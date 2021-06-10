@@ -1,0 +1,10 @@
+{
+    "python.linting.pylintEnabled": false,
+    "python.linting.banditEnabled": false,
+    "python.linting.enabled": true,
+    "python.linting.flake8Enabled": true,
+    "python.formatting.provider": "black",
+    "python.venvPath": "${workspaceFolder}/.venv",
+    "python.pythonPath": "${workspaceFolder}/.venv/bin/python",
+    "python.linting.mypyEnabled": true
+}
