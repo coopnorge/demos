@@ -1,0 +1,14 @@
+#A sample configuration for a HA setup: it will register at all gateways of a system
+#(potentially restricted to a set belonging to a given logon group)
+#Replace the dummy values and put this file in the working directory.
+#In eclipse environment it is the project root directory.
+#in this case connecion_count refers to connections per gateway
+jco.server.connection_count=2
+jco.server.mshost=messageserver_of_the_system
+jco.server.system_id=SID
+#enter ms service here, if /etc/services does not define the logical port sapms<SID> In this case jco.server.r3name needs to be dropped 
+#jco.server.msserv=1234
+#group is optional - when not specified all application servers will be used, otherwise only the ones that are member of the group
+jco.server.group=PUBLIC
+jco.server.progid=program_id_as_defined_in_sm59
+jco.server.repository_destination=client_destination_for_repository

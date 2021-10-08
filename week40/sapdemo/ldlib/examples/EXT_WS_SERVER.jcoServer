@@ -1,0 +1,15 @@
+#A sample configuration for a WebSocket server: it will run at a given port and waits for incoming WebSocketRFC requests
+#Replace the dummy values and put this file in the working directory.
+#In eclipse environment it is the project root directory.
+jco.server.wsport=51555
+#in this case connecion_count refers to the allowed number of incoming stateless connections
+jco.server.connection_count=2
+jco.server.repository_destination=client_destination_for_repository
+#for setting up trust one can specify a P12 file with its PIN - however for productive scenarios please implement getSSLServerContext in ServerDataProvider
+jco.client.tls_p12_file=/opt/jco/trustedCAsAndOwnKeys.p12
+jco.client.tls_p12_passwd=secret
+#
+#further properties are optional (see documentation in ServerDataProvider)
+#jco.server.tls_server_partner_auth=REQUIRED
+#jco.server.ws_pong_timeout=10
+#jco.server.ws_ping_period=15
