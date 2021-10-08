@@ -1,2 +1,2 @@
-java -jar -Dloader.path=. target/demo-0.0.1-SNAPSHOT.jar 
+java -jar -Dloader.path=ldlib target/demo-0.0.1-SNAPSHOT.jar 
 

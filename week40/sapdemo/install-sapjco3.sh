@@ -1,5 +1,5 @@
 mvn install:install-file \
-   -Dfile=sapjco3.jar \
+   -Dfile=ldlib/sapjco3.jar \
    -DgroupId=com.sap.conn.jco \
    -DartifactId=sapjco3 \
    -Dversion=3.1.4 \
