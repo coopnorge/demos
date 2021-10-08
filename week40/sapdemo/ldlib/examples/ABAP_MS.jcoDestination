@@ -1,0 +1,22 @@
+#Sample destination configuration when using a load balanced logon with a message server
+#Replace the dummy values and put this file in the working directory.
+#In eclipse environment it is the project root directory. 
+jco.client.mshost=message_server
+jco.client.r3name=SID
+#enter ms service here, if /etc/services does not define the logical port sapms<SID> In this case jco.client.r3name needs to be dropped 
+#jco.client.msserv=1234
+#group is optional - when not specified PUBLIC is assumed
+jco.client.group=PUBLIC
+jco.client.client=000
+jco.client.user=JCOTESTER
+jco.client.passwd=SECRET
+jco.client.lang=en
+#
+#further useful standard properties (see documentation in DestinationDataProvider)
+#those are independent from the connection type
+jco.destination.repository_roundtrip_optimization=1
+jco.client.serialization_format=columnBased
+jco.client.network=lan
+jco.destination.pool_capacity=10
+jco.destination.expiration_time=600000
+jco.destination.expiration_check_period=120000

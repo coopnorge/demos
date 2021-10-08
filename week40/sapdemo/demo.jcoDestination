@@ -1,0 +1,21 @@
+#Sample destination configuration when using an application server over CPIC
+#Replace the dummy values and put this file in the working directory.
+#In eclipse environment it is the project root directory.
+jco.client.ashost=
+jco.client.sysnr=00
+jco.client.client=300
+jco.client.user=
+jco.client.passwd=
+jco.client.lang=en
+jco.client.group=Q30_RFC_group
+jco.client.sysid=Q30
+
+#
+#further useful standard properties (see documentation in DestinationDataProvider)
+#those are independent from the connection type
+jco.destination.repository_roundtrip_optimization=1
+jco.client.serialization_format=columnBased
+jco.client.network=lan
+jco.destination.pool_capacity=10
+jco.destination.expiration_time=600000
+jco.destination.expiration_check_period=120000

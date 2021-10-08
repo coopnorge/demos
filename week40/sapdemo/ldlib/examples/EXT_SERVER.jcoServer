@@ -1,0 +1,8 @@
+#A sample configuration for a standard registered server 
+#Replace the dummy values and put this file in the working directory.
+#In eclipse environment it is the project root directory.
+jco.server.connection_count=2
+jco.server.gwhost=gateway_host_id_as_defined_in_sm59
+jco.server.progid=program_id_as_defined_in_sm59
+jco.server.gwserv=sapgw00
+jco.server.repository_destination=client_destination_for_repository
