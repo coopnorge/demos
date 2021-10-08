@@ -33,7 +33,7 @@
 			<artifactId>sapjco3</artifactId>
 			<version>3.1.4</version>
 			<scope>system</scope>
-			<systemPath>${project.basedir}/sapjco3.jar</systemPath>
+			<systemPath>${project.basedir}/ldlib/sapjco3.jar</systemPath>
 		</dependency>
 
 	</dependencies>

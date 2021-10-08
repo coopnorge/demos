@@ -18,7 +18,7 @@ You can run the app as a standalone jar file by running the following commands (
 
 ```
 mvn clean package
-java -jar -Dloader.path=. target/demo-0.0.1-SNAPSHOT.jar 
+java -jar -Dloader.path=ldlib target/demo-0.0.1-SNAPSHOT.jar 
 ```
 
 or in a docker container (run-docker.sh)
