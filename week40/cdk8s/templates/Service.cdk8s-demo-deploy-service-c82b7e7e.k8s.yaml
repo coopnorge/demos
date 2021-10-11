@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: cdk8s-demo
+  name: cdk8s-demo-deploy-service-c82b7e7e
+spec:
+  externalIPs: []
+  ports:
+    - port: 883
+      targetPort: 8080
+  selector:
+    cdk8s.deployment: cdk8s-demo-deploy-c8a26a08
+  type: ClusterIP
