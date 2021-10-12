@@ -1,0 +1,21 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+spec:
+  gateways:
+    - test-gateway
+  hosts:
+    - bla.com
+    - boe.com
+  http:
+    - match:
+        - uri:
+            prefix: /test
+      route:
+        - destination:
+            host: cdk8s-demo-deploy-service-c82b7e7e
+            port:
+              number: 883
+metadata:
+  labels:
+    app: cdk8s-demo
+  name: test-vs

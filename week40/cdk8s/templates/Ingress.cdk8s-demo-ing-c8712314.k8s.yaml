@@ -1,0 +1,14 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  labels:
+    app: cdk8s-demo
+  name: cdk8s-demo-ing-c8712314
+spec:
+  rules:
+    - host: host
+      http:
+        paths:
+          - backend:
+              serviceName: cdk8s-demo-deploy-service-c82b7e7e
+              servicePort: 883
