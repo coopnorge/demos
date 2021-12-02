@@ -1,0 +1,12 @@
+services:
+  devtools:
+    build:
+      context: .
+      dockerfile: Dockerfile.devtools
+    working_dir: /srv/workspace
+    volumes:
+      - .:/srv/workspace:z
+      - xdg-cache-home:/root/.cache
+    command: modd
+volumes:
+    xdg-cache-home: {}
