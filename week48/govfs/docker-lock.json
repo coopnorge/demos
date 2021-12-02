@@ -1,0 +1,13 @@
+{
+	"composefiles": {
+		"docker-compose.yml": [
+			{
+				"name": "golang",
+				"tag": "1.16-buster",
+				"digest": "0dd361b197272f3a26462030e4a387ac9a06495aa63ac5e9a8b0b72df8cfdba1",
+				"dockerfile": "Dockerfile.devtools",
+				"service": "devtools"
+			}
+		]
+	}
+}
