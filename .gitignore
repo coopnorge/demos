@@ -60,3 +60,7 @@ cmake-build-*/
 
 # File-based project format
 *.iws
+
+# Node modules
+
+node_modules

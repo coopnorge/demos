@@ -28,3 +28,10 @@ ___
 ### BDD
 - [bdd-api](https://github.com/coopnorge/demos/tree/main/week23/bdd-api) - Testing API with BDD approach based on Golang
 
+## Security 
+---
+### Security tooling
+
+- [Security tooling for your CI/CD] - Bring security tooling into your CI/CD.
+
+[Security tooling for your CI/CD]: 2022-week-16/security-ci-cd/README.md
