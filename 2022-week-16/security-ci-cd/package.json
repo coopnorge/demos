@@ -1,0 +1,13 @@
+{
+  "name": "security-ci-cd",
+  "version": "0.0.0",
+  "description": "mdx-deck based presentation about security in CI/CD",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "mdx-deck": "^4.1.1"
+  },
+  "scripts": {
+    "start": "mdx-deck slides.mdx"
+  }
+}
