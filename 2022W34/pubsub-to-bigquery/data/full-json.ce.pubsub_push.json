@@ -1,0 +1,20 @@
+{
+  "message": {
+    "attributes": {
+      "ce-id": "a2289aff-fd14-4680-ad76-10892727977f",
+      "ce-source": "example:ce-source",
+      "ce-specversion": "1.0",
+      "ce-type": "com.example.ce-type.json.v1",
+      "ce-datacontenttype": "application/json",
+      "ce-dataschema": "example:ce-dataschema",
+      "ce-subject": "example:ce-subject",
+      "ce-coopnorgerecordedat": "2016-08-09T03:02:17.000Z"
+    },
+    "data": "ewogICJzb21lIjogImRhdGEiLAogICJpbiI6IFsKICAgICJqc29uIgogIF0KfQo=",
+    "messageId": "6197665337638415",
+    "message_id": "6197665337638415",
+    "publishTime": "2016-08-09T03:02:17.000Z",
+    "publish_time": "2016-08-09T03:02:17.000Z"
+  },
+  "subscription": "projects/egproject/subscriptions/egsubscription"
+}

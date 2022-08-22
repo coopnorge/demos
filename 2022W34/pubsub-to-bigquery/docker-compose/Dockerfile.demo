@@ -1,0 +1,78 @@
+FROM docker.io/mikefarah/yq:4@sha256:856f7ab12c58608d422a742a4917e6998ad065d9d48a5b1cd69c3ce8fa80f3fa AS yq
+FROM docker.io/jeffail/benthos:4@sha256:e4d02271efa22bc2adb9696dfb4e0dd04564ee520dec400eb9f92f6c441d047b AS benthos
+FROM docker.io/library/golang:1.18.5-bullseye@sha256:ac2ea4e233e5f1bb4407893f58d4e33d908945d4163e5848160ab588d1d6a456 AS golang
+# FROM docker.io/google/cloud-sdk:slim@sha256:2c63781317816109976151a4f233222926dd62baee33d402a5fb9ee2707c9745
+
+
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+# https://packages.debian.org/search?keywords=busybox&searchon=names&suite=buster&section=all
+RUN \
+    apt-get update && \
+    apt-get install -y \
+        --no-install-recommends \
+        make \
+        socat \
+        curl \
+        ca-certificates \
+        busybox \
+        rsync \
+        protobuf-compiler \
+        libprotobuf-dev \
+        git \
+        jq \
+        && \
+    rm -vr /var/lib/apt/lists/* && \
+    true
+
+RUN \
+    apt-get install -y \
+        --no-install-recommends \
+        apt-transport-https \
+        ca-certificates \
+        gnupg \
+        && \
+    rm -vr /var/lib/apt/lists/* && \
+    true
+
+#     echo \
+#         "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" \
+#         | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \
+#     curl https://packages.cloud.google.com/apt/doc/apt-key.gpg \
+#         | apt-key --keyring /usr/share/keyrings/cloud.google.gpg add - && \
+#     true
+
+RUN \
+    echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" \
+        | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \
+    curl https://packages.cloud.google.com/apt/doc/apt-key.gpg \
+        | apt-key --keyring /usr/share/keyrings/cloud.google.gpg add - && \
+    apt-get update -y && \
+    apt-get install google-cloud-cli -y && \
+    rm -vr /var/lib/apt/lists/* && \
+    true
+
+
+# COPY --from=golang /usr/local/go/ /usr/local/go/
+
+# ENV PATH="/go/bin:/usr/local/go/bin:$PATH"
+# ENV GOPATH=/go
+
+# RUN \
+#     go version && \
+#     go env > /usr/local/bin/goenv.sh && \
+#     true
+
+
+COPY --from=yq /usr/bin/yq /usr/local/bin/yq
+COPY --from=benthos /benthos /usr/local/bin/benthos
+
+COPY go.mod go.sum tools.go /var/tmp/build/
+
+RUN \
+    export GOBIN=/usr/local/bin && \
+    cd /var/tmp/build/ && \
+    awk -F '"' '/_.*toolchain/{print $2}' tools.go | xargs -t -I{} go install {} && \
+    rm -rf "$(go env GOPATH)" && \
+    rm -rf /var/tmp/build/* && \
+    true

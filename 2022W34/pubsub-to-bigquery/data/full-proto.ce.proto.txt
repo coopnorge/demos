@@ -1,0 +1,31 @@
+id: "a2289aff-fd14-4680-ad76-10892727977f"
+source: "example:ce-source"
+spec_version: "1.0"
+type: "com.example.ce-type.json.v1"
+attributes: [
+  {
+    key: "datacontenttype",
+    value: { ce_string: "application/json" }
+  },
+  {
+    key: "dataschema",
+    value: { ce_string: "example:ce-dataschema" }
+  },
+  {
+    key: "subject",
+    value: { ce_string: "example:ce-subject" }
+  },
+  {
+    key: "time",
+    value: { ce_timestamp: { seconds: 1372985426,  nanos: 0 } }
+  },
+  {
+    key: "coopnorgerecordedat",
+    value: { ce_timestamp: { seconds: 1470711737,  nanos: 0 } }
+  }
+]
+proto_data {
+  [type.googleapis.com/example.greeter.v1.SayHelloRequest] {
+    name: "iNe6QSPp"
+  }
+}

@@ -1,0 +1,27 @@
+[
+  {
+    "name": "subscription_name",
+    "mode": "REQUIRED",
+    "type": "STRING"
+  },
+  {
+    "name": "message_id",
+    "mode": "REQUIRED",
+    "type": "STRING"
+  },
+  {
+    "name": "publish_time",
+    "mode": "REQUIRED",
+    "type": "TIMESTAMP"
+  },
+  {
+    "name": "data",
+    "mode": "REQUIRED",
+    "type": "BYTES"
+  },
+  {
+    "name": "attributes",
+    "mode": "REQUIRED",
+    "type": "STRING"
+  }
+]

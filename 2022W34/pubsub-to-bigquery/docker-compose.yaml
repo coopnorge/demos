@@ -1,0 +1,27 @@
+# https://docs.docker.com/compose/compose-file/compose-file-v3/
+version: "3"
+services:
+  terraform-devtools:
+    build:
+      context: docker-compose
+      target: terraform-devtools
+    working_dir: /srv/workspace
+    command: validate terraform_init_args="-backend=false" tfswitch=true
+    volumes:
+      - .:/srv/workspace:z
+      - xdg-cache-home:/root/.cache
+      - $HOME/.terraform.d/:/root/.terraform.d/
+      - $HOME/.config/gcloud/:/root/.config/gcloud/
+      - dot-terraform:/srv/workspace/terraform/.terraform
+  demo-devtools:
+    build:
+      context: docker-compose
+      dockerfile: Dockerfile.demo
+    working_dir: /srv/workspace
+    volumes:
+      - .:/srv/workspace:z
+      - xdg-cache-home:/root/.cache
+      - $HOME/.config/gcloud/:/root/.config/gcloud/
+volumes:
+  xdg-cache-home: {}
+  dot-terraform: {}

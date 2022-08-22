@@ -1,0 +1,135 @@
+[
+  {
+    "name": "subscription_name",
+    "mode": "REQUIRED",
+    "type": "STRING"
+  },
+  {
+    "name": "message_id",
+    "mode": "REQUIRED",
+    "type": "STRING"
+  },
+  {
+    "name": "publish_time",
+    "mode": "REQUIRED",
+    "type": "TIMESTAMP"
+  },
+  {
+    "name": "attributes",
+    "mode": "REQUIRED",
+    "type": "STRING"
+  },
+  {
+    "name": "ce_id",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "ce_source",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "ce_spec_version",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "ce_type",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "ce_attributes",
+    "type": "RECORD",
+    "mode": "REPEATED",
+    "fields": [
+      {
+        "name": "key",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "value",
+        "type": "RECORD",
+        "mode": "NULLABLE",
+        "fields": [
+          {
+            "name": "ce_boolean",
+            "type": "BOOLEAN",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "ce_integer",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "ce_string",
+            "type": "STRING",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "ce_bytes",
+            "type": "BYTES",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "ce_uri",
+            "type": "STRING",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "ce_uri_ref",
+            "type": "STRING",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "ce_timestamp",
+            "type": "RECORD",
+            "mode": "NULLABLE",
+            "fields": [
+              {
+                "name": "seconds",
+                "type": "INTEGER",
+                "mode": "NULLABLE"
+              },
+              {
+                "name": "nanos",
+                "type": "INTEGER",
+                "mode": "NULLABLE"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "ce_binary_data",
+    "type": "BYTES",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "ce_text_data",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "ce_proto_data",
+    "type": "RECORD",
+    "mode": "NULLABLE",
+    "fields": [
+      {
+        "name": "type_url",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "value",
+        "type": "BYTES",
+        "mode": "NULLABLE"
+      }
+    ]
+  }
+]
