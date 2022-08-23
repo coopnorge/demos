@@ -1,0 +1,169 @@
+# https://taskfile.dev/usage/
+# https://pkg.go.dev/text/template
+# https://go-task.github.io/slim-sprig/
+version: "3"
+
+vars:
+  BUF: buf
+  PYTHON: python
+
+tasks:
+  buf:
+    desc: Run buf
+    cmds:
+      - "{{.BUF}} {{.CLI_ARGS}}"
+  buf:mod:
+    desc: Run buf mod commands
+    dir: spec/proto
+    cmds:
+      - "{{.BUF}} mod {{.CLI_ARGS}}"
+  buf:export:
+    desc: Run buf mod commands
+    cmds:
+      - task: buf
+        vars: { CLI_ARGS: "export -o var/buf/exported {{.CLI_ARGS}}" }
+  buf:generate:
+    desc: Run buf generate
+    cmds:
+      - task: buf
+        vars: { CLI_ARGS: "generate" }
+  fetch:
+    desc: Fetch remote resources
+    cmds:
+      - |
+        curl -L -o spec/proto/io/cloudevents/v1/cloudevents.proto https://github.com/cloudevents/spec/raw/main/cloudevents/formats/cloudevents.proto
+  clean:
+    desc: Clean everything
+    cmds:
+      - task: _rimraf
+        vars: { RIMRAF_TARGET: "var" }
+  demo:clean:
+    desc: View data in bigquery
+    cmds:
+      - |
+        bq query --nouse_legacy_sql --project_id $(yq -r .GCP_PROJECT_ID .env.yaml) \
+          '
+          TRUNCATE TABLE `daeca.daeca-schemaless`;
+          TRUNCATE TABLE `daeca.daeca-cloudevents`;
+          '
+################################################################################
+# demo:schemaless
+################################################################################
+  demo:schemaless:
+    desc: Run the schemaless demo
+    cmds:
+      - cmd: echo "Sending an event to the schemaless topic ..."
+      - task: demo:schemaless:send
+      - cmd: "echo 'press enter to continue ...'; read"
+      - cmd: echo "Pull events from the schemaless topic ..."
+      - task: demo:schemaless:pull
+      - cmd: "echo 'press enter to continue ...'; read"
+      - cmd: echo "Query the schemaless biqeury table for events ..."
+      - task: demo:schemaless:query
+  demo:schemaless:send:
+    desc: Send an event to the schemaless topic
+    cmds:
+      - |
+        cat data/full-json.ce.pubsub_push.json \
+          | jq '{ messages: [ { attributes: .message.attributes, data: .message.data } ] }' - \
+          | tee /dev/stderr \
+          | curl \
+            -H "Authorization: Bearer $(gcloud auth application-default print-access-token)" \
+            -H "Content-Type: application/json" \
+            https://pubsub.googleapis.com/v1/projects/$(yq -r .GCP_PROJECT_ID .env.yaml)/topics/daeca-schemaless:publish \
+            --data '@/dev/stdin'
+  demo:schemaless:pull:
+    desc: Pull+ack events from the schemaless )/topics/daeca-schemaless:publish
+    cmds:
+      - |
+        gcloud pubsub subscriptions pull \
+          --auto-ack --limit 9999 --format=json \
+          projects/$(yq -r .GCP_PROJECT_ID .env.yaml)/subscriptions/daeca-schemaless-pull  {{.CLI_ARGS}}
+  demo:schemaless:query:
+    desc: View data in bigquery
+    cmds:
+      - |
+        bq query --nouse_legacy_sql --format json --project_id $(yq -r .GCP_PROJECT_ID .env.yaml) \
+          'SELECT
+            subscription_name,
+            message_id,
+            publish_time,
+            SAFE_CONVERT_BYTES_TO_STRING(data) as data,
+            attributes
+          FROM
+            `daeca.daeca-schemaless`
+          ORDER BY publish_time DESC
+          LIMIT 1;
+          ' \
+          | jq '[ .[] | (.attributes = (.attributes | fromjson)) | (.data = (.data | fromjson)) ]'
+################################################################################
+# demo:cloudevents
+################################################################################
+  demo:cloudevents:
+    desc: Run the schemaless demo
+    cmds:
+      - task: buf:export
+      - cmd: echo "Sending an event to the cloudevents topic ..."
+      - task: demo:cloudevents:send
+      - cmd: "echo 'press enter to continue ...'; read"
+      - cmd: echo "Pull events from the cloudevents topic ..."
+      - task: demo:cloudevents:pull
+      - cmd: "echo 'press enter to continue ...'; read"
+      - cmd: echo "Query the cloudevents biqeury table for events ..."
+      - task: demo:cloudevents:query
+  demo:cloudevents:send:
+    desc: Send an event to the schemaless topic
+    cmds:
+      - |
+        cat data/full-json.ce.proto.txt \
+          | tee /dev/stderr \
+          | protoc --proto_path=var/buf/exported --encode="io.cloudevents.v1.CloudEvent" io/cloudevents/v1/cloudevents.proto \
+          | base64 --wrap=0 \
+          | jq -c -R -s '{ messages: [ { data: . } ] }' \
+          | curl \
+            -H "Authorization: Bearer $(gcloud auth application-default print-access-token)" \
+            -H "Content-Type: application/json" \
+            https://pubsub.googleapis.com/v1/projects/$(yq -r .GCP_PROJECT_ID .env.yaml)/topics/daeca-cloudevents:publish \
+            --data-binary '@/dev/stdin'
+  demo:cloudevents:pull:
+    desc: Pull+ack events from the schemaless )/topics/daeca-schemaless:publish
+    cmds:
+      - |
+        gcloud pubsub subscriptions pull \
+          --limit 1 --format=json \
+          projects/$(yq -r .GCP_PROJECT_ID .env.yaml)/subscriptions/daeca-cloudevents-pull \
+          | tee /dev/stderr \
+          | jq -r '.[].message.data' | base64 -d \
+          | protoc --proto_path=var/buf/exported --decode="io.cloudevents.v1.CloudEvent" io/cloudevents/v1/cloudevents.proto
+  demo:cloudevents:query:
+    desc: View data in bigquery
+    cmds:
+      - |
+        bq query --nouse_legacy_sql --format json --project_id $(yq -r .GCP_PROJECT_ID .env.yaml) \
+          '
+          SELECT
+            SAFE_CONVERT_BYTES_TO_STRING(ce_binary_data) AS ce_binary_data_str,
+            *
+          FROM
+            `daeca.daeca-cloudevents`
+          ORDER BY publish_time DESC
+          LIMIT 1;
+          ' \
+        | jq '[ .[] | (.ce_binary_data_str = (.ce_binary_data_str | fromjson)) ]'
+################################################################################
+# ...
+################################################################################
+  _rimraf:
+    # This task is a utility task for recursively removing directories, it is
+    # similar to rm -rf but not identical and it should work wherever there is
+    # a python interpreter. The name is inspired by
+    # <https://www.npmjs.com/package/rimraf>.
+    - cmd: |
+        {{.PYTHON}} -c '
+        from pathlib import Path;
+        import sys, shutil;
+        for path in sys.argv[1:]:
+          if Path(path).exists():
+            sys.stderr.write(f"removing {path}\n")
+            shutil.rmtree(path, ignore_errors=True)
+        ' {{.RIMRAF_TARGET}}

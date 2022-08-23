@@ -1,0 +1,4 @@
+project_id  = "sandbox-iwan-aucamp-e332"
+region      = "europe-north1"
+zone        = "europe-north1-b"
+environment = "gzju"

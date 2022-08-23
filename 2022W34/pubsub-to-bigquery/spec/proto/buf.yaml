@@ -1,0 +1,41 @@
+# https://docs.buf.build/lint/configuration
+# https://docs.buf.build/lint/rules
+# https://docs.buf.build/best-practices/style-guide
+# https://docs.buf.build/configuration/v1/buf-yaml
+version: v1
+# https://docs.buf.build/bsr/overview#module-cache
+# ~/.cache/buf
+deps:
+  - buf.build/googleapis/googleapis:7529bb85c9cd4c489dba05e04769c547
+  - buf.build/grpc-ecosystem/grpc-gateway:00116f302b12478b85deb33b734e026c
+  - buf.build/grpc/grpc:e35016be50db469a97b06a4418fe917c
+  - buf.build/unitytestorg/gen-bq-schema
+build:
+  excludes: []
+lint:
+  use:
+    - DEFAULT
+    - COMMENTS
+    - PACKAGE_NO_IMPORT_CYCLE
+  except:
+    - ENUM_VALUE_PREFIX
+    - COMMENT_FIELD
+    - COMMENT_ONEOF
+    - COMMENT_ENUM_VALUE
+  enum_zero_value_suffix: _INVALID
+  rpc_allow_same_request_response: false
+  rpc_allow_google_protobuf_empty_requests: false
+  rpc_allow_google_protobuf_empty_responses: false
+  service_suffix: API
+  ignore_only:
+    COMMENT_MESSAGE:
+      - aucampia/scratchpad/lax/
+      - io/cloudevents/v1/cloudevents.proto
+    FIELD_LOWER_SNAKE_CASE:
+      - aucampia/scratchpad/lax/
+  ignore:
+    - io/cloudevents/v1/
+    - examples
+breaking:
+  use:
+    - FILE

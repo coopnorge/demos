@@ -1,0 +1,10 @@
+# https://docs.buf.build/configuration/v1/buf-gen-yaml
+version: v1
+managed:
+  # https://docs.buf.build/generate/managed-mode
+  # https://docs.buf.build/tour/use-managed-mode
+  enabled: true
+plugins:
+  - name: bq-schema
+    out: var/generated/bq
+    strategy: all
