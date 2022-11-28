@@ -1,0 +1,11 @@
+{
+	"dockerfiles": {
+		"Dockerfile": [
+			{
+				"name": "docker.io/library/node",
+				"tag": "19.1.0",
+				"digest": "aacbfded42f894ceddbe4954a04c39a8ae9884d500623be032e30751311b534c"
+			}
+		]
+	}
+}

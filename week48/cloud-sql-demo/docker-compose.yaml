@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  devtools:
+    build:
+      context: docker-compose
+      target: devtools
+    working_dir: /srv/workspace
+    ports:
+      - "0.0.0.0:3030:3030/tcp"
+    volumes:
+      - .:/srv/workspace:z
+      - ${NODE_MODULES:-node-modules}:/srv/workspace/node_modules
+
+volumes:
+  node-modules: {}
