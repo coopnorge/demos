@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package example.greeter.v1;
+
+import "example/types/v1/messages.proto";
+// https://raw.githubusercontent.com/bufbuild/protoc-gen-validate/main/validate/validate.proto
+// https://github.com/bufbuild/protoc-gen-validate#constraint-rules
+import "validate/validate.proto";
+
+// The greeting service definition.
+service GreeterAPI {
+  // Request a greeting.
+  rpc Greet(GreetRequest) returns (GreetResponse);
+}
+
+// The request message containing the name of the entity to be greeted.
+message GreetRequest {
+  string name = 1 [(validate.rules) = {
+    string: {
+      min_len: 1,
+      not_in: [
+        "Jack Smith",
+        "Jackity Jack"
+      ]
+    }
+  }];
+  example.types.v1.SomeType some_value = 2 [(validate.rules).message.required = true];
+}
+
+// The response message containing the greetings.
+message GreetResponse {
+  string message = 1;
+}

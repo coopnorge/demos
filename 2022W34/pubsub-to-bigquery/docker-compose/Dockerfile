@@ -1,5 +1,2 @@
-FROM ghcr.io/coopnorge/engineering-docker-images/e0/devtools-terraform-v1beta1:latest@sha256:847abb087c22cb613ecf00f3ce77268019ea2f3586caa2fad7f97671f0c1358d AS terraform-devtools
-FROM ghcr.io/coopnorge/engineering-docker-images/e0/devtools-kubernetes-v1beta1:latest@sha256:fa097a4a3db1087e32826e69b4a6af2a8ba555033f4633ffe289f605ab47181e AS kubernetes-devtools
-FROM docker.io/fullstorydev/grpcurl:latest@sha256:d42ef512419560776bee5bb51e338a1734a0edb99f450b6d98fd98bcc93796f3 AS grpcurl
-FROM ghcr.io/navikt/mock-oauth2-server:0.5.1@sha256:cd90f4f08cc122163cbbff5ad849a9b59d82f61b92bd44a0d02c78580a32bf84 AS mockoauth2
-FROM google/cloud-sdk:latest@sha256:d234fdeb42d1e22ad9896e5e9822d9101467daf4e70283ede103aea65f85ad13 AS cloud-sdk
+FROM ghcr.io/coopnorge/engineering-docker-images/e0/devtools-terraform-v1beta1:latest@sha256:0aa1cdbbee2fe1e2395a71a132a5d9402f7909d9d2abe55155685ccf4ebe87e5 AS terraform-devtools
+FROM google/cloud-sdk:latest@sha256:d7d89de58ed3a72a623736676a5106488052a720f073ba281bb20bfb9d9d7aee AS cloud-sdk

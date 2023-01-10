@@ -1,0 +1,37 @@
+version: "3"
+
+services:
+  devtools:
+    build:
+      context: devtools
+      dockerfile: Dockerfile
+    privileged: true
+    environment:
+      GOMODCACHE: /root/.cache/go-mod
+    security_opt:
+      - seccomp:unconfined
+      - apparmor:unconfined
+    working_dir: /srv/workspace
+    volumes:
+      - .:/srv/workspace:z
+      - ${_XDG_CACHE_DIR:-xdg-cache-home}:/root/.cache
+      - ${DOCKER_CONFIG:-~/.docker}:/root/.docker
+      - ${LOCALSTATEDIR:-devtools-var}:/srv/workspace/var
+    # command: "modd --debug --notify --file modd.conf"
+    ports:
+      - "127.0.0.1:32604:32604"
+  grpcurl:
+    image: docker.io/fullstorydev/grpcurl:latest@sha256:d42ef512419560776bee5bb51e338a1734a0edb99f450b6d98fd98bcc93796f3
+    network_mode: host
+  mockoauth2:
+    image: ghcr.io/navikt/mock-oauth2-server:0.3.5@sha256:3d96dbc475c11ee62f14fd8025ace900c3cffa87da2cfdb7765c8dccc42de223
+    restart: always
+    environment:
+      JSON_CONFIG_PATH: /tmp/config/mock-oauth2-server.json
+    ports:
+      - "127.0.0.1:31309:8080/tcp"
+    volumes:
+      - ./test/conf/mockoauth2/:/tmp/config/:ro,z
+volumes:
+    xdg-cache-home: {}
+    devtools-var: {}
