@@ -13,7 +13,7 @@ cp .env.yaml.example .env.yaml
 
 # validate and apply terraform
 docker compose run --rm terraform-devtools validate
-docker compose run --rm terraform-devtools bash -c 'terraform -chdir=terraform apply'
+docker compose run --rm terraform-devtools terraform -chdir=terraform apply
 
 # Clean the state for demo:
 docker compose run --rm demo-devtools task demo:clean
@@ -24,5 +24,3 @@ docker compose run --rm demo-devtools task demo:schemaless
 # Run cloudevents schema demo:
 docker compose run --rm demo-devtools task demo:cloudevents
 ```
-
--

@@ -1,0 +1,48 @@
+{
+	"dockerfiles": {
+		"Dockerfile": [
+			{
+				"name": "ghcr.io/coopnorge/engineering-docker-images/e0/devtools-terraform-v1beta1",
+				"tag": "latest",
+				"digest": "0aa1cdbbee2fe1e2395a71a132a5d9402f7909d9d2abe55155685ccf4ebe87e5"
+			},
+			{
+				"name": "ghcr.io/coopnorge/engineering-docker-images/e0/devtools-kubernetes-v1beta1",
+				"tag": "latest",
+				"digest": "9c8d8149670736436e1bbd93b27d04ddd3c459fcad72bb5c3e589d3b8a3b5b97"
+			},
+			{
+				"name": "docker.io/fullstorydev/grpcurl",
+				"tag": "latest",
+				"digest": "d42ef512419560776bee5bb51e338a1734a0edb99f450b6d98fd98bcc93796f3"
+			},
+			{
+				"name": "ghcr.io/navikt/mock-oauth2-server",
+				"tag": "0.5.1",
+				"digest": "cd90f4f08cc122163cbbff5ad849a9b59d82f61b92bd44a0d02c78580a32bf84"
+			},
+			{
+				"name": "google/cloud-sdk",
+				"tag": "latest",
+				"digest": "d7d89de58ed3a72a623736676a5106488052a720f073ba281bb20bfb9d9d7aee"
+			}
+		],
+		"Dockerfile.demo": [
+			{
+				"name": "docker.io/mikefarah/yq",
+				"tag": "4",
+				"digest": "495c1e1db2d653cce61a06da52cfca0c7d68d6249cc6e61b2a134d92c609c016"
+			},
+			{
+				"name": "docker.io/jeffail/benthos",
+				"tag": "4",
+				"digest": "0eeaba5fe2e344f858c0057304ebb0b5dcac5212300258601f9dde881daf70bb"
+			},
+			{
+				"name": "docker.io/library/golang",
+				"tag": "1.18.5-bullseye",
+				"digest": "c362804a0f4e21a7006e36212cbcec6b2888c01dd560d577e74e33d32e12013f"
+			}
+		]
+	}
+}

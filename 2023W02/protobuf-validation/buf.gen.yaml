@@ -1,0 +1,46 @@
+# https://docs.buf.build/configuration/v1/buf-gen-yaml
+version: v1
+managed:
+  # https://docs.buf.build/generate/managed-mode
+  # https://docs.buf.build/tour/use-managed-mode
+  enabled: true
+  go_package_prefix:
+    default: gitlab.com/aucampia/eg/service-golang/internal/generated/proto
+    except:
+      - buf.build/googleapis/googleapis
+      - buf.build/grpc-ecosystem/grpc-gateway
+      - buf.build/grpc/grpc
+      - buf.build/envoyproxy/protoc-gen-validate
+      - buf.build/unitytestorg/gen-bq-schema
+plugins:
+  - name: go
+    # https://developers.google.com/protocol-buffers/docs/reference/go-generated
+    out: internal/generated/proto/
+    opt:
+      - paths=import
+      - module=gitlab.com/aucampia/eg/service-golang/internal/generated/proto
+  - name: go-grpc
+    out: internal/generated/proto/
+    opt:
+      - paths=import
+      - module=gitlab.com/aucampia/eg/service-golang/internal/generated/proto
+  - name: doc
+    # https://github.com/pseudomuto/protoc-gen-doc#invoking-the-plugin
+    out: var/generated/doc
+    opt:
+      - markdown
+      - index.md
+    strategy: all
+  - name: doc
+    # https://github.com/pseudomuto/protoc-gen-doc#invoking-the-plugin
+    out: var/generated/doc
+    opt:
+      - html
+      - index.html
+    strategy: all
+  - name: validate
+    out: internal/generated/proto/
+    opt:
+      - lang=go
+      - paths=import
+      - module=gitlab.com/aucampia/eg/service-golang/internal/generated/proto

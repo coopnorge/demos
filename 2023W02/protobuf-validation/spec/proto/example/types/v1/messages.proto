@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+package example.types.v1;
+
+message SomeType {
+  string value = 1;
+}
