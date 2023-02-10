@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "localproject"
+version = "0.1.0"
+description = ""
+authors = []
+
+[tool.poetry.dependencies]
+python = "^3.6.1"
+
+[tool.poetry.dev-dependencies]
+rdflib-jsonld = "^0.5.0"
+rdflib = "^5.0.0"
+pylode = "^2.8.3"
+pyyaml = "^5.3.1"
+#"yocho.rdflib-xtl" = "^0.3.0"
+"yocho.rdflib-xtl" = { git = "https://gitlab.com/aucampia/wip/rdflib-xtl.git", branch = "master" }
+PyGObject = "^3.38.0"
+xdot = "^1.2"
+numpy = "^1.19.4"
+
+[build-system]
+requires = ["setuptools","poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

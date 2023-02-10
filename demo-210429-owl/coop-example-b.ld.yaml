@@ -1,0 +1,41 @@
+---
+# https://www.w3.org/TR/json-ld/
+# https://www.w3.org/TR/json-ld/#the-context
+# 
+"@context":
+  rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+  xsd: http://www.w3.org/2001/XMLSchema#
+  rdfs: http://www.w3.org/2000/01/rdf-schema#
+  owl: http://www.w3.org/2002/07/owl#
+  dc: http://purl.org/dc/elements/1.1/
+  dcterms: http://purl.org/dc/terms/
+  obo: http://purl.obolibrary.org/obo/
+  skos: http://www.w3.org/2004/02/skos/core#
+  foaf: http://xmlns.com/foaf/0.1/
+  org: http://www.w3.org/ns/org#
+  acl: http://www.w3.org/ns/auth/acl#
+  coopo: xri://coop.no/tbd-20210426/ontology/
+  coopeg: xri://coop.no/tbd-20210426/examples/
+  coopID:
+    "@id": xri://coop.no/tbd-20210426/ontology/coopID
+  hasMembership:
+    "@id": xri://coop.no/tbd-20210426/ontology/hasMembership
+    "@type": "@id"
+
+
+"@graph":
+- "@id": coopeg:Person-000
+  "@type": coopo:Member
+  coopo:coopID: "C00000"
+  coopo:Member.hasMembership: { "@id": coopeg:Person-000.Membership-000 }
+
+- "@id": coopeg:Person-000.Membership-000
+  "@type": coopo:Membership
+  coopo:memberID: "M00000"
+  coopo:Membership.hasOwner: { "@id": coopeg:Person-000 }
+
+- coopID: "C00001"
+  hasMembership: { "@id": coopeg:Person-000.Membership-001 }
+
+- coopID: "C00002"
+  hasMembership: { "@id": coopeg:Person-000.Membership-002 }

@@ -1,0 +1,204 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix owl: <http://www.w3.org/2002/07/owl#>.
+@prefix dc: <http://purl.org/dc/elements/1.1/>.
+@prefix dcterms: <http://purl.org/dc/terms/>.
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix schema: <https://schema.org/> .
+@prefix rdau: <http://rdaregistry.info/Elements/u/> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+
+@prefix coopo: <xri://coop.no/tbd-20210426/ontology/> .
+
+
+coopo:
+    rdf:type owl:Ontology;
+    dc:title "Coop Ontology"@en;
+    dc:description "An ontology for coop"@en;
+    dc:abstract "This ontology captures key entity types and their relationships.";
+    vann:preferredNamespacePrefix "coopo";
+    owl:versionInfo "0.1.1"
+    .
+
+coopo:cnsa
+    rdfs:label "Coop Norge SA"@no;
+    dc:title "Coop Norge SA"@no;
+    dc:description "The CNSA organization"@en;
+    rdf:type org:Organization;
+    .
+
+coopo:coopID
+    rdfs:label "coopID"@en;
+    dc:description "An identifier for a person"@en;
+    rdf:type rdf:Property;
+    rdfs:subPropertyOf dc:identifier;
+    rdfs:domain foaf:Person;
+    rdfs:range xsd:string;
+    rdfs:isDefinedBy coopo:;
+    .
+
+coopo:Member
+    rdfs:label "Member"@en;
+    dc:description "A person with one or more memberships in a cooperative."@en;
+    dc:description "Et medlem i en eller flere samvirkelager."@no;
+    rdf:type rdfs:Class, owl:Class;
+    rdfs:subClassOf foaf:Person;
+    rdfs:isDefinedBy coopo:;
+    rdfs:subClassOf [ a owl:Restriction ;
+        owl:minCardinality 1;
+        owl:onProperty coopo:Member.hasMembership ];
+    .
+
+coopo:Member.hasMembership
+    rdfs:label "hasMembership"@en;
+    dc:description "A membership of the member"@en;
+    rdf:type rdf:Property;
+    owl:inverseOf coopo:Membership.hasOwner;
+    rdfs:subPropertyOf rdau:owner.en;
+    rdfs:domain coopo:Member;
+    rdfs:range coopo:Membership;
+    rdfs:isDefinedBy coopo:;
+    .
+
+coopo:Cooperative
+    rdfs:label "Cooperative"@en;
+    skos:altLabel "Samvirkelag"@no;
+    dc:description "An individual cooperative"@en;
+    rdf:type rdfs:Class, owl:Class;
+    rdfs:subClassOf org:Organization;
+    skos:altLabel "S-lag"@no;
+    rdfs:isDefinedBy coopo:;
+    .
+
+coopo:Membership
+    rdfs:label "Membership"@en;
+    dc:description "A membership in an individual cooperative"@en;
+    rdf:type rdfs:Class, owl:Class;
+    rdfs:subClassOf org:Membership;
+    rdfs:isDefinedBy coopo:;
+    rdfs:subClassOf
+        [ a owl:Restriction ;
+            owl:cardinality 1;
+            owl:onProperty coopo:Membership.hasOwner ],
+        [ a owl:Restriction ;
+            owl:cardinality 1;
+            owl:onProperty coopo:Membership.in ];
+    .
+
+coopo:memberID
+    rdfs:label "memberID"@en;
+    dc:description "The identifier of the membership"@en;
+    rdf:type rdf:Property;
+    rdfs:subPropertyOf dc:identifier;
+    rdfs:domain coopo:Membership;
+    rdfs:range xsd:string;
+    rdfs:isDefinedBy coopo:;
+    .
+
+coopo:Membership.hasOwner
+    rdfs:label "hasOwner"@en;
+    dc:description "The owner of the membership"@en;
+    rdf:type rdf:Property;
+    rdfs:domain coopo:Membership;
+    rdfs:range coopo:Member;
+    rdfs:subPropertyOf rdau:ownerOf.en;
+    owl:inverseOf coopo:Member.hasMembership;
+    rdfs:isDefinedBy coopo:;
+    .
+
+coopo:Membership.in
+    rdfs:label "in"@en;
+    rdfs:label "i"@no;
+    dc:description "The cooperative the person is a member in"@en;
+    dc:description "Samvirkelaget personen er medlem i"@no;
+    rdf:type rdf:Property;
+    rdfs:domain coopo:Membership;
+    rdfs:range coopo:Cooperative;
+    rdfs:subPropertyOf org:organization;
+    rdfs:isDefinedBy coopo:;
+    .
+
+
+coopo:Family
+    rdfs:label "Family"@en;
+    dc:description "A Coop family"@en;
+    rdf:type rdfs:Class, owl:Class;
+    rdfs:subClassOf foaf:Group;
+    rdfs:isDefinedBy coopo:;
+    rdfs:subClassOf [ a owl:Restriction ;
+        owl:cardinality 1;
+        owl:onProperty coopo:Family.hasOwner ];
+    .
+
+
+coopo:Family.hasMember
+    rdfs:label "hasMember"@en;
+    dc:description "A member of the Coop Family"@en;
+    rdf:type rdf:Property;
+    rdfs:domain coopo:Family;
+    rdfs:range coopo:FamilyMember;
+    rdfs:subPropertyOf foaf:member;
+    owl:inverseOf coopo:FamilyMember.memberOf;
+    rdfs:isDefinedBy coopo:;
+    .
+
+coopo:Family.hasOwner
+    rdfs:label "hasOwner"@en;
+    dc:description "The owner of the Coop Family"@en;
+    rdf:type rdf:Property;
+    rdfs:domain coopo:Family;
+    rdfs:range coopo:FamilyOwner;
+    rdfs:subPropertyOf rdau:ownerOf.en;
+    rdfs:subPropertyOf coopo:Family.hasMember;
+    owl:inverseOf coopo:FamilyOwner.hasFamily;
+    rdfs:isDefinedBy coopo:;
+    .
+
+
+coopo:FamilyMember
+    rdfs:label "Family Member"@en;
+    dc:description "A member of a Coop family."@en;
+    rdf:type rdfs:Class, owl:Class;
+    rdfs:subClassOf foaf:Person;
+    rdfs:isDefinedBy coopo:;
+    rdfs:subClassOf [ a owl:Restriction ;
+        owl:minCardinality 1;
+        owl:onProperty coopo:FamilyMember.memberOf ];
+    .
+
+coopo:FamilyMember.memberOf
+    rdfs:label "memberOf"@en;
+    dc:description "A family that this family member is a member of."@en;
+    rdf:type rdf:Property;
+    rdfs:domain coopo:FamilyMember;
+    rdfs:range coopo:Family;
+    owl:inverseOf coopo:Family.hasMember;
+    rdfs:isDefinedBy coopo:;
+    .
+
+coopo:FamilyOwner
+    rdfs:label "Family Owner"@en;
+    dc:description "The owner of a Coop family."@en;
+    rdf:type rdfs:Class, owl:Class;
+    rdfs:subClassOf coopo:FamilyMember;
+    rdfs:subClassOf coopo:Member;
+    rdfs:isDefinedBy coopo:;
+    rdfs:subClassOf [ a owl:Restriction ;
+        owl:cardinality 1;
+        owl:onProperty coopo:FamilyOwner.hasFamily ];
+    .
+
+coopo:FamilyOwner.hasFamily
+    rdfs:label "hasFamily"@en;
+    dc:description "The family that the owner owns."@en;
+    rdf:type rdf:Property;
+    owl:inverseOf coopo:Family.hasOwner;
+    rdfs:subPropertyOf rdau:owner.en;
+    rdfs:subPropertyOf coopo:FamilyMember.memberOf;
+    rdfs:domain coopo:FamilyOwner;
+    rdfs:range coopo:Family;
+    rdfs:isDefinedBy coopo:;
+    .

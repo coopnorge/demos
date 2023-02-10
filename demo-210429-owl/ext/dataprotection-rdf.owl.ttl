@@ -1,0 +1,1376 @@
+@prefix : <http://www.w3.org/2002/07/owl#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/TR/skos-reference#> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+dc:contributor rdfs:label "Contributor"@en ;
+    terms:description "Examples of a Contributor include a person, an organization, or a service. Typically, the name of a Contributor should be used to indicate the entity."@en ;
+    terms:hasVersion <http://dublincore.org/usage/terms/history/#contributor-006> ;
+    terms:issued "1999-07-02"^^xsd:date ;
+    terms:modified "2008-01-14"^^xsd:date ;
+    rdfs:comment "An entity responsible for making contributions to the resource."@en ;
+    rdfs:isDefinedBy dc: ;
+    skos:note "A second property with the same name as this property has been declared in the dcterms: namespace (http://purl.org/dc/terms/).  See the Introduction to the document \"DCMI Metadata Terms\" (http://dublincore.org/documents/dcmi-terms/) for an explanation."@en .
+
+dc:coverage rdfs:label "Coverage"@en ;
+    terms:description "Spatial topic and spatial applicability may be a named place or a location specified by its geographic coordinates. Temporal topic may be a named period, date, or date range. A jurisdiction may be a named administrative entity or a geographic place to which the resource applies. Recommended best practice is to use a controlled vocabulary such as the Thesaurus of Geographic Names [TGN]. Where appropriate, named places or time periods can be used in preference to numeric identifiers such as sets of coordinates or date ranges."@en ;
+    terms:hasVersion <http://dublincore.org/usage/terms/history/#coverage-006> ;
+    terms:issued "1999-07-02"^^xsd:date ;
+    terms:modified "2008-01-14"^^xsd:date ;
+    rdfs:comment "The spatial or temporal topic of the resource, the spatial applicability of the resource, or the jurisdiction under which the resource is relevant."@en ;
+    rdfs:isDefinedBy dc: ;
+    skos:note "A second property with the same name as this property has been declared in the dcterms: namespace (http://purl.org/dc/terms/).  See the Introduction to the document \"DCMI Metadata Terms\" (http://dublincore.org/documents/dcmi-terms/) for an explanation."@en .
+
+dc:creator rdfs:label "Creator"@en ;
+    terms:description "Examples of a Creator include a person, an organization, or a service. Typically, the name of a Creator should be used to indicate the entity."@en ;
+    terms:hasVersion <http://dublincore.org/usage/terms/history/#creator-006> ;
+    terms:issued "1999-07-02"^^xsd:date ;
+    terms:modified "2008-01-14"^^xsd:date ;
+    rdfs:comment "An entity primarily responsible for making the resource."@en ;
+    rdfs:isDefinedBy dc: ;
+    skos:note "A second property with the same name as this property has been declared in the dcterms: namespace (http://purl.org/dc/terms/).  See the Introduction to the document \"DCMI Metadata Terms\" (http://dublincore.org/documents/dcmi-terms/) for an explanation."@en .
+
+dc:date rdfs:label "Date"@en ;
+    terms:description "Date may be used to express temporal information at any level of granularity.  Recommended best practice is to use an encoding scheme, such as the W3CDTF profile of ISO 8601 [W3CDTF]."@en ;
+    terms:hasVersion <http://dublincore.org/usage/terms/history/#date-006> ;
+    terms:issued "1999-07-02"^^xsd:date ;
+    terms:modified "2008-01-14"^^xsd:date ;
+    rdfs:comment "A point or period of time associated with an event in the lifecycle of the resource."@en ;
+    rdfs:isDefinedBy dc: ;
+    skos:note "A second property with the same name as this property has been declared in the dcterms: namespace (http://purl.org/dc/terms/).  See the Introduction to the document \"DCMI Metadata Terms\" (http://dublincore.org/documents/dcmi-terms/) for an explanation."@en .
+
+dc:description rdfs:label "Description"@en ;
+    terms:description "Description may include but is not limited to: an abstract, a table of contents, a graphical representation, or a free-text account of the resource."@en ;
+    terms:hasVersion <http://dublincore.org/usage/terms/history/#description-006> ;
+    terms:issued "1999-07-02"^^xsd:date ;
+    terms:modified "2008-01-14"^^xsd:date ;
+    rdfs:comment "An account of the resource."@en ;
+    rdfs:isDefinedBy dc: ;
+    skos:note "A second property with the same name as this property has been declared in the dcterms: namespace (http://purl.org/dc/terms/).  See the Introduction to the document \"DCMI Metadata Terms\" (http://dublincore.org/documents/dcmi-terms/) for an explanation."@en .
+
+dc:format rdfs:label "Format"@en ;
+    terms:description "Examples of dimensions include size and duration. Recommended best practice is to use a controlled vocabulary such as the list of Internet Media Types [MIME]."@en ;
+    terms:hasVersion <http://dublincore.org/usage/terms/history/#format-007> ;
+    terms:issued "1999-07-02"^^xsd:date ;
+    terms:modified "2008-01-14"^^xsd:date ;
+    rdfs:comment "The file format, physical medium, or dimensions of the resource."@en ;
+    rdfs:isDefinedBy dc: ;
+    skos:note "A second property with the same name as this property has been declared in the dcterms: namespace (http://purl.org/dc/terms/).  See the Introduction to the document \"DCMI Metadata Terms\" (http://dublincore.org/documents/dcmi-terms/) for an explanation."@en .
+
+dc:identifier rdfs:label "Identifier"@en ;
+    terms:description "Recommended best practice is to identify the resource by means of a string conforming to a formal identification system. "@en ;
+    terms:hasVersion <http://dublincore.org/usage/terms/history/#identifier-006> ;
+    terms:issued "1999-07-02"^^xsd:date ;
+    terms:modified "2008-01-14"^^xsd:date ;
+    rdfs:comment "An unambiguous reference to the resource within a given context."@en ;
+    rdfs:isDefinedBy dc: ;
+    skos:note "A second property with the same name as this property has been declared in the dcterms: namespace (http://purl.org/dc/terms/).  See the Introduction to the document \"DCMI Metadata Terms\" (http://dublincore.org/documents/dcmi-terms/) for an explanation."@en .
+
+dc:language rdfs:label "Language"@en ;
+    terms:description "Recommended best practice is to use a controlled vocabulary such as RFC 4646 [RFC4646]."@en ;
+    terms:hasVersion <http://dublincore.org/usage/terms/history/#language-007> ;
+    terms:issued "1999-07-02"^^xsd:date ;
+    terms:modified "2008-01-14"^^xsd:date ;
+    rdfs:comment "A language of the resource."@en ;
+    rdfs:isDefinedBy dc: ;
+    rdfs:seeAlso <http://www.ietf.org/rfc/rfc4646.txt> ;
+    skos:note "A second property with the same name as this property has been declared in the dcterms: namespace (http://purl.org/dc/terms/).  See the Introduction to the document \"DCMI Metadata Terms\" (http://dublincore.org/documents/dcmi-terms/) for an explanation."@en .
+
+dc:publisher rdfs:label "Publisher"@en ;
+    terms:description "Examples of a Publisher include a person, an organization, or a service. Typically, the name of a Publisher should be used to indicate the entity."@en ;
+    terms:hasVersion <http://dublincore.org/usage/terms/history/#publisher-006> ;
+    terms:issued "1999-07-02"^^xsd:date ;
+    terms:modified "2008-01-14"^^xsd:date ;
+    rdfs:comment "An entity responsible for making the resource available."@en ;
+    rdfs:isDefinedBy dc: ;
+    skos:note "A second property with the same name as this property has been declared in the dcterms: namespace (http://purl.org/dc/terms/).  See the Introduction to the document \"DCMI Metadata Terms\" (http://dublincore.org/documents/dcmi-terms/) for an explanation."@en .
+
+dc:relation rdfs:label "Relation"@en ;
+    terms:description "Recommended best practice is to identify the related resource by means of a string conforming to a formal identification system. "@en ;
+    terms:hasVersion <http://dublincore.org/usage/terms/history/#relation-006> ;
+    terms:issued "1999-07-02"^^xsd:date ;
+    terms:modified "2008-01-14"^^xsd:date ;
+    rdfs:comment "A related resource."@en ;
+    rdfs:isDefinedBy dc: ;
+    skos:note "A second property with the same name as this property has been declared in the dcterms: namespace (http://purl.org/dc/terms/).  See the Introduction to the document \"DCMI Metadata Terms\" (http://dublincore.org/documents/dcmi-terms/) for an explanation."@en .
+
+dc:rights a :AnnotationProperty ;
+    rdfs:label "Rights"@en ;
+    terms:description "Typically, rights information includes a statement about various property rights associated with the resource, including intellectual property rights."@en ;
+    terms:hasVersion <http://dublincore.org/usage/terms/history/#rights-006> ;
+    terms:issued "1999-07-02"^^xsd:date ;
+    terms:modified "2008-01-14"^^xsd:date ;
+    rdfs:comment "Information about rights held in and over the resource."@en ;
+    rdfs:isDefinedBy dc: ;
+    skos:note "A second property with the same name as this property has been declared in the dcterms: namespace (http://purl.org/dc/terms/).  See the Introduction to the document \"DCMI Metadata Terms\" (http://dublincore.org/documents/dcmi-terms/) for an explanation."@en .
+
+dc:source rdfs:label "Source"@en ;
+    terms:description "The described resource may be derived from the related resource in whole or in part. Recommended best practice is to identify the related resource by means of a string conforming to a formal identification system."@en ;
+    terms:hasVersion <http://dublincore.org/usage/terms/history/#source-006> ;
+    terms:issued "1999-07-02"^^xsd:date ;
+    terms:modified "2008-01-14"^^xsd:date ;
+    rdfs:comment "A related resource from which the described resource is derived."@en ;
+    rdfs:isDefinedBy dc: ;
+    skos:note "A second property with the same name as this property has been declared in the dcterms: namespace (http://purl.org/dc/terms/).  See the Introduction to the document \"DCMI Metadata Terms\" (http://dublincore.org/documents/dcmi-terms/) for an explanation."@en .
+
+dc:subject rdfs:label "Subject"@en ;
+    terms:description "Typically, the subject will be represented using keywords, key phrases, or classification codes. Recommended best practice is to use a controlled vocabulary."@en ;
+    terms:hasVersion <http://dublincore.org/usage/terms/history/#subject-007> ;
+    terms:issued "1999-07-02"^^xsd:date ;
+    terms:modified "2012-06-14"^^xsd:date ;
+    rdfs:comment "The topic of the resource."@en ;
+    rdfs:isDefinedBy dc: ;
+    skos:note "A second property with the same name as this property has been declared in the dcterms: namespace (http://purl.org/dc/terms/).  See the Introduction to the document \"DCMI Metadata Terms\" (http://dublincore.org/documents/dcmi-terms/) for an explanation."@en .
+
+dc:title rdfs:label "Title"@en ;
+    terms:hasVersion <http://dublincore.org/usage/terms/history/#title-006> ;
+    terms:issued "1999-07-02"^^xsd:date ;
+    terms:modified "2008-01-14"^^xsd:date ;
+    rdfs:comment "A name given to the resource."@en ;
+    rdfs:isDefinedBy dc: ;
+    skos:note "A second property with the same name as this property has been declared in the dcterms: namespace (http://purl.org/dc/terms/).  See the Introduction to the document \"DCMI Metadata Terms\" (http://dublincore.org/documents/dcmi-terms/) for an explanation."@en .
+
+dc:type rdfs:label "Type"@en ;
+    terms:description "Recommended best practice is to use a controlled vocabulary such as the DCMI Type Vocabulary [DCMITYPE]. To describe the file format, physical medium, or dimensions of the resource, use the Format element."@en ;
+    terms:hasVersion <http://dublincore.org/usage/terms/history/#type-006> ;
+    terms:issued "1999-07-02"^^xsd:date ;
+    terms:modified "2008-01-14"^^xsd:date ;
+    rdfs:comment "The nature or genre of the resource."@en ;
+    rdfs:isDefinedBy dc: ;
+    skos:note "A second property with the same name as this property has been declared in the dcterms: namespace (http://purl.org/dc/terms/).  See the Introduction to the document \"DCMI Metadata Terms\" (http://dublincore.org/documents/dcmi-terms/) for an explanation."@en .
+
+terms:OWLAnnotationPropertyImpl_094d13a0_a651_46ab_b8a7_47dcb7dfa1bf rdfs:label "title"@en .
+
+terms:OWLAnnotationPropertyImpl_21550cd8_2fc0_4dfb_b77d_ff4ba1e9429d rdfs:label "hasVersion"@en .
+
+terms:OWLAnnotationPropertyImpl_242990ac_580d_4bd6_a814_1d136830b4e3 rdfs:label "title"@en .
+
+terms:OWLAnnotationPropertyImpl_417511b0_2394_41dd_a770_4bbd6d5b9d58 rdfs:label "publisher"@en .
+
+terms:OWLAnnotationPropertyImpl_5e0543e5_f52b_4e59_bc14_3abe0452b009 rdfs:label "publisher"@en .
+
+terms:OWLAnnotationPropertyImpl_6484f224_f4f8_4a07_a482_826fe83cbd44 rdfs:label "hasVersion"@en .
+
+terms:OWLAnnotationPropertyImpl_76987ca1_c69f_4650_88b1_b285af3b2c38 rdfs:label "modified"@en .
+
+terms:OWLAnnotationPropertyImpl_87e29aff_89c9_4baa_91fc_88d476659b44 rdfs:label "issued"@en .
+
+terms:OWLAnnotationPropertyImpl_acd6846e_699d_4935_8f24_a67c94c61ee2 rdfs:label "description"@en .
+
+terms:OWLAnnotationPropertyImpl_d9c73075_acd8_4732_bff4_91367fea6a54 rdfs:label "modified"@en .
+
+terms:OWLAnnotationPropertyImpl_f7bc73c6_9706_48d7_b53b_bc253d6d58b1 rdfs:label "description"@en .
+
+terms:OWLAnnotationPropertyImpl_f8098115_1cfa_4ef6_836a_aafff9252f73 rdfs:label "issued"@en .
+
+terms:description a :AnnotationProperty .
+
+terms:hasVersion a :AnnotationProperty .
+
+terms:issued a :AnnotationProperty .
+
+terms:modified a :AnnotationProperty .
+
+terms:publisher a :AnnotationProperty .
+
+terms:title a :AnnotationProperty .
+
+<http://www.uni.lu/dataprotection> a :Ontology ;
+    dc:rights "This work is distributed under a Creative Commons Attribution License (http://creativecommons.org/licenses/by/3.0/)." .
+
+<http://www.uni.lu/dataprotection#OWLClass_059044e8_58f0_4cd8_8014_8c5babe12c7d> a :Class ;
+    rdfs:label "Profiling"@en ;
+    rdfs:comment """Article 20.1
+
+Automated processing intended to evaluate certain personal aspects relating to this natural person or to analyse or predict in particular the natural person's performance at work, economic situation, location, health, personal preferences, reliability or behaviour."""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_f9140510_7d3e_441d_a8cf_a67da4fb19c4> .
+
+<http://www.uni.lu/dataprotection#OWLClass_1d2f3df4_e138_45ec_8434_0705d94b1c18> a :Class ;
+    rdfs:label "Erasure"@en ;
+    rdfs:comment "The request to obtain from the controller the erasure of personal data relating to them and the abstention from further dissemination of such data."@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClassImpl_58cf8e1b_e912_4f83_bdbe_0214e093bd4c> ;
+    :equivalentClass [ a :Restriction ;
+            :onProperty <http://www.uni.lu/dataprotection#OWLObjectPropertyImpl_9d75d818_a66f_4e92_8400_6990cb686671> ;
+            :someValuesFrom <http://www.uni.lu/dataprotection#OWLClass_48029399_9b67_4460_9eec_db9c7f55752c> ],
+        [ a :Restriction ;
+            :onProperty <http://www.uni.lu/dataprotection#OWLObjectPropertyImpl_9679a244_6762_4da7_9aaa_c89f96e6f22c> ;
+            :someValuesFrom <http://www.uni.lu/dataprotection#OWLClass_931c3eee_c583_4adb_9af9_e0891ea43f2b> ],
+        [ a :Restriction ;
+            :onProperty <http://www.uni.lu/dataprotection#OWLObjectPropertyImpl_9d75d818_a66f_4e92_8400_6990cb686671> ;
+            :someValuesFrom <http://www.uni.lu/dataprotection#OWLClass_b841fd2e_162d_4f1a_8c2c_05dc948e63a0> ] .
+
+<http://www.uni.lu/dataprotection#OWLClass_21b029c0_43d8_4ee4_aa3f_c8b91b33974f> a :Class ;
+    rdfs:label "Relevancy"@en ;
+    rdfs:comment """DPH s. 3.3.1
+
+Only such data shall be processed as are "adequate, relevant and not excessive in relation to the purpose for which they are collected and/or further processed". The categories of data chosen for processing must be necessary in order to achieve the declared overall aim of the processing operations, and a controller should strictly limit collection of data to such information as is directly relevant for the specific purpose pursued by the processing."""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_38c37e49_92a4_4bbc_9780_9eed89158298>,
+        <http://www.uni.lu/dataprotection#OWLClass_b841fd2e_162d_4f1a_8c2c_05dc948e63a0> .
+
+<http://www.uni.lu/dataprotection#OWLClass_25b9b478_c602_4073_a790_6374ba384b42> a :Class ;
+    rdfs:label "ProcessingScope"@en ;
+    rdfs:comment """The actual reason for which the processing is performed. The processing is lawful if one of the lawfulness conditions apply. The lawfulness conditions have a twofold meaning:
+- they represent the legal grounds that make the processing lawful. This is an application of the lawfulness principle;
+- they define the boundaries within which the processing is allowed. This is an application of the principle of purpose limitation.
+
+The combination of these two facets makes up the processing scope."""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_b491c951_2363_4eab_a32f_0fc922d48adc>,
+        <http://www.uni.lu/dataprotection#OWLClass_ba7850fa_6664_4b14_91d4_b8307ae8481d> .
+
+<http://www.uni.lu/dataprotection#OWLClass_27535d61_8d2c_4e2c_96bd_cabd05c9149a> a :Class ;
+    rdfs:label "Representative"@en ;
+    rdfs:comment """Article 4(14)
+
+Any natural or legal person established in the Union who, explicitly designated by the controller, acts and may be addressed by any supervisory authority and other bodies in the Union instead of the controller, with regard to the obligations of the controller under this Regulation."""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_99a373a5_bae0_4769_a675_7bf1a8467f00> .
+
+<http://www.uni.lu/dataprotection#OWLClass_28125d88_ca58_40fb_bedf_8b05cc85a4ec> a :Class ;
+    rdfs:label "OrganisationalMeasures"@en ;
+    rdfs:comment "Security measures that concern the organization of the controller or processor, including the division of roles and limited access rights."@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_37cc24cc_e8cc_4ac2_8594_7aa5cc97f129> .
+
+<http://www.uni.lu/dataprotection#OWLClass_411a42e7_c0a2_483e_b2ce_ebc85160fe33> a :Class ;
+    rdfs:label "TechnicalMeasures"@en ;
+    rdfs:comment "Security measures introduced in the technical infrastructure of the controller or processor, such as secure protocols, access control systems or encryption."@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_37cc24cc_e8cc_4ac2_8594_7aa5cc97f129> .
+
+<http://www.uni.lu/dataprotection#OWLClass_49185c12_e790_4177_ba61_944b1fc3b8ce> a :Class ;
+    rdfs:label "Certification"@en ;
+    rdfs:comment """Article 39.1
+
+The Member States and the Commission shall encourage, in particular at European level, the establishment of data protection certification mechanisms and of data protection seals and marks, allowing data subjects to quickly assess the level of data protection provided by controllers and processors. The data protection certifications mechanisms shall contribute to the proper application of this Regulation, taking account of the specific features of the various sectors and different processing operations."""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_15f536e2_2946_4aca_b996_2615e37e729a> .
+
+<http://www.uni.lu/dataprotection#OWLClass_52a03e03_fa27_4f76_8af1_059dd1af4f90> a :Class ;
+    rdfs:label "PrivacyByDesign"@en ;
+    rdfs:comment """Article 23.1
+
+Having regard to the state of the art and the cost of implementation, the controller shall, both at the time of the determination of the means for processing and at the time of the processing itself, implement appropriate technical and organisational measures and procedures in such a way that the processing will meet the requirements of this Regulation and ensure the protection of the rights of the data subject."""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_15f536e2_2946_4aca_b996_2615e37e729a>,
+        <http://www.uni.lu/dataprotection#OWLClass_31ba96e6_a8e7_4d61_9af2_25280e70bb8f> .
+
+<http://www.uni.lu/dataprotection#OWLClass_583cd6c2_76ad_4b1c_b11b_60373af28e5b> a :Class ;
+    rdfs:label "CodeOfConduct"@en ;
+    rdfs:comment """Article 38.1
+
+The Member States, the supervisory authorities and the Commission shall encourage the drawing up of codes of conduct intended to contribute to the proper application of this Regulation, taking account of the specific features of the various data processing sectors, in particular in relation to:
+(a) fair and transparent data processing;
+(b) the collection of data;
+(c) the information of the public and of data subjects;
+(d) requests of data subjects in exercise of their rights;
+(e) information and protection of children;
+(f) transfer of data to third countries or international organisations;
+(g) mechanisms for monitoring and ensuring compliance with the code by the controllers adherent to it;
+(h) out-of-court proceedings and other dispute resolution procedures for resolving disputes between controllers and data subjects with respect to the processing of personal data, without prejudice to the rights of the data subjects pursuant to Articles 73 and 75."""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_59851879_88be_4cf3_bd27_3b185fc2046a> .
+
+<http://www.uni.lu/dataprotection#OWLClass_75dd7417_421b_47d5_b6cd_daf3b328ca3b> a :Class ;
+    rdfs:label "ManualProcessing"@en ;
+    rdfs:comment "Processing that requires human activity."@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_847950cb_b447_4f15_bb85_ed45f878d760> ;
+    :disjointWith <http://www.uni.lu/dataprotection#OWLClass_f9140510_7d3e_441d_a8cf_a67da4fb19c4> .
+
+<http://www.uni.lu/dataprotection#OWLClass_771335d1_185e_465d_b779_165e6f384353> a :Class ;
+    rdfs:label "PrivacyByDefault"@en ;
+    rdfs:comment """Article 23.2
+
+The controller shall implement mechanisms for ensuring that, by default, only those personal data are processed which are necessary for each specific purpose of the processing and are especially not collected or retained beyond the minimum necessary for those purposes, both in terms of the amount of the data and the time of their storage. In particular, those mechanisms shall ensure that by default personal data are not made accessible to an indefinite number of individuals."""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_31ba96e6_a8e7_4d61_9af2_25280e70bb8f> .
+
+<http://www.uni.lu/dataprotection#OWLClass_d6d8fedc_ca29_4852_bc9d_fe4abf2707e0> a :Class ;
+    rdfs:label "Rectification"@en ;
+    rdfs:comment "The request to obtain from the controller the rectification of personal data relating to them which are inaccurate."@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClassImpl_58cf8e1b_e912_4f83_bdbe_0214e093bd4c> ;
+    :equivalentClass [ a :Restriction ;
+            :onProperty <http://www.uni.lu/dataprotection#OWLObjectPropertyImpl_9d75d818_a66f_4e92_8400_6990cb686671> ;
+            :someValuesFrom <http://www.uni.lu/dataprotection#OWLClass_fdf49ad5_3967_4c7f_b6dc_e8de56c976b2> ],
+        [ a :Restriction ;
+            :onProperty <http://www.uni.lu/dataprotection#OWLObjectPropertyImpl_9679a244_6762_4da7_9aaa_c89f96e6f22c> ;
+            :someValuesFrom <http://www.uni.lu/dataprotection#OWLClass_43574c52_adab_4ef9_807a_68f850c65a04> ] .
+
+<http://www.uni.lu/dataprotection#OWLClass_efdc2be7_211a_4933_bdef_2fed334f2858> a :Class ;
+    rdfs:label "BreachNotification"@en ;
+    rdfs:comment """Article 31.1
+
+In the case of a personal data breach, the controller shall without undue delay and, where feasible, not later than 24 hours after having become aware of it, notify the personal data breach to the supervisory authority. The notification to the supervisory authority shall be accompanied by a reasoned justification in cases where it is not made within 24 hours.
+
+Article 32.1
+
+When the personal data breach is likely to adversely affect the protection of the personal data or privacy of the data subject, the controller shall, after the notification referred to in Article 31, communicate the personal data breach to the data subject without undue delay."""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_31ba96e6_a8e7_4d61_9af2_25280e70bb8f> .
+
+<http://www.uni.lu/dataprotection#OWLDataProperty_4644d2f7_3262_4cc1_84ff_06605a549316> a :DatatypeProperty ;
+    rdfs:label "dataName"@en ;
+    rdfs:domain <http://www.uni.lu/dataprotection#OWLClass_ed8bdd2f_f171_49c2_9386_576fe410d791> ;
+    rdfs:range xsd:string .
+
+<http://www.uni.lu/dataprotection#OWLDataProperty_6fb5e412_2c48_4308_94b9_2b02c71b8004> a :DatatypeProperty ;
+    rdfs:label "dataSubjectId"@en ;
+    rdfs:domain <http://www.uni.lu/dataprotection#OWLClass_be0e1d3c_0330_4bd1_994f_919bb4962315> ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf :topDataProperty .
+
+<http://www.uni.lu/dataprotection#OWLNamedIndividual_3b3179d7_ab20_45eb_842b_39318f5149a1> a :NamedIndividual ;
+    rdfs:label "EUTransfer"@en .
+
+<http://www.uni.lu/dataprotection#OWLNamedIndividual_6ae3b678_a2b2_4193_8f9a_2ccf21a4c8a4> a :NamedIndividual ;
+    rdfs:label "EURecipient"@en .
+
+<http://www.uni.lu/dataprotection#OWLNamedIndividual_8c8d297c_3ff0_46f8_a478_d30c921d18b7> a :NamedIndividual ;
+    rdfs:label "NonEURecipient"@en .
+
+<http://www.uni.lu/dataprotection#OWLNamedIndividual_9acbc5cb_d89e_4fff_8f42_8992774fd62e> a :NamedIndividual ;
+    rdfs:label "NonEUTransfer"@en .
+
+<http://www.uni.lu/dataprotection#OWLNamedIndividual_f7d3f3e2_c07d_4ef0_a56b_a99a5af25e6b> a <http://www.uni.lu/dataprotection#OWLClass_f234596c_9040_4f87_bd51_49ec017fd3d5>,
+        :NamedIndividual ;
+    rdfs:label "BiometricData"@en .
+
+<http://www.uni.lu/dataprotection#OWLObjectPropertyImpl_4bf9eaca_1040_4861_8e69_2eb6cfe40e83> a :ObjectProperty ;
+    rdfs:label "supervises"@en ;
+    rdfs:domain <http://www.uni.lu/dataprotection#OWLClass_dd11ad3d_8e96_4fd6_9646_b1fa4799b296> ;
+    rdfs:range <http://www.uni.lu/dataprotection#OWLClass_413e4c1b_7d3b_4fc1_98c0_b782b533aae8> .
+
+<http://www.uni.lu/dataprotection#OWLObjectPropertyImpl_95cdd11f_2c25_48df_9f74_ca2878b7eac4> a :ObjectProperty ;
+    rdfs:label "performProcessing"@en ;
+    rdfs:domain <http://www.uni.lu/dataprotection#OWLClass_3c5113eb_0923_4946_86cf_f5a83de7f9bb> ;
+    rdfs:range <http://www.uni.lu/dataprotection#OWLClass_080c5ed8_aa3c_4bfd_af54_dc6e2a546d8b> ;
+    :inverseOf <http://www.uni.lu/dataprotection#OWLObjectProperty_5d457280_4325_44df_8083_ad7b53c0dfca> .
+
+<http://www.uni.lu/dataprotection#OWLObjectProperty_1001ed7a_4f36_4975_8879_de174ef82e70> a :InverseFunctionalProperty,
+        :ObjectProperty ;
+    rdfs:label "mustProvide"@en ;
+    rdfs:domain <http://www.uni.lu/dataprotection#OWLClass_413e4c1b_7d3b_4fc1_98c0_b782b533aae8> ;
+    rdfs:range <http://www.uni.lu/dataprotection#OWLClass_4a286d0b_f129_4976_be2b_9c7ab71beb24> .
+
+<http://www.uni.lu/dataprotection#OWLObjectProperty_16ef80bb_336f_4678_b647_aa3ce5c02e49> a :ObjectProperty ;
+    rdfs:label "appoints"@en ;
+    rdfs:domain <http://www.uni.lu/dataprotection#OWLClass_413e4c1b_7d3b_4fc1_98c0_b782b533aae8> ;
+    rdfs:range <http://www.uni.lu/dataprotection#OWLClass_b3ce5053_8b0c_41d5_81ba_36f3ccbd5642> .
+
+<http://www.uni.lu/dataprotection#OWLObjectProperty_217a5aab_f37f_4e80_868a_6d8b6f059fa4> a :InverseFunctionalProperty,
+        :ObjectProperty ;
+    rdfs:label "hasPersonalData"@en ;
+    rdfs:domain <http://www.uni.lu/dataprotection#OWLClass_be0e1d3c_0330_4bd1_994f_919bb4962315> ;
+    rdfs:range <http://www.uni.lu/dataprotection#OWLClass_ed8bdd2f_f171_49c2_9386_576fe410d791> ;
+    :inverseOf <http://www.uni.lu/dataprotection#OWLObjectProperty_e9b85247_b390_4b60_9d03_627a9bcc0a7f> .
+
+<http://www.uni.lu/dataprotection#OWLObjectProperty_33c92211_3b91_4b7c_8cfd_9165c3d7629c> a :InverseFunctionalProperty,
+        :ObjectProperty ;
+    rdfs:label "issueFine"@en ;
+    rdfs:domain <http://www.uni.lu/dataprotection#OWLClass_dd11ad3d_8e96_4fd6_9646_b1fa4799b296> ;
+    rdfs:range [ a :Class ;
+            :unionOf ( [ a :Class ;
+                        :intersectionOf ( <http://www.uni.lu/dataprotection#OWLClass_eba91113_47e1_4806_8b83_bd8ba94c2002> [ a :Class ;
+                                    :complementOf <http://www.uni.lu/dataprotection#OWLClass_336f5c83_c4cc_4889_8cbc_2c07562155a2> ] ) ] [ a :Class ;
+                        :complementOf [ a :Restriction ;
+                                :onProperty <http://www.uni.lu/dataprotection#OWLObjectProperty_570763f7_9a02_4787_bf15_dea159241d52> ;
+                                :someValuesFrom <http://www.uni.lu/dataprotection#OWLClass_59851879_88be_4cf3_bd27_3b185fc2046a> ] ] ) ] .
+
+<http://www.uni.lu/dataprotection#OWLObjectProperty_4ae39feb_b852_4059_b66a_758628b01402> a :ObjectProperty ;
+    rdfs:label "transferContent"@en ;
+    rdfs:domain <http://www.uni.lu/dataprotection#OWLClass_eba91113_47e1_4806_8b83_bd8ba94c2002> ;
+    rdfs:range <http://www.uni.lu/dataprotection#OWLClass_ed8bdd2f_f171_49c2_9386_576fe410d791> .
+
+<http://www.uni.lu/dataprotection#OWLObjectProperty_6076aa11_7396_4b3b_815b_b83cab7df069> a :InverseFunctionalProperty,
+        :ObjectProperty ;
+    rdfs:label "hasObligation"@en ;
+    rdfs:domain <http://www.uni.lu/dataprotection#OWLClass_413e4c1b_7d3b_4fc1_98c0_b782b533aae8> ;
+    rdfs:range <http://www.uni.lu/dataprotection#OWLClass_e7e707fc_dc05_4f59_973d_771a0e393117> .
+
+<http://www.uni.lu/dataprotection#OWLObjectProperty_72c09d42_4524_4808_95c4_0c9f280e3f98> a :FunctionalProperty,
+        :ObjectProperty ;
+    rdfs:label "usesProcessingMode"@en ;
+    rdfs:domain <http://www.uni.lu/dataprotection#OWLClass_080c5ed8_aa3c_4bfd_af54_dc6e2a546d8b> ;
+    rdfs:range <http://www.uni.lu/dataprotection#OWLClass_847950cb_b447_4f15_bb85_ed45f878d760> .
+
+<http://www.uni.lu/dataprotection#OWLObjectProperty_7ac248aa_2d24_4e6a_912a_6f9519c698c1> a :ObjectProperty ;
+    rdfs:label "hasParent"@en ;
+    rdfs:domain <http://www.uni.lu/dataprotection#OWLClass_801beed0_2387_4a31_a5f1_6636c3558cb7> ;
+    rdfs:range <http://www.uni.lu/dataprotection#OWLClass_91a1bac2_859c_446e_86c7_0f32f12470ac> .
+
+<http://www.uni.lu/dataprotection#OWLObjectProperty_86608510_836e_4b41_a785_adb447d6ddd0> a :ObjectProperty ;
+    rdfs:label "cooperateWith"@en ;
+    rdfs:domain <http://www.uni.lu/dataprotection#OWLClass_3c5113eb_0923_4946_86cf_f5a83de7f9bb>,
+        <http://www.uni.lu/dataprotection#OWLClass_413e4c1b_7d3b_4fc1_98c0_b782b533aae8> ;
+    rdfs:range <http://www.uni.lu/dataprotection#OWLClass_dd11ad3d_8e96_4fd6_9646_b1fa4799b296> .
+
+<http://www.uni.lu/dataprotection#OWLObjectProperty_8c1f0a3c_b12c_4025_9307_7de3b0086671> a :ObjectProperty ;
+    rdfs:label "dataWasBreached"@en ;
+    rdfs:domain <http://www.uni.lu/dataprotection#OWLClass_ed8bdd2f_f171_49c2_9386_576fe410d791> ;
+    rdfs:range <http://www.uni.lu/dataprotection#OWLClass_c544c98a_ea80_4638_94c2_47fe7985c5b9> .
+
+<http://www.uni.lu/dataprotection#OWLObjectProperty_9886111f_f601_4189_81bd_41bc65f13d4c> a :InverseFunctionalProperty,
+        :ObjectProperty ;
+    rdfs:label "hasVitalInterest"@en ;
+    rdfs:domain <http://www.uni.lu/dataprotection#OWLClass_be0e1d3c_0330_4bd1_994f_919bb4962315> ;
+    rdfs:range <http://www.uni.lu/dataprotection#OWLClass_0b2f9b8c_8e60_4b1a_9471_9ce55bf73ae4> .
+
+<http://www.uni.lu/dataprotection#OWLObjectProperty_a13cf5b7_2210_434a_9dd1_fc46e2f85f5c> a :InverseFunctionalProperty,
+        :ObjectProperty ;
+    rdfs:label "hasGrantedConsent"@en ;
+    rdfs:domain <http://www.uni.lu/dataprotection#OWLClass_be0e1d3c_0330_4bd1_994f_919bb4962315> ;
+    rdfs:range <http://www.uni.lu/dataprotection#OWLClass_a2ccd29b_a341_4659_919a_977a6a81d4d1> ;
+    :inverseOf <http://www.uni.lu/dataprotection#OWLObjectProperty_d6b379ea_fc70_4e52_8990_4b2579886200> .
+
+<http://www.uni.lu/dataprotection#OWLObjectProperty_b4a56142_242b_44f5_80de_209a573b750e> a :InverseFunctionalProperty,
+        :ObjectProperty ;
+    rdfs:label "hasLegitimateInterest"@en ;
+    rdfs:domain <http://www.uni.lu/dataprotection#OWLClass_413e4c1b_7d3b_4fc1_98c0_b782b533aae8> ;
+    rdfs:range <http://www.uni.lu/dataprotection#OWLClass_a42fde83_5051_4cc3_b86c_b1981b6b6500> .
+
+<http://www.uni.lu/dataprotection#OWLObjectProperty_b8c0f954_156f_427f_80e3_0cd915a259e3> a :FunctionalProperty,
+        :ObjectProperty ;
+    rdfs:label "processOnBehalfOf"@en ;
+    rdfs:domain <http://www.uni.lu/dataprotection#OWLClass_3c5113eb_0923_4946_86cf_f5a83de7f9bb> ;
+    rdfs:range <http://www.uni.lu/dataprotection#OWLClass_413e4c1b_7d3b_4fc1_98c0_b782b533aae8> .
+
+<http://www.uni.lu/dataprotection#OWLObjectProperty_c898c3d2_b288_427c_a535_32052cc6978e> a :InverseFunctionalProperty,
+        :ObjectProperty ;
+    rdfs:label "notifyBreach"@en ;
+    rdfs:domain <http://www.uni.lu/dataprotection#OWLClass_413e4c1b_7d3b_4fc1_98c0_b782b533aae8> ;
+    rdfs:range <http://www.uni.lu/dataprotection#OWLClass_c544c98a_ea80_4638_94c2_47fe7985c5b9> .
+
+<http://www.uni.lu/dataprotection#OWLObjectProperty_e4459726_050d_4ba9_a9e7_56bff2354021> a :ObjectProperty ;
+    rdfs:label "breachNotifiedTo"@en ;
+    rdfs:domain <http://www.uni.lu/dataprotection#OWLClass_c544c98a_ea80_4638_94c2_47fe7985c5b9> ;
+    rdfs:range <http://www.uni.lu/dataprotection#OWLClass_be0e1d3c_0330_4bd1_994f_919bb4962315> ;
+    rdfs:subPropertyOf :topObjectProperty .
+
+<http://www.uni.lu/dataprotection#OWLObjectProperty_f90cb5d0_29a1_41ef_a947_aa86cb69cc14> a :InverseFunctionalProperty,
+        :ObjectProperty ;
+    rdfs:label "performAccess"@en ;
+    rdfs:domain <http://www.uni.lu/dataprotection#OWLClass_be0e1d3c_0330_4bd1_994f_919bb4962315> ;
+    rdfs:range <http://www.uni.lu/dataprotection#OWLClass_12f8d2e4_932c_44b2_a152_7fb6fe4d7e7c> .
+
+rdf:PlainLiteral rdfs:label "rdf:PlainLiteral"@en .
+
+rdfs:isDefinedBy rdfs:label "rdfs:isDefinedBy"@en .
+
+rdfs:label rdfs:label "rdfs:label"@en .
+
+rdfs:seeAlso rdfs:label "rdfs:seeAlso"@en .
+
+xsd:OWLDatatypeImpl_7c27e6b5_f4d1_4113_9831_bf9431834ff0 rdfs:label "date"@en .
+
+xsd:OWLDatatypeImpl_9008e7cb_da51_4d30_b7fb_63978d2d9e63 rdfs:label "date"@en .
+
+xsd:date a rdfs:Datatype .
+
+<http://www.w3.org/2004/02/skos/core#OWLAnnotationPropertyImpl_08c1407d_ec6c_4b17_8edf_4abb17f039cb> rdfs:label "closeMatch"@en .
+
+<http://www.w3.org/2004/02/skos/core#OWLAnnotationPropertyImpl_1fa18f57_a790_40e8_aff1_a6c6867fce1d> rdfs:label "closeMatch"@en .
+
+<http://www.w3.org/2004/02/skos/core#OWLAnnotationPropertyImpl_23de5b25_d99d_4053_8491_90ac4f1b01f9> rdfs:label "note"@en .
+
+<http://www.w3.org/2004/02/skos/core#OWLAnnotationPropertyImpl_2890e030_22b0_4257_9668_d20f259a369b> rdfs:label "exactMatch"@en .
+
+<http://www.w3.org/2004/02/skos/core#OWLAnnotationPropertyImpl_3617d7e2_276e_4ead_8ab6_765572cf6007> rdfs:label "note"@en .
+
+<http://www.w3.org/2004/02/skos/core#OWLAnnotationPropertyImpl_38110948_dcd5_49af_922f_30825fe9be37> rdfs:label "broaderTransitive"@en .
+
+<http://www.w3.org/2004/02/skos/core#OWLAnnotationPropertyImpl_3ed8c3e4_2c43_433d_9f65_50e97949d2d2> rdfs:label "broadMatch"@en .
+
+<http://www.w3.org/2004/02/skos/core#OWLAnnotationPropertyImpl_40db4dea_1f00_4cdc_8c2c_e0b261b4b818> rdfs:label "exactMatch"@en .
+
+<http://www.w3.org/2004/02/skos/core#OWLAnnotationPropertyImpl_516a3db6_58db_47e7_8141_323dd51a05d0> rdfs:label "broadMatch"@en .
+
+<http://www.w3.org/2004/02/skos/core#OWLAnnotationPropertyImpl_5da093f8_3d86_4481_b13f_bfb4f4ca603e> rdfs:label "closeMatch"@en .
+
+<http://www.w3.org/2004/02/skos/core#OWLAnnotationPropertyImpl_711a0657_ad17_4cc2_a4a4_7ab3e31d9fe9> rdfs:label "closeMatch"@en .
+
+<http://www.w3.org/2004/02/skos/core#OWLAnnotationPropertyImpl_7a410669_92a6_4856_bdac_587b87b50592> rdfs:label "exactMatch"@en .
+
+<http://www.w3.org/2004/02/skos/core#OWLAnnotationPropertyImpl_80ac4966_b94b_447e_9a9f_4dbff877fd89> rdfs:label "closeMatch"@en .
+
+<http://www.w3.org/2004/02/skos/core#OWLAnnotationPropertyImpl_87608b6e_854c_44fc_9546_1d090053b511> rdfs:label "broaderTransitive"@en .
+
+<http://www.w3.org/2004/02/skos/core#OWLAnnotationPropertyImpl_ae522acd_b4c3_4dff_bb8e_9fb5565e241b> rdfs:label "exactMatch"@en .
+
+<http://www.w3.org/2004/02/skos/core#OWLAnnotationPropertyImpl_b79dea85_da38_4371_96dc_30a639826a63> rdfs:label "broadMatch"@en .
+
+<http://www.w3.org/2004/02/skos/core#OWLAnnotationPropertyImpl_b8cc2e2d_f9ef_40ef_9107_4b247d7787b8> rdfs:label "broadMatch"@en .
+
+<http://www.w3.org/2004/02/skos/core#OWLAnnotationPropertyImpl_c5686ee0_cc44_43c5_9a6a_6ab8920fc3ec> rdfs:label "closeMatch"@en .
+
+<http://www.w3.org/2004/02/skos/core#OWLAnnotationPropertyImpl_d5664569_69fe_4586_b6af_7b6c11c4e26a> rdfs:label "broaderTransitive"@en .
+
+<http://www.w3.org/2004/02/skos/core#OWLAnnotationPropertyImpl_e64a6883_ac97_40d6_b82d_8f68134fe756> rdfs:label "broadMatch"@en .
+
+<http://www.w3.org/2004/02/skos/core#OWLAnnotationPropertyImpl_e74ebdb2_a910_41a0_969c_e935d0ffc343> rdfs:label "broadMatch"@en .
+
+<http://www.w3.org/2004/02/skos/core#OWLAnnotationPropertyImpl_f0470b65_d715_4fa8_a03f_3e48d32d3a26> rdfs:label "broaderTransitive"@en .
+
+<http://www.w3.org/2004/02/skos/core#OWLAnnotationPropertyImpl_fa87fc96_35fe_461f_81e5_078e57b36db0> rdfs:label "note"@en .
+
+<http://www.w3.org/2004/02/skos/core#broadMatch> a :AnnotationProperty .
+
+<http://www.w3.org/2004/02/skos/core#broaderTransitive> a :AnnotationProperty .
+
+<http://www.w3.org/2004/02/skos/core#closeMatch> a :AnnotationProperty .
+
+<http://www.w3.org/2004/02/skos/core#exactMatch> a :AnnotationProperty ;
+    rdfs:subPropertyOf rdfs:comment .
+
+<http://www.w3.org/2004/02/skos/core#note> a :AnnotationProperty .
+
+<http://www.uni.lu/dataprotection#OWLClass_12ed2171_63ca_4d47_afcd_b6721ac351a9> a :Class ;
+    rdfs:label "NonEURecipient"@en ;
+    rdfs:comment "A recipient not located within the European Union and not subject to the Regulation."@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_bf972a40_26a4_451a_b104_ea993da94716> ;
+    :disjointWith <http://www.uni.lu/dataprotection#OWLClass_624c0561_eda6_4035_9f2a_47d4b8de3ee9> .
+
+<http://www.uni.lu/dataprotection#OWLClass_1dcad2a0_486a_4f14_8b0e_1b9e521f738e> a :Class ;
+    rdfs:label "VitalProcessing"@en ;
+    rdfs:comment """Article 6.1(d)
+
+Processing that is necessary in order to protect the vital interests of the data subject."""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_f91e368a_9e61_4616_85d2_d24ff9c08ab2> ;
+    :equivalentClass [ a :Restriction ;
+            :onProperty <http://www.uni.lu/dataprotection#OWLObjectProperty_26abc84c_8c4c_458c_8605_2ffbd1590d0d> ;
+            :someValuesFrom <http://www.uni.lu/dataprotection#OWLClass_0b2f9b8c_8e60_4b1a_9471_9ce55bf73ae4> ] .
+
+<http://www.uni.lu/dataprotection#OWLClass_29c82d22_60ee_4d6c_a0a3_791432cc5481> a :Class ;
+    rdfs:label "ObligatedProcessing"@en ;
+    rdfs:comment """Article 6.1(c)
+
+Processing that is necessary for compliance with a legal obligation to which the controller is subject."""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_f91e368a_9e61_4616_85d2_d24ff9c08ab2> ;
+    :equivalentClass [ a :Restriction ;
+            :onProperty <http://www.uni.lu/dataprotection#OWLObjectProperty_50f8f0ef_9504_4ceb_b566_8fcb583ab045> ;
+            :someValuesFrom <http://www.uni.lu/dataprotection#OWLClass_e7e707fc_dc05_4f59_973d_771a0e393117> ] .
+
+<http://www.uni.lu/dataprotection#OWLClass_301e1bec_ae1a_4601_9bea_a35fe79e4ea3> a :Class ;
+    rdfs:label "RequiredProcessing"@en ;
+    rdfs:comment "Any processing that is not based upon the explicit consent of the data subject."@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_f91e368a_9e61_4616_85d2_d24ff9c08ab2> ;
+    :equivalentClass [ a :Class ;
+            :unionOf ( <http://www.uni.lu/dataprotection#OWLClass_02b07422_386e_4a70_8c4a_c2534b513fb5> <http://www.uni.lu/dataprotection#OWLClass_1dcad2a0_486a_4f14_8b0e_1b9e521f738e> <http://www.uni.lu/dataprotection#OWLClass_29c82d22_60ee_4d6c_a0a3_791432cc5481> <http://www.uni.lu/dataprotection#OWLClass_57b79a8d_ad1a_4ace_9892_affeb548ba0d> <http://www.uni.lu/dataprotection#OWLClass_df7e7536_7235_4e30_b042_4e8a8b5852a5> ) ] .
+
+<http://www.uni.lu/dataprotection#OWLClass_336f5c83_c4cc_4889_8cbc_2c07562155a2> a :Class ;
+    rdfs:label "LawfulTransfer"@en ;
+    rdfs:comment """Article 40
+
+Any transfer of personal data which are undergoing processing or are intended for processing after transfer to a third country or to an international organisation may only take place if, subject to the other provisions of this Regulation, the conditions laid down in Chapter V are complied with by the controller and processor, including for onward transfers of personal data from the third country or an international organisation to another third country or to another international organisation."""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_eba91113_47e1_4806_8b83_bd8ba94c2002> ;
+    :equivalentClass [ a :Class ;
+            :unionOf ( [ a :Class ;
+                        :intersectionOf ( [ a :Restriction ;
+                                    :onProperty <http://www.uni.lu/dataprotection#OWLObjectProperty_963fc55c_8a6d_48eb_a7b5_0d111603003a> ;
+                                    :someValuesFrom <http://www.uni.lu/dataprotection#OWLClass_12ed2171_63ca_4d47_afcd_b6721ac351a9> ] [ a :Restriction ;
+                                    :onProperty <http://www.uni.lu/dataprotection#OWLObjectProperty_ede6ce89_417f_48c1_a76e_4df8ff1ad55a> ;
+                                    :someValuesFrom <http://www.uni.lu/dataprotection#OWLClass_06a52543_55ee_4037_8370_dd56a165fe70> ] ) ] [ a :Restriction ;
+                        :onProperty <http://www.uni.lu/dataprotection#OWLObjectProperty_963fc55c_8a6d_48eb_a7b5_0d111603003a> ;
+                        :someValuesFrom <http://www.uni.lu/dataprotection#OWLClass_624c0561_eda6_4035_9f2a_47d4b8de3ee9> ] ) ] .
+
+<http://www.uni.lu/dataprotection#OWLClass_3c993f72_4546_4509_b66b_425999f0118d> a :Class ;
+    rdfs:label "AppropriateSafeguards"@en ;
+    rdfs:comment """Article 42.1
+
+Where the Commission has taken no decision pursuant to Article 41, a controller or processor may transfer personal data to a third country or an international organisation only if the controller or processor has adduced appropriate safeguards with respect to the protection of personal data in a legally binding instrument."""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_06a52543_55ee_4037_8370_dd56a165fe70> .
+
+<http://www.uni.lu/dataprotection#OWLClass_57b79a8d_ad1a_4ace_9892_affeb548ba0d> a :Class ;
+    rdfs:label "PublicInterestProcessing"@en ;
+    rdfs:comment """Article 6.1(e)
+
+Processing that is necessary for the performance of a task carried out in the public interest or in the exercise of official authority vested in the controller."""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_f91e368a_9e61_4616_85d2_d24ff9c08ab2> ;
+    :equivalentClass [ a :Restriction ;
+            :onProperty <http://www.uni.lu/dataprotection#OWLObjectProperty_077c98dc_e4f1_4fa4_82f1_4d5d6bac1a11> ;
+            :someValuesFrom <http://www.uni.lu/dataprotection#OWLClass_f0877852_cd4f_4338_bd33_7a11b7f3677d> ] .
+
+<http://www.uni.lu/dataprotection#OWLClass_5a9540f3_9f42_46c1_9cff_227fa5323efb> a :Class ;
+    rdfs:label "ProcessingActivity"@en ;
+    rdfs:comment "A specific operation which is performed upon personal data or sets of personal data." ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_080c5ed8_aa3c_4bfd_af54_dc6e2a546d8b> .
+
+<http://www.uni.lu/dataprotection#OWLClass_69062b9e_235e_4977_877f_0021effc2dfc> a :Class ;
+    rdfs:label "ParentConsent"@en ;
+    rdfs:comment "Consent to the processing of personal data of a child below the age of 13 years given or authorised by the child's parent or custodian."@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_fccddccc_e1c5_425a_9e67_99ea9c2dfa55> ;
+    :equivalentClass [ a :Restriction ;
+            :onProperty <http://www.uni.lu/dataprotection#OWLObjectProperty_d6b379ea_fc70_4e52_8990_4b2579886200> ;
+            :someValuesFrom <http://www.uni.lu/dataprotection#OWLClass_91a1bac2_859c_446e_86c7_0f32f12470ac> ] .
+
+<http://www.uni.lu/dataprotection#OWLClass_70533b01_01ad_4c16_92d7_d37ff183d561> a :Class ;
+    rdfs:label "BindingCorporateRules"@en ;
+    rdfs:comment """Article 43.1
+
+A supervisory authority shall in accordance with the consistency mechanism set out in Article 58 approve binding corporate rules, provided that they:
+(a) are legally binding and apply to and are enforced by every member within the controller’s or processor's group of undertakings, and include their employees;
+(b) expressly confer enforceable rights on data subjects;
+(c) fulfil the requirements laid down in paragraph 2."""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_06a52543_55ee_4037_8370_dd56a165fe70> .
+
+<http://www.uni.lu/dataprotection#OWLClass_7ef6aaee_8d1b_4e22_bee2_f64f4332c477> a :Class ;
+    rdfs:label "LawfulnessRule"@en ;
+    rdfs:comment """DPH s. 4.1.1
+
+Chapter II of Directive 95/46, entitled ‘General rules on the lawfulness of the processing of personal data’, provides that, subject to the exceptions permitted under Article 13, all processing of personal data must comply, first, with the principles relating to data quality set out in Article 6 of the Data Protection Directive and, secondly, with one of the criteria for making data processing legitimate, listed in Article 7. This explains the cases which legitimise the processing of non-sensitive personal data."""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_b937960f_e255_4bcf_aff6_f362c905a8b8>,
+        <http://www.uni.lu/dataprotection#OWLClass_c750844c_48fa_4fbd_8619_b8b9b1e967db> .
+
+<http://www.uni.lu/dataprotection#OWLClass_801beed0_2387_4a31_a5f1_6636c3558cb7> a :Class ;
+    rdfs:label "ChildDataSubject"@en ;
+    rdfs:comment "A data subject under the age of 13 years."@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_be0e1d3c_0330_4bd1_994f_919bb4962315> .
+
+<http://www.uni.lu/dataprotection#OWLClass_a6bd38e0_dcde_48be_812b_8c785619187b> a :Class ;
+    rdfs:label "RightToInformation"@en ;
+    rdfs:comment """Article 14.1
+
+Where personal data relating to a data subject are collected, the controller shall provide the data subject with at least the following information:
+(a) the identity and the contact details of the controller and, if any, of the controller's representative and of the data protection officer;
+(b) the purposes of the processing for which the personal data are intended, including the contract terms and general conditions where the processing is based on point (b) of Article 6(1) and the legitimate interests pursued by the controller where the processing is based on point (f) of Article 6(1);
+(c) the period for which the personal data will be stored;
+(d) the existence of the right to request from the controller access to and rectification or erasure of the personal data concerning the data subject or to object to the processing of such personal data;
+(e) the right to lodge a complaint to the supervisory authority and the contact details of the supervisory authority;
+(f) the recipients or categories of recipients of the personal data;
+(g) where applicable, that the controller intends to transfer to a third country or international organisation and on the level of protection afforded by that third country or international organisation by reference to an adequacy decision by the Commission;
+(h) any further information necessary to guarantee fair processing in respect of the data subject, having regard to the specific circumstances in which the personal data are collected."""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_83eaae05_ab01_4df1_b8ed_a203cfec5a08>,
+        <http://www.uni.lu/dataprotection#OWLClass_8fd1b241_6e73_4771_9cf7_4a995dd8311b> .
+
+<http://www.uni.lu/dataprotection#OWLClass_b3ce5053_8b0c_41d5_81ba_36f3ccbd5642> a :Class ;
+    rdfs:label "DataProtectionOfficer"@en ;
+    rdfs:comment """Article 37.1
+
+The controller or the processor shall entrust the data protection officer at least with the following tasks:
+(a) to inform and advise the controller or the processor of their obligations pursuant to this Regulation and to document this activity and the responses received;
+(b) to monitor the implementation and application of the policies of the controller or processor in relation to the protection of personal data, including the assignment of responsibilities, the training of staff involved in the processing operations, and the related audits;
+(c) to monitor the implementation and application of this Regulation, in particular as to the requirements related to data protection by design, data protection by default and data security and to the information of data subjects and their requests in exercising their rights under this Regulation;
+(d) to ensure that the documentation referred to in Article 28 is maintained;
+(e) to monitor the documentation, notification and communication of personal data breaches pursuant to Articles 31 and 32;
+(f) to monitor the performance of the data protection impact assessment by the controller or processor and the application for prior authorisation or prior consultation, if required pursuant Articles 33 and 34;
+(g) to monitor the response to requests from the supervisory authority, and, within the sphere of the data protection officer's competence, co-operating with the supervisory authority at the latter's request or on the data protection officer's own initiative;
+(h) to act as the contact point for the supervisory authority on issues related to the processing and consult with the supervisory authority, if appropriate, on his/her own initiative."""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_59851879_88be_4cf3_bd27_3b185fc2046a>,
+        <http://www.uni.lu/dataprotection#OWLClass_99a373a5_bae0_4769_a675_7bf1a8467f00> ;
+    skos:broadMatch <http://www.estrellaproject.org/lkif-core/legal-action.owl#Legal_Person> .
+
+<http://www.uni.lu/dataprotection#OWLClass_b628f28a_bd8c_471e_9c61_9548ff8cfd58> a :Class ;
+    rdfs:label "RightToNoProfiling"@en ;
+    rdfs:comment """Article 20.1
+
+Every natural person shall have the right not to be subject to a measure which produces legal effects concerning this natural person or significantly affects this natural person, and which is based solely on automated processing intended to evaluate certain personal aspects relating to this natural person or to analyse or predict in particular the natural person's performance at work, economic situation, location, health, personal preferences, reliability or behaviour."""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_8fd1b241_6e73_4771_9cf7_4a995dd8311b>,
+        <http://www.uni.lu/dataprotection#OWLClass_b491c951_2363_4eab_a32f_0fc922d48adc> .
+
+<http://www.uni.lu/dataprotection#OWLClass_bfbcc9ac_862a_454f_8a67_a52f688d75ca> a :Class ;
+    rdfs:label "AdequacyDecision"@en ;
+    rdfs:comment """Article 41.1
+
+A transfer may take place where the Commission has decided that the third country, or a territory or a processing sector within that third country, or the international organisation in question ensures an adequate level of protection. Such transfer shall not require any further authorisation."""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_06a52543_55ee_4037_8370_dd56a165fe70> .
+
+<http://www.uni.lu/dataprotection#OWLClass_c37e1def_c49d_4171_94ca_7d6912ef2acf> a :Class ;
+    rdfs:label "ConsensualProcessing"@en ;
+    rdfs:comment """Article 6.1(a)
+
+Processing of personal data to which the data subject has given consent for one or more specific purposes."""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_f91e368a_9e61_4616_85d2_d24ff9c08ab2> ;
+    :equivalentClass [ a :Class ;
+            :unionOf ( [ a :Class ;
+                        :intersectionOf ( [ a :Class ;
+                                    :complementOf [ a :Restriction ;
+                                            :onProperty <http://www.uni.lu/dataprotection#OWLObjectProperty_1c8dcaa8_9f93_4cbb_9523_b4884a29a9b8> ;
+                                            :someValuesFrom <http://www.uni.lu/dataprotection#OWLClass_ea967b60_4d4f_41e0_97fe_8d7dd514619c> ] ] [ a :Restriction ;
+                                    :onProperty <http://www.uni.lu/dataprotection#OWLObjectProperty_1c8dcaa8_9f93_4cbb_9523_b4884a29a9b8> ;
+                                    :someValuesFrom <http://www.uni.lu/dataprotection#OWLClass_f234596c_9040_4f87_bd51_49ec017fd3d5> ] [ a :Restriction ;
+                                    :onClass <http://www.uni.lu/dataprotection#OWLClass_fccddccc_e1c5_425a_9e67_99ea9c2dfa55> ;
+                                    :onProperty <http://www.uni.lu/dataprotection#OWLObjectProperty_570763f7_9a02_4787_bf15_dea159241d52> ;
+                                    :qualifiedCardinality "1"^^xsd:nonNegativeInteger ] ) ] [ a :Class ;
+                        :intersectionOf ( [ a :Class ;
+                                    :complementOf [ a :Restriction ;
+                                            :onProperty <http://www.uni.lu/dataprotection#OWLObjectProperty_1c8dcaa8_9f93_4cbb_9523_b4884a29a9b8> ;
+                                            :someValuesFrom <http://www.uni.lu/dataprotection#OWLClass_f234596c_9040_4f87_bd51_49ec017fd3d5> ] ] [ a :Restriction ;
+                                    :onClass <http://www.uni.lu/dataprotection#OWLClass_a2ccd29b_a341_4659_919a_977a6a81d4d1> ;
+                                    :onProperty <http://www.uni.lu/dataprotection#OWLObjectProperty_570763f7_9a02_4787_bf15_dea159241d52> ;
+                                    :qualifiedCardinality "1"^^xsd:nonNegativeInteger ] ) ] [ a :Class ;
+                        :intersectionOf ( [ a :Restriction ;
+                                    :onProperty <http://www.uni.lu/dataprotection#OWLObjectProperty_1c8dcaa8_9f93_4cbb_9523_b4884a29a9b8> ;
+                                    :someValuesFrom <http://www.uni.lu/dataprotection#OWLClass_ea967b60_4d4f_41e0_97fe_8d7dd514619c> ] [ a :Restriction ;
+                                    :onClass <http://www.uni.lu/dataprotection#OWLClass_69062b9e_235e_4977_877f_0021effc2dfc> ;
+                                    :onProperty <http://www.uni.lu/dataprotection#OWLObjectProperty_570763f7_9a02_4787_bf15_dea159241d52> ;
+                                    :qualifiedCardinality "1"^^xsd:nonNegativeInteger ] ) ] ) ] .
+
+<http://www.uni.lu/dataprotection#OWLClass_c61c5125_09a3_46f0_9369_2288f8f41a1b> a :Class ;
+    rdfs:label "Documentation"@en ;
+    rdfs:comment """Article 28.1
+
+Each controller and processor and, if any, the controller's representative, shall maintain documentation of all processing operations under its responsibility."""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_83eaae05_ab01_4df1_b8ed_a203cfec5a08>,
+        <http://www.uni.lu/dataprotection#OWLClass_c750844c_48fa_4fbd_8619_b8b9b1e967db> .
+
+<http://www.uni.lu/dataprotection#OWLClass_cd736f6b_2897_46b3_af1e_89e318585b0a> a :Class ;
+    rdfs:label "ImpactAssessment"@en ;
+    rdfs:comment """Article 33.1
+
+Where processing operations present specific risks to the rights and freedoms of data subjects by virtue of their nature, their scope or their purposes, the controller or the processor acting on the controller's behalf shall carry out an assessment of the impact of the envisaged processing operations on the protection of personal data."""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_7e0df94b_e1c3_4a97_b19d_d9320b921f84>,
+        <http://www.uni.lu/dataprotection#OWLClass_c750844c_48fa_4fbd_8619_b8b9b1e967db> .
+
+<http://www.uni.lu/dataprotection#OWLClass_df7e7536_7235_4e30_b042_4e8a8b5852a5> a :Class ;
+    rdfs:label "LegitimateInterestProcessing"@en ;
+    rdfs:comment """Article 6.1(f)
+
+Processing that is necessary for the purposes of the legitimate interests pursued by a controller, except where such interests are overridden by the interests or fundamental rights and freedoms of the data subject which require protection of personal data, in particular where the data subject is a child. This shall not apply to processing carried out by public authorities in the performance of their tasks."""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_f91e368a_9e61_4616_85d2_d24ff9c08ab2> ;
+    :equivalentClass [ a :Restriction ;
+            :onProperty <http://www.uni.lu/dataprotection#OWLObjectProperty_6eaca250_d77d_4df4_b978_8dcbb84e6a50> ;
+            :someValuesFrom <http://www.uni.lu/dataprotection#OWLClass_a42fde83_5051_4cc3_b86c_b1981b6b6500> ] .
+
+<http://www.uni.lu/dataprotection#OWLClass_fa3d54a9_5ad4_4240_b021_815d980dcda6> a :Class ;
+    rdfs:label "RightToPortability"@en ;
+    rdfs:comment """Article 18
+
+The data subject shall have the right, where personal data are processed by electronic means and in a structured and commonly used format, to obtain from the controller a copy of data undergoing processing in an electronic and structured format which is commonly used and allows for further use by the data subject."""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_15f536e2_2946_4aca_b996_2615e37e729a>,
+        <http://www.uni.lu/dataprotection#OWLClass_8fd1b241_6e73_4771_9cf7_4a995dd8311b> .
+
+<http://www.uni.lu/dataprotection#OWLNamedIndividual_2f06aa66_4ab7_41c6_9b94_c2cb13e9691f> a <http://www.uni.lu/dataprotection#OWLClass_f234596c_9040_4f87_bd51_49ec017fd3d5>,
+        :NamedIndividual ;
+    rdfs:label "ReligionData"@en .
+
+<http://www.uni.lu/dataprotection#OWLNamedIndividual_55e57984_3d3c_4ba0_8321_6c74aaf17d36> a <http://www.uni.lu/dataprotection#OWLClass_f234596c_9040_4f87_bd51_49ec017fd3d5>,
+        :NamedIndividual ;
+    rdfs:label "TradeUnionData"@en .
+
+<http://www.uni.lu/dataprotection#OWLNamedIndividual_80f23d4a_5825_4858_af79_1c67c5289684> a <http://www.uni.lu/dataprotection#OWLClass_f234596c_9040_4f87_bd51_49ec017fd3d5>,
+        :NamedIndividual ;
+    rdfs:label "RacialData"@en .
+
+<http://www.uni.lu/dataprotection#OWLNamedIndividual_8de904ed_c312_4b94_8936_21ff4dc59afc> a <http://www.uni.lu/dataprotection#OWLClass_f234596c_9040_4f87_bd51_49ec017fd3d5>,
+        :NamedIndividual ;
+    rdfs:label "SexualData"@en .
+
+<http://www.uni.lu/dataprotection#OWLNamedIndividual_9383a976_2f15_4a41_8d61_e43b5694658f> a <http://www.uni.lu/dataprotection#OWLClass_b937960f_e255_4bcf_aff6_f362c905a8b8>,
+        :NamedIndividual ;
+    rdfs:label "ECHRLawfulness"@en .
+
+<http://www.uni.lu/dataprotection#OWLNamedIndividual_a91304fc_bb35_41cd_a8f0_8cf07c096e4a> a <http://www.uni.lu/dataprotection#OWLClass_f234596c_9040_4f87_bd51_49ec017fd3d5>,
+        :NamedIndividual ;
+    rdfs:label "HealthcareData"@en .
+
+<http://www.uni.lu/dataprotection#OWLNamedIndividual_ad6121f2_bdc0_4ea7_a67e_372f70b08f9a> a <http://www.uni.lu/dataprotection#OWLClass_f234596c_9040_4f87_bd51_49ec017fd3d5>,
+        :NamedIndividual ;
+    rdfs:label "BeliefData"@en .
+
+<http://www.uni.lu/dataprotection#OWLNamedIndividual_d54a634e_1259_4078_928b_3a630491f3c3> a <http://www.uni.lu/dataprotection#OWLClass_b937960f_e255_4bcf_aff6_f362c905a8b8>,
+        :NamedIndividual ;
+    rdfs:label "CharterLawfulness"@en .
+
+<http://www.uni.lu/dataprotection#OWLNamedIndividual_e572ffb6_feda_492a_83c1_2ab982d3af11> a <http://www.uni.lu/dataprotection#OWLClass_f234596c_9040_4f87_bd51_49ec017fd3d5>,
+        :NamedIndividual ;
+    rdfs:label "GeneticData"@en .
+
+<http://www.uni.lu/dataprotection#OWLNamedIndividual_f39efa62_7202_46d8_9736_7be3966f2ee4> a <http://www.uni.lu/dataprotection#OWLClass_f234596c_9040_4f87_bd51_49ec017fd3d5>,
+        :NamedIndividual ;
+    rdfs:label "PoliticalData"@en .
+
+<http://www.uni.lu/dataprotection#OWLNamedIndividual_f7438c24_0ad0_44ee_a402_760d6d3aaa99> a <http://www.uni.lu/dataprotection#OWLClass_f234596c_9040_4f87_bd51_49ec017fd3d5>,
+        :NamedIndividual ;
+    rdfs:label "CriminalData"@en .
+
+<http://www.uni.lu/dataprotection#OWLObjectProperty_077c98dc_e4f1_4fa4_82f1_4d5d6bac1a11> a :ObjectProperty ;
+    rdfs:label "requiredByPublicInterest"@en ;
+    rdfs:domain <http://www.uni.lu/dataprotection#OWLClass_080c5ed8_aa3c_4bfd_af54_dc6e2a546d8b> ;
+    rdfs:range <http://www.uni.lu/dataprotection#OWLClass_f0877852_cd4f_4338_bd33_7a11b7f3677d> ;
+    rdfs:subPropertyOf <http://www.uni.lu/dataprotection#OWLObjectProperty_570763f7_9a02_4787_bf15_dea159241d52> .
+
+<http://www.uni.lu/dataprotection#OWLObjectProperty_26abc84c_8c4c_458c_8605_2ffbd1590d0d> a :ObjectProperty ;
+    rdfs:label "requiredByVitalInterest"@en ;
+    rdfs:domain <http://www.uni.lu/dataprotection#OWLClass_080c5ed8_aa3c_4bfd_af54_dc6e2a546d8b> ;
+    rdfs:range <http://www.uni.lu/dataprotection#OWLClass_0b2f9b8c_8e60_4b1a_9471_9ce55bf73ae4> ;
+    rdfs:subPropertyOf <http://www.uni.lu/dataprotection#OWLObjectProperty_570763f7_9a02_4787_bf15_dea159241d52> .
+
+<http://www.uni.lu/dataprotection#OWLObjectProperty_2a714588_010a_4833_ae08_09b32aa6295c> a :InverseFunctionalProperty,
+        :ObjectProperty ;
+    rdfs:label "objectTo"@en ;
+    rdfs:domain <http://www.uni.lu/dataprotection#OWLClass_be0e1d3c_0330_4bd1_994f_919bb4962315> ;
+    rdfs:range <http://www.uni.lu/dataprotection#OWLClass_080c5ed8_aa3c_4bfd_af54_dc6e2a546d8b> .
+
+<http://www.uni.lu/dataprotection#OWLObjectProperty_332f288f_09e9_4743_bac9_6b65ac57f10e> a :FunctionalProperty,
+        :ObjectProperty ;
+    rdfs:label "accessData"@en ;
+    rdfs:domain <http://www.uni.lu/dataprotection#OWLClass_573ba052_e830_419f_9c33_bee5251b8043> ;
+    rdfs:range <http://www.uni.lu/dataprotection#OWLClass_ed8bdd2f_f171_49c2_9386_576fe410d791> ;
+    rdfs:subPropertyOf :topObjectProperty .
+
+<http://www.uni.lu/dataprotection#OWLObjectProperty_4233322f_cb80_4ee7_bed2_213d920c59c3> a :FunctionalProperty,
+        :ObjectProperty ;
+    rdfs:label "isObjected"@en ;
+    rdfs:domain <http://www.uni.lu/dataprotection#OWLClass_080c5ed8_aa3c_4bfd_af54_dc6e2a546d8b> ;
+    rdfs:range <http://www.uni.lu/dataprotection#OWLClass_7bb468f6_ab61_4585_a9cb_522371c20b9d> .
+
+<http://www.uni.lu/dataprotection#OWLObjectProperty_50f8f0ef_9504_4ceb_b566_8fcb583ab045> a :ObjectProperty ;
+    rdfs:label "requiredByObligation"@en ;
+    rdfs:domain <http://www.uni.lu/dataprotection#OWLClass_080c5ed8_aa3c_4bfd_af54_dc6e2a546d8b> ;
+    rdfs:range <http://www.uni.lu/dataprotection#OWLClass_e7e707fc_dc05_4f59_973d_771a0e393117> ;
+    rdfs:subPropertyOf <http://www.uni.lu/dataprotection#OWLObjectProperty_570763f7_9a02_4787_bf15_dea159241d52> .
+
+<http://www.uni.lu/dataprotection#OWLObjectProperty_5d457280_4325_44df_8083_ad7b53c0dfca> a :FunctionalProperty,
+        :InverseFunctionalProperty,
+        :ObjectProperty ;
+    rdfs:label "processingPerformedBy"@en ;
+    rdfs:domain <http://www.uni.lu/dataprotection#OWLClass_080c5ed8_aa3c_4bfd_af54_dc6e2a546d8b> ;
+    rdfs:range <http://www.uni.lu/dataprotection#OWLClass_3c5113eb_0923_4946_86cf_f5a83de7f9bb> .
+
+<http://www.uni.lu/dataprotection#OWLObjectProperty_6eaca250_d77d_4df4_b978_8dcbb84e6a50> a :ObjectProperty ;
+    rdfs:label "requiredByLegitimateInterest"@en ;
+    rdfs:domain <http://www.uni.lu/dataprotection#OWLClass_080c5ed8_aa3c_4bfd_af54_dc6e2a546d8b> ;
+    rdfs:range <http://www.uni.lu/dataprotection#OWLClass_a42fde83_5051_4cc3_b86c_b1981b6b6500> ;
+    rdfs:subPropertyOf <http://www.uni.lu/dataprotection#OWLObjectProperty_570763f7_9a02_4787_bf15_dea159241d52> .
+
+<http://www.uni.lu/dataprotection#OWLObjectProperty_86442676_0100_49b3_991c_504d7c89a49a> a :FunctionalProperty,
+        :ObjectProperty ;
+    rdfs:label "specialConsentAppliesTo"@en ;
+    rdfs:domain <http://www.uni.lu/dataprotection#OWLClass_a2ccd29b_a341_4659_919a_977a6a81d4d1> ;
+    rdfs:range [ a :Class ;
+            :intersectionOf ( <http://www.uni.lu/dataprotection#OWLClass_080c5ed8_aa3c_4bfd_af54_dc6e2a546d8b> [ a :Restriction ;
+                        :onProperty <http://www.uni.lu/dataprotection#OWLObjectProperty_1c8dcaa8_9f93_4cbb_9523_b4884a29a9b8> ;
+                        :someValuesFrom <http://www.uni.lu/dataprotection#OWLClass_f234596c_9040_4f87_bd51_49ec017fd3d5> ] ) ] ;
+    rdfs:subPropertyOf <http://www.uni.lu/dataprotection#OWLObjectProperty_bcd48dd9_79f1_4a6c_98ba_fdd5748312dc> .
+
+<http://www.uni.lu/dataprotection#OWLObjectProperty_bcd48dd9_79f1_4a6c_98ba_fdd5748312dc> a :FunctionalProperty,
+        :ObjectProperty ;
+    rdfs:label "consentAppliesTo"@en ;
+    rdfs:domain <http://www.uni.lu/dataprotection#OWLClass_a2ccd29b_a341_4659_919a_977a6a81d4d1> ;
+    rdfs:range <http://www.uni.lu/dataprotection#OWLClass_080c5ed8_aa3c_4bfd_af54_dc6e2a546d8b> ;
+    rdfs:subPropertyOf <http://www.uni.lu/dataprotection#OWLObjectProperty_d279ae3c_1c63_4a0c_8f33_f6f347fb911a> .
+
+<http://www.uni.lu/dataprotection#OWLObjectProperty_cb6a55ce_5777_4d29_b15d_6be3845259a3> a :ObjectProperty ;
+    rdfs:label "requiredForContract"@en ;
+    rdfs:domain <http://www.uni.lu/dataprotection#OWLClass_080c5ed8_aa3c_4bfd_af54_dc6e2a546d8b> ;
+    rdfs:range <http://www.uni.lu/dataprotection#OWLClass_2023c585_fdec_4229_8951_24f6d4639634> ;
+    rdfs:subPropertyOf <http://www.uni.lu/dataprotection#OWLObjectProperty_570763f7_9a02_4787_bf15_dea159241d52> .
+
+<http://www.uni.lu/dataprotection#OWLObjectProperty_d279ae3c_1c63_4a0c_8f33_f6f347fb911a> a :FunctionalProperty,
+        :ObjectProperty ;
+    rdfs:label "requirementAppliesTo"@en ;
+    rdfs:domain <http://www.uni.lu/dataprotection#OWLClass_c750844c_48fa_4fbd_8619_b8b9b1e967db> ;
+    rdfs:range <http://www.uni.lu/dataprotection#OWLClass_080c5ed8_aa3c_4bfd_af54_dc6e2a546d8b> ;
+    :inverseOf <http://www.uni.lu/dataprotection#OWLObjectProperty_570763f7_9a02_4787_bf15_dea159241d52> .
+
+<http://www.uni.lu/dataprotection#OWLObjectProperty_e9b85247_b390_4b60_9d03_627a9bcc0a7f> a :FunctionalProperty,
+        :ObjectProperty ;
+    rdfs:label "pertainsTo"@en ;
+    rdfs:domain <http://www.uni.lu/dataprotection#OWLClass_ed8bdd2f_f171_49c2_9386_576fe410d791> ;
+    rdfs:range <http://www.uni.lu/dataprotection#OWLClass_be0e1d3c_0330_4bd1_994f_919bb4962315> .
+
+<http://www.uni.lu/dataprotection#OWLObjectProperty_ede6ce89_417f_48c1_a76e_4df8ff1ad55a> a :ObjectProperty ;
+    rdfs:label "transferHasRequirement"@en ;
+    rdfs:domain <http://www.uni.lu/dataprotection#OWLClass_eba91113_47e1_4806_8b83_bd8ba94c2002> ;
+    rdfs:range <http://www.uni.lu/dataprotection#OWLClass_06a52543_55ee_4037_8370_dd56a165fe70> .
+
+rdfs:comment rdfs:label "rdfs:comment"@en .
+
+:topDataProperty rdfs:label "owl:topDataProperty"@en .
+
+<http://www.uni.lu/dataprotection#OWLClass_02b07422_386e_4a70_8c4a_c2534b513fb5> a :Class ;
+    rdfs:label "ContractualProcessing"@en ;
+    rdfs:comment """Article 6.1(b)
+
+Processing that is necessary for the performance of a contract to which the data
+subject is party or in order to take steps at the request of the data subject prior
+to entering into a contract."""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_f91e368a_9e61_4616_85d2_d24ff9c08ab2> ;
+    :equivalentClass [ a :Restriction ;
+            :onProperty <http://www.uni.lu/dataprotection#OWLObjectProperty_cb6a55ce_5777_4d29_b15d_6be3845259a3> ;
+            :someValuesFrom <http://www.uni.lu/dataprotection#OWLClass_2023c585_fdec_4229_8951_24f6d4639634> ] .
+
+<http://www.uni.lu/dataprotection#OWLClass_12f8d2e4_932c_44b2_a152_7fb6fe4d7e7c> a :Class ;
+    rdfs:label "Access"@en ;
+    rdfs:comment """Article 15.2
+
+The request to obtain from the controller communication of the personal data undergoing processing. Where the data subject makes the request in electronic form, the information shall be provided in electronic form, unless otherwise requested by the data subject."""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClassImpl_58cf8e1b_e912_4f83_bdbe_0214e093bd4c> ;
+    :equivalentClass [ a :Restriction ;
+            :onProperty <http://www.uni.lu/dataprotection#OWLObjectProperty_332f288f_09e9_4743_bac9_6b65ac57f10e> ;
+            :someValuesFrom <http://www.uni.lu/dataprotection#OWLClass_ed8bdd2f_f171_49c2_9386_576fe410d791> ],
+        [ a :Restriction ;
+            :onProperty <http://www.uni.lu/dataprotection#OWLObjectPropertyImpl_9d75d818_a66f_4e92_8400_6990cb686671> ;
+            :someValuesFrom <http://www.uni.lu/dataprotection#OWLClass_83eaae05_ab01_4df1_b8ed_a203cfec5a08> ],
+        [ a :Restriction ;
+            :onProperty <http://www.uni.lu/dataprotection#OWLObjectPropertyImpl_9679a244_6762_4da7_9aaa_c89f96e6f22c> ;
+            :someValuesFrom <http://www.uni.lu/dataprotection#OWLClass_573ba052_e830_419f_9c33_bee5251b8043> ] .
+
+<http://www.uni.lu/dataprotection#OWLClass_2da92369_af57_4fc1_b84a_a35658cb88cf> a :Class ;
+    rdfs:label "RightToObject"@en ;
+    rdfs:comment """Article 19.1
+
+The data subject shall have the right to object, on grounds relating to their particular situation, at any time to the processing of personal data which is based on points (d), (e) and (f) of Article 6(1), unless the controller demonstrates compelling legitimate grounds for the processing which override the interests or fundamental rights and freedoms of the data subject."""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_15f536e2_2946_4aca_b996_2615e37e729a>,
+        <http://www.uni.lu/dataprotection#OWLClass_8fd1b241_6e73_4771_9cf7_4a995dd8311b> .
+
+<http://www.uni.lu/dataprotection#OWLClass_37cc24cc_e8cc_4ac2_8594_7aa5cc97f129> a :Class ;
+    rdfs:label "Measures"@en ;
+    rdfs:comment "The means by which the controller and the processor tries to avoid data breaches."@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_31ba96e6_a8e7_4d61_9af2_25280e70bb8f> .
+
+<http://www.uni.lu/dataprotection#OWLClass_38c37e49_92a4_4bbc_9780_9eed89158298> a :Class ;
+    rdfs:label "DataMinimization"@en ;
+    rdfs:comment "Personal data should be collected only when, and to the extent to which, a given purpose cannot be reached without using anonymous or statistical data or data that do not allow identification of the data subject."@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_b491c951_2363_4eab_a32f_0fc922d48adc> .
+
+<http://www.uni.lu/dataprotection#OWLClass_43574c52_adab_4ef9_807a_68f850c65a04> a :Class ;
+    rdfs:label "RightToRectification"@en ;
+    rdfs:comment """Article 16
+
+The data subject shall have the right to obtain from the controller the rectification of personal data relating to them which are inaccurate. The data subject shall have the right to obtain completion of incomplete personal data, including by way of supplementing a corrective statement."""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_8fd1b241_6e73_4771_9cf7_4a995dd8311b>,
+        <http://www.uni.lu/dataprotection#OWLClass_fdf49ad5_3967_4c7f_b6dc_e8de56c976b2> .
+
+<http://www.uni.lu/dataprotection#OWLClass_48029399_9b67_4460_9eec_db9c7f55752c> a :Class ;
+    rdfs:label "Retention"@en ;
+    rdfs:comment """DPH s. 3.3.3
+
+Article 6 (1) (e) of the Data Protection Directive and, likewise, Article 5 (e) of Convention 108 require Member States to ensure that personal data are "kept in a form which permits identification of data subjects for no longer than is necessary for the The key principles of European data protection law purposes for which the data were collected or for which they are further processed." The data must therefore be erased when those purposes have been served."""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_38c37e49_92a4_4bbc_9780_9eed89158298>,
+        <http://www.uni.lu/dataprotection#OWLClass_b841fd2e_162d_4f1a_8c2c_05dc948e63a0> .
+
+<http://www.uni.lu/dataprotection#OWLClass_4a286d0b_f129_4976_be2b_9c7ab71beb24> a :Class ;
+    rdfs:label "TransparentInformation"@en ;
+    rdfs:comment """Article 11
+
+The controller shall have transparent and easily accessible policies with regard to the processing of personal data and for the exercise of data subjects' rights.
+
+The controller shall provide any information and any communication relating to the processing of personal data to the data subject in an intelligible form, using clear and plain language, adapted to the data subject, in particular for any information addressed specifically to a child."""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_15f536e2_2946_4aca_b996_2615e37e729a>,
+        <http://www.uni.lu/dataprotection#OWLClass_a6bd38e0_dcde_48be_812b_8c785619187b>,
+        <http://www.uni.lu/dataprotection#OWLClass_c750844c_48fa_4fbd_8619_b8b9b1e967db> .
+
+<http://www.uni.lu/dataprotection#OWLClass_573ba052_e830_419f_9c33_bee5251b8043> a :Class ;
+    rdfs:label "RightOfAccess"@en ;
+    rdfs:comment """Article 15.1
+
+The data subject shall have the right to obtain from the controller at any time, on request, confirmation as to whether or not personal data relating to the data subject are being processed. Where such personal data are being processed, the controller shall provide the following information:
+(a) the purposes of the processing;
+(b) the categories of personal data concerned;
+(c) the recipients or categories of recipients to whom the personal data are to be or have been disclosed, in particular to recipients in third countries;
+(d) the period for which the personal data will be stored;
+(e) the existence of the right to request from the controller rectification or erasure of personal data concerning the data subject or to object to the processing of such personal data;
+(f) the right to lodge a complaint to the supervisory authority and the contact details of the supervisory authority;
+(g) communication of the personal data undergoing processing and of any available information as to their source;
+(h) the significance and envisaged consequences of such processing, at least in the case of measures referred to in Article 20."""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_83eaae05_ab01_4df1_b8ed_a203cfec5a08>,
+        <http://www.uni.lu/dataprotection#OWLClass_8fd1b241_6e73_4771_9cf7_4a995dd8311b> .
+
+<http://www.uni.lu/dataprotection#OWLClass_624c0561_eda6_4035_9f2a_47d4b8de3ee9> a :Class ;
+    rdfs:label "EURecipient"@en ;
+    rdfs:comment "A recipient located within the European Union, or subject to the Regulation."@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_bf972a40_26a4_451a_b104_ea993da94716> .
+
+<http://www.uni.lu/dataprotection#OWLClass_7bb468f6_ab61_4585_a9cb_522371c20b9d> a :Class ;
+    rdfs:label "Objection"@en ;
+    rdfs:comment "The data subjects' objection to the processing of personal data, on grounds relating to their particular situation, at any time to the processing of personal data which is based on points (d), (e) and (f) of Article 6(1)."@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClassImpl_58cf8e1b_e912_4f83_bdbe_0214e093bd4c> ;
+    :equivalentClass [ a :Restriction ;
+            :onProperty <http://www.uni.lu/dataprotection#OWLObjectProperty_2a714588_010a_4833_ae08_09b32aa6295c> ;
+            :someValuesFrom <http://www.uni.lu/dataprotection#OWLClass_080c5ed8_aa3c_4bfd_af54_dc6e2a546d8b> ],
+        [ a :Restriction ;
+            :onProperty <http://www.uni.lu/dataprotection#OWLObjectPropertyImpl_9679a244_6762_4da7_9aaa_c89f96e6f22c> ;
+            :someValuesFrom <http://www.uni.lu/dataprotection#OWLClass_2da92369_af57_4fc1_b84a_a35658cb88cf> ],
+        [ a :Restriction ;
+            :onProperty <http://www.uni.lu/dataprotection#OWLObjectPropertyImpl_9d75d818_a66f_4e92_8400_6990cb686671> ;
+            :someValuesFrom <http://www.uni.lu/dataprotection#OWLClass_15f536e2_2946_4aca_b996_2615e37e729a> ] .
+
+<http://www.uni.lu/dataprotection#OWLClass_91a1bac2_859c_446e_86c7_0f32f12470ac> a :Class ;
+    rdfs:label "Parent"@en ;
+    rdfs:comment "The parent or custodian of a child below the age of 13 years."@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_99a373a5_bae0_4769_a675_7bf1a8467f00> .
+
+<http://www.uni.lu/dataprotection#OWLClass_931c3eee_c583_4adb_9af9_e0891ea43f2b> a :Class ;
+    rdfs:label "RightToErasure"@en ;
+    rdfs:comment """Article 17.1
+
+The data subject shall have the right to obtain from the controller the erasure of personal data relating to them and the abstention from further dissemination of such data, especially in relation to personal data which are made available by the data subject while he or she was a child, where one of the following grounds applies:
+(a) the data are no longer necessary in relation to the purposes for which they were collected or otherwise processed;
+(b) the data subject withdraws consent on which the processing is based according to point (a) of Article 6(1), or when the storage period consented to has expired, and where there is no other legal ground for the processing of the data;
+(c) the data subject objects to the processing of personal data pursuant to Article 19;
+(d) the processing of the data does not comply with this Regulation for other reasons."""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_48029399_9b67_4460_9eec_db9c7f55752c>,
+        <http://www.uni.lu/dataprotection#OWLClass_8fd1b241_6e73_4771_9cf7_4a995dd8311b> .
+
+<http://www.uni.lu/dataprotection#OWLClass_af4ae221_0c41_4b82_8ff9_7561e9d9c6cd> a :Class ;
+    rdfs:label "Rule"@en ;
+    rdfs:comment "Requirement that the controller or processor must fulfill to be compliant with the Regulation."@en ;
+    skos:broadMatch <http://www.estrellaproject.org/lkif-core/norm.owl#Obligation> .
+
+<http://www.uni.lu/dataprotection#OWLClass_ba7850fa_6664_4b14_91d4_b8307ae8481d> a :Class ;
+    rdfs:label "Justification"@en ;
+    rdfs:comment "Reason to perform the processing, such as the interest of the data controller."@en ;
+    :disjointWith <http://www.uni.lu/dataprotection#OWLClass_ed8bdd2f_f171_49c2_9386_576fe410d791> .
+
+<http://www.uni.lu/dataprotection#OWLClass_eccd3a99_0368_4293_a3d1_e344dc5bd0a1> a :Class ;
+    rdfs:label "Fairness"@en ;
+    rdfs:comment """DPH s. 3.4
+
+The principle of fair processing governs primarily the relationship between the controller and the data subject."""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_6c46bd74_4881_488e_b461_603592bc3426> .
+
+<http://www.uni.lu/dataprotection#OWLClass_f0877852_cd4f_4338_bd33_7a11b7f3677d> a :Class ;
+    rdfs:label "PublicInterest"@en ;
+    rdfs:comment "An interest beneficial to a general community of undetermined individuals."@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_f993be7a_344f_4fee_9a35_75f1e3b367c5> .
+
+<http://www.uni.lu/dataprotection#OWLClass_f9140510_7d3e_441d_a8cf_a67da4fb19c4> a :Class ;
+    rdfs:label "AutomatedProcessing"@en ;
+    rdfs:comment "Processing that does not require human activity."@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_847950cb_b447_4f15_bb85_ed45f878d760> .
+
+<http://www.uni.lu/dataprotection#OWLClass_fccddccc_e1c5_425a_9e67_99ea9c2dfa55> a :Class ;
+    rdfs:label "SpecialConsent"@en ;
+    rdfs:comment "Consent given under special circumstances, such as to the processing of personal data of a child or to the processing of sensitive data."@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_a2ccd29b_a341_4659_919a_977a6a81d4d1> ;
+    :equivalentClass [ a :Restriction ;
+            :onProperty <http://www.uni.lu/dataprotection#OWLObjectProperty_86442676_0100_49b3_991c_504d7c89a49a> ;
+            :someValuesFrom <http://www.uni.lu/dataprotection#OWLClass_080c5ed8_aa3c_4bfd_af54_dc6e2a546d8b> ] .
+
+<http://www.uni.lu/dataprotection#OWLClass_fdf49ad5_3967_4c7f_b6dc_e8de56c976b2> a :Class ;
+    rdfs:label "Accuracy"@en ;
+    rdfs:comment """DPH s. 3.3.2
+
+A controller holding personal information shall not use that information without taking steps to ensure with reasonable certainty that the data are accurate and up to date."""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_b841fd2e_162d_4f1a_8c2c_05dc948e63a0> .
+
+<http://www.uni.lu/dataprotection#OWLObjectProperty_43a932bd_d72f_4cd9_8aef_a2b60603224f> a :ObjectProperty ;
+    rdfs:label "hasParties"@en ;
+    rdfs:domain <http://www.uni.lu/dataprotection#OWLClass_2023c585_fdec_4229_8951_24f6d4639634> ;
+    rdfs:range [ a :Class ;
+            :unionOf ( <http://www.uni.lu/dataprotection#OWLClass_413e4c1b_7d3b_4fc1_98c0_b782b533aae8> <http://www.uni.lu/dataprotection#OWLClass_be0e1d3c_0330_4bd1_994f_919bb4962315> ) ] .
+
+<http://www.uni.lu/dataprotection#OWLObjectProperty_963fc55c_8a6d_48eb_a7b5_0d111603003a> a :ObjectProperty ;
+    rdfs:label "hasRecipient"@en ;
+    rdfs:domain <http://www.uni.lu/dataprotection#OWLClass_eba91113_47e1_4806_8b83_bd8ba94c2002> ;
+    rdfs:range <http://www.uni.lu/dataprotection#OWLClass_bf972a40_26a4_451a_b104_ea993da94716> .
+
+<http://www.uni.lu/dataprotection#OWLObjectProperty_d6b379ea_fc70_4e52_8990_4b2579886200> a :FunctionalProperty,
+        :ObjectProperty ;
+    rdfs:label "consentGrantedBy"@en ;
+    rdfs:domain <http://www.uni.lu/dataprotection#OWLClass_a2ccd29b_a341_4659_919a_977a6a81d4d1> ;
+    rdfs:range <http://www.uni.lu/dataprotection#OWLClass_be0e1d3c_0330_4bd1_994f_919bb4962315> .
+
+xsd:string rdfs:label "xsd:string"@en .
+
+:topObjectProperty rdfs:label "owl:topObjectProperty"@en .
+
+<http://www.uni.lu/dataprotection#OWLClass_0b2f9b8c_8e60_4b1a_9471_9ce55bf73ae4> a :Class ;
+    rdfs:label "VitalInterest"@en ;
+    rdfs:comment "Interest concerning the life or health of a subject."@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_f993be7a_344f_4fee_9a35_75f1e3b367c5> .
+
+<http://www.uni.lu/dataprotection#OWLClass_2023c585_fdec_4229_8951_24f6d4639634> a :Class ;
+    rdfs:label "Contract"@en ;
+    rdfs:comment "Binding instrument to establish a legal relationship between two or more parties."@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_f993be7a_344f_4fee_9a35_75f1e3b367c5> ;
+    :equivalentClass [ a :Class ;
+            :intersectionOf ( [ a :Restriction ;
+                        :onClass <http://www.uni.lu/dataprotection#OWLClass_413e4c1b_7d3b_4fc1_98c0_b782b533aae8> ;
+                        :onProperty <http://www.uni.lu/dataprotection#OWLObjectProperty_43a932bd_d72f_4cd9_8aef_a2b60603224f> ;
+                        :qualifiedCardinality "1"^^xsd:nonNegativeInteger ] [ a :Restriction ;
+                        :onClass <http://www.uni.lu/dataprotection#OWLClass_be0e1d3c_0330_4bd1_994f_919bb4962315> ;
+                        :onProperty <http://www.uni.lu/dataprotection#OWLObjectProperty_43a932bd_d72f_4cd9_8aef_a2b60603224f> ;
+                        :qualifiedCardinality "1"^^xsd:nonNegativeInteger ] ) ] .
+
+<http://www.uni.lu/dataprotection#OWLClass_7e0df94b_e1c3_4a97_b19d_d9320b921f84> a :Class ;
+    rdfs:label "Accountability"@en ;
+    rdfs:comment """DPH s. 3.5
+
+The Organisation for Economic Co-operation and Development (OECD) adopted privacy guidelines in 2013 that highlighted that controllers have an important role in making data protection work in practice. The guidelines develop an accountability principle to the effect that "a data controller should be accountable for complying with measures which give effect to the [material] principles stated above.\""""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_6c46bd74_4881_488e_b461_603592bc3426> .
+
+<http://www.uni.lu/dataprotection#OWLClass_847950cb_b447_4f15_bb85_ed45f878d760> a :Class ;
+    rdfs:label "ProcessingMode"@en ;
+    rdfs:comment "The specific way in which the processing is performed."@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_080c5ed8_aa3c_4bfd_af54_dc6e2a546d8b> .
+
+<http://www.uni.lu/dataprotection#OWLClass_a42fde83_5051_4cc3_b86c_b1981b6b6500> a :Class ;
+    rdfs:label "LegitimateInterest"@en ;
+    rdfs:comment "Objective that a subject can legally pursue."@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_f993be7a_344f_4fee_9a35_75f1e3b367c5> .
+
+<http://www.uni.lu/dataprotection#OWLClass_b491c951_2363_4eab_a32f_0fc922d48adc> a :Class ;
+    rdfs:label "Purpose"@en ;
+    rdfs:comment """DPH s. 3.2
+
+In essence, the principle of purpose specification and limitation means that the legitimacy of processing personal data will depend on the purpose of the processing. The purpose must have been specified and made manifest by the controller before the processing of data starts. Under EU law, this must be done either by declaration, in other words by notification, to the appropriate supervisory authority or, at the least, by internal documentation which must be made available by the controller for inspection by the supervisory authorities and access by the data subject."""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_6c46bd74_4881_488e_b461_603592bc3426> .
+
+<http://www.uni.lu/dataprotection#OWLClass_b937960f_e255_4bcf_aff6_f362c905a8b8> a :Class ;
+    rdfs:label "LawfulnessPrinciple"@en ;
+    rdfs:comment """DPH s. 3.1.1
+
+The processing of personal data may constitute an interference with the right to respect for private life of the data subject. The right to respect for private life is, however, not an absolute right but must be balanced against and reconciled with other legitimate interests, be they of other persons (private interests) or of society as a whole (public interests)."""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_6c46bd74_4881_488e_b461_603592bc3426> ;
+    :equivalentClass [ a :Class ;
+            :oneOf ( <http://www.uni.lu/dataprotection#OWLNamedIndividual_9383a976_2f15_4a41_8d61_e43b5694658f> <http://www.uni.lu/dataprotection#OWLNamedIndividual_d54a634e_1259_4078_928b_3a630491f3c3> ) ] .
+
+<http://www.uni.lu/dataprotection#OWLClass_bf972a40_26a4_451a_b104_ea993da94716> a :Class ;
+    rdfs:label "Recipient"@en ;
+    rdfs:comment """Article 4(7)
+
+A natural or legal person, public authority, agency or any other body to which the personal data are disclosed"""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_413e4c1b_7d3b_4fc1_98c0_b782b533aae8> .
+
+<http://www.uni.lu/dataprotection#OWLClass_c544c98a_ea80_4638_94c2_47fe7985c5b9> a :Class ;
+    rdfs:label "DataBreach"@en ;
+    rdfs:comment "A violation of the security measures of the data controller that exposes personal data to unintended subjects."@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_15f536e2_2946_4aca_b996_2615e37e729a> .
+
+<http://www.uni.lu/dataprotection#OWLClass_dd11ad3d_8e96_4fd6_9646_b1fa4799b296> a :Class ;
+    rdfs:label "SupervisoryAuthority"@en ;
+    rdfs:comment """Article 4(19)
+
+A public authority which is established by a Member State in accordance with Article 46."""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_99a373a5_bae0_4769_a675_7bf1a8467f00> .
+
+<http://www.uni.lu/dataprotection#OWLClass_e7e707fc_dc05_4f59_973d_771a0e393117> a :Class ;
+    rdfs:label "LegalObligation"@en ;
+    rdfs:comment "Behaviour that is legally required of a subject by means of a contract or law."@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_f993be7a_344f_4fee_9a35_75f1e3b367c5> .
+
+<http://www.uni.lu/dataprotection#OWLClass_ea967b60_4d4f_41e0_97fe_8d7dd514619c> a :Class ;
+    rdfs:label "ChildData"@en ;
+    rdfs:comment "Personal data pertaining to a data subject under the age of 13 years."@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_f234596c_9040_4f87_bd51_49ec017fd3d5> .
+
+<http://www.uni.lu/dataprotection#OWLClass_3c5113eb_0923_4946_86cf_f5a83de7f9bb> a :Class ;
+    rdfs:label "Processor"@en ;
+    rdfs:comment """Article 4(6)
+
+A natural or legal person, public authority, agency or any other body which processes personal data on behalf of the controller."""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_99a373a5_bae0_4769_a675_7bf1a8467f00> .
+
+<http://www.uni.lu/dataprotection#OWLClass_59851879_88be_4cf3_bd27_3b185fc2046a> a :Class ;
+    rdfs:label "Compliance"@en ;
+    rdfs:comment """Article 5(f)
+
+Personal data must be processed under the responsibility and liability of the controller, who shall ensure and demonstrate for each processing operation the compliance with the provisions of this Regulation."""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_7e0df94b_e1c3_4a97_b19d_d9320b921f84>,
+        <http://www.uni.lu/dataprotection#OWLClass_c750844c_48fa_4fbd_8619_b8b9b1e967db> .
+
+<http://www.uni.lu/dataprotection#OWLClass_83eaae05_ab01_4df1_b8ed_a203cfec5a08> a :Class ;
+    rdfs:label "Transparency"@en ;
+    rdfs:comment """DPH s. 3.4.1
+
+This principle establishes an obligation for the controller to keep the data subjects informed about how their data are being used."""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_eccd3a99_0368_4293_a3d1_e344dc5bd0a1> .
+
+<http://www.uni.lu/dataprotection#OWLClass_b841fd2e_162d_4f1a_8c2c_05dc948e63a0> a :Class ;
+    rdfs:label "DataQuality"@en ;
+    rdfs:comment """DPH s. 3.3
+
+The principles of data quality must be implemented by the controller in all processing operations.
+The principle of limited retention of data makes it necessary to delete data as soon as they are no longer needed for the purposes for which they were collected.
+Exemptions from the principle of limited retention must be set out by law and need special safeguards for the protection of data subjects."""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_6c46bd74_4881_488e_b461_603592bc3426> .
+
+<http://www.uni.lu/dataprotection#OWLObjectPropertyImpl_9679a244_6762_4da7_9aaa_c89f96e6f22c> a :ObjectProperty ;
+    rdfs:label "exerciseRight"@en ;
+    rdfs:domain <http://www.uni.lu/dataprotection#OWLClassImpl_58cf8e1b_e912_4f83_bdbe_0214e093bd4c> ;
+    rdfs:range <http://www.uni.lu/dataprotection#OWLClass_8fd1b241_6e73_4771_9cf7_4a995dd8311b> .
+
+<http://www.uni.lu/dataprotection#OWLClassImpl_58cf8e1b_e912_4f83_bdbe_0214e093bd4c> a :Class ;
+    rdfs:label "Action"@en .
+
+<http://www.uni.lu/dataprotection#OWLClass_06a52543_55ee_4037_8370_dd56a165fe70> a :Class ;
+    rdfs:label "TransferRule"@en ;
+    rdfs:comment "Rule that applies only to the transfer of personal data."@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_af4ae221_0c41_4b82_8ff9_7561e9d9c6cd> .
+
+<http://www.uni.lu/dataprotection#OWLClass_31ba96e6_a8e7_4d61_9af2_25280e70bb8f> a :Class ;
+    rdfs:label "Security"@en ;
+    rdfs:comment """Article 30.1
+
+The controller and the processor shall implement appropriate technical and organisational measures to ensure a level of security appropriate to the risks represented by the processing and the nature of the personal data to be protected, having regard to the state of the art and the costs of their implementation."""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_7e0df94b_e1c3_4a97_b19d_d9320b921f84>,
+        <http://www.uni.lu/dataprotection#OWLClass_c750844c_48fa_4fbd_8619_b8b9b1e967db> .
+
+<http://www.uni.lu/dataprotection#OWLClass_6c46bd74_4881_488e_b461_603592bc3426> a :Class ;
+    rdfs:label "Principle"@en ;
+    rdfs:comment """DPH ch. 3
+
+The principles set out in Article 5 of Convention 108 enshrine the essence of European data protection law. They appear also in Article 6 of the Data Protection Directive as the starting point for more detailed provisions in the subsequent articles of the directive. All later data protection legislation at the CoE or EU level must comply with these principles and they must be kept in mind when interpreting such legislation.
+Any exemptions from and restrictions to these key principles may be provided for at national level;107 they must be provided for by law, pursue a legitimate aim and be necessary in a democratic society. All three conditions must be fulfilled."""@en ;
+    skos:broadMatch <http://www.estrellaproject.org/lkif-core/norm.owl> .
+
+<http://www.uni.lu/dataprotection#OWLClass_eba91113_47e1_4806_8b83_bd8ba94c2002> a :Class ;
+    rdfs:label "DataTransfer"@en ;
+    rdfs:comment """Article 4(3)
+
+Disclosure of personal data by transmission, dissemination or otherwise
+making available."""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_5a9540f3_9f42_46c1_9cff_227fa5323efb> .
+
+<http://www.uni.lu/dataprotection#OWLObjectPropertyImpl_9d75d818_a66f_4e92_8400_6990cb686671> a :ObjectProperty ;
+    rdfs:label "implements"@en .
+
+<http://www.uni.lu/dataprotection#OWLObjectProperty_1c8dcaa8_9f93_4cbb_9523_b4884a29a9b8> a :FunctionalProperty,
+        :ObjectProperty ;
+    rdfs:label "processingAppliesTo"@en ;
+    rdfs:domain <http://www.uni.lu/dataprotection#OWLClass_080c5ed8_aa3c_4bfd_af54_dc6e2a546d8b> ;
+    rdfs:range <http://www.uni.lu/dataprotection#OWLClass_ed8bdd2f_f171_49c2_9386_576fe410d791> .
+
+<http://www.uni.lu/dataprotection#OWLClass_a2ccd29b_a341_4659_919a_977a6a81d4d1> a :Class ;
+    rdfs:label "Consent"@en ;
+    rdfs:comment """Article 7
+
+The controller shall bear the burden of proof for the data subject's consent to the processing of their personal data for specified purposes.
+
+If the data subject's consent is to be given in the context of a written declaration which also concerns another matter, the requirement to give consent must be presented distinguishable in its appearance from this other matter.
+
+The data subject shall have the right to withdraw his or her consent at any time. The withdrawal of consent shall not affect the lawfulness of processing based on consent before its withdrawal.
+
+Consent shall not provide a legal basis for the processing, where there is a significant imbalance between the position of the data subject and the controller."""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_15f536e2_2946_4aca_b996_2615e37e729a>,
+        <http://www.uni.lu/dataprotection#OWLClass_f993be7a_344f_4fee_9a35_75f1e3b367c5> .
+
+<http://www.uni.lu/dataprotection#OWLObjectProperty_c2d389de_7681_40df_b3e8_00982e1ae1f2> a :ObjectProperty ;
+    rdfs:label "processingGrantsRight"@en ;
+    rdfs:domain <http://www.uni.lu/dataprotection#OWLClass_080c5ed8_aa3c_4bfd_af54_dc6e2a546d8b> ;
+    rdfs:range <http://www.uni.lu/dataprotection#OWLClass_8fd1b241_6e73_4771_9cf7_4a995dd8311b> .
+
+<http://www.uni.lu/dataprotection#OWLClass_f91e368a_9e61_4616_85d2_d24ff9c08ab2> a :Class ;
+    rdfs:label "LawfulProcessing"@en ;
+    rdfs:comment """Article 6.1
+
+Processing of personal data shall be lawful only if and to the extent that at least one of the following applies:
+(a) the data subject has given consent to the processing of their personal data for one or more specific purposes;
+(b) processing is necessary for the performance of a contract to which the data subject is party or in order to take steps at the request of the data subject prior to entering into a contract;
+(c) processing is necessary for compliance with a legal obligation to which the controller is subject;
+(d) processing is necessary in order to protect the vital interests of the data subject;
+(e) processing is necessary for the performance of a task carried out in the public interest or in the exercise of official authority vested in the controller;
+(f) processing is necessary for the purposes of the legitimate interests pursued by a controller, except where such interests are overridden by the interests or fundamental rights and freedoms of the data subject which require protection of personal data, in particular where the data subject is a child. This shall not apply to processing carried out by public authorities in the performance of their tasks."""@en ;
+    rdfs:subClassOf [ a :Restriction ;
+            :onProperty <http://www.uni.lu/dataprotection#OWLObjectProperty_570763f7_9a02_4787_bf15_dea159241d52> ;
+            :someValuesFrom <http://www.uni.lu/dataprotection#OWLClass_4a286d0b_f129_4976_be2b_9c7ab71beb24> ],
+        [ a :Restriction ;
+            :onProperty <http://www.uni.lu/dataprotection#OWLObjectProperty_570763f7_9a02_4787_bf15_dea159241d52> ;
+            :someValuesFrom <http://www.uni.lu/dataprotection#OWLClass_31ba96e6_a8e7_4d61_9af2_25280e70bb8f> ],
+        [ a :Restriction ;
+            :onProperty <http://www.uni.lu/dataprotection#OWLObjectProperty_c2d389de_7681_40df_b3e8_00982e1ae1f2> ;
+            :someValuesFrom <http://www.uni.lu/dataprotection#OWLClass_2da92369_af57_4fc1_b84a_a35658cb88cf> ],
+        [ a :Restriction ;
+            :onProperty <http://www.uni.lu/dataprotection#OWLObjectProperty_570763f7_9a02_4787_bf15_dea159241d52> ;
+            :someValuesFrom <http://www.uni.lu/dataprotection#OWLClass_c61c5125_09a3_46f0_9369_2288f8f41a1b> ],
+        [ a :Restriction ;
+            :onProperty <http://www.uni.lu/dataprotection#OWLObjectProperty_570763f7_9a02_4787_bf15_dea159241d52> ;
+            :someValuesFrom <http://www.uni.lu/dataprotection#OWLClass_f993be7a_344f_4fee_9a35_75f1e3b367c5> ],
+        [ a :Restriction ;
+            :onProperty <http://www.uni.lu/dataprotection#OWLObjectProperty_c2d389de_7681_40df_b3e8_00982e1ae1f2> ;
+            :someValuesFrom <http://www.uni.lu/dataprotection#OWLClass_fa3d54a9_5ad4_4240_b021_815d980dcda6> ],
+        [ a :Class ;
+            :complementOf [ a :Restriction ;
+                    :onProperty <http://www.uni.lu/dataprotection#OWLObjectProperty_4233322f_cb80_4ee7_bed2_213d920c59c3> ;
+                    :someValuesFrom <http://www.uni.lu/dataprotection#OWLClass_7bb468f6_ab61_4585_a9cb_522371c20b9d> ] ],
+        [ a :Restriction ;
+            :onProperty <http://www.uni.lu/dataprotection#OWLObjectProperty_570763f7_9a02_4787_bf15_dea159241d52> ;
+            :someValuesFrom <http://www.uni.lu/dataprotection#OWLClass_cd736f6b_2897_46b3_af1e_89e318585b0a> ],
+        [ a :Restriction ;
+            :onProperty <http://www.uni.lu/dataprotection#OWLObjectProperty_c2d389de_7681_40df_b3e8_00982e1ae1f2> ;
+            :someValuesFrom <http://www.uni.lu/dataprotection#OWLClass_931c3eee_c583_4adb_9af9_e0891ea43f2b> ],
+        [ a :Restriction ;
+            :onProperty <http://www.uni.lu/dataprotection#OWLObjectProperty_c2d389de_7681_40df_b3e8_00982e1ae1f2> ;
+            :someValuesFrom <http://www.uni.lu/dataprotection#OWLClass_43574c52_adab_4ef9_807a_68f850c65a04> ],
+        [ a :Restriction ;
+            :onProperty <http://www.uni.lu/dataprotection#OWLObjectProperty_570763f7_9a02_4787_bf15_dea159241d52> ;
+            :someValuesFrom <http://www.uni.lu/dataprotection#OWLClass_59851879_88be_4cf3_bd27_3b185fc2046a> ],
+        [ a :Restriction ;
+            :onProperty <http://www.uni.lu/dataprotection#OWLObjectProperty_c2d389de_7681_40df_b3e8_00982e1ae1f2> ;
+            :someValuesFrom <http://www.uni.lu/dataprotection#OWLClass_12f8d2e4_932c_44b2_a152_7fb6fe4d7e7c> ],
+        [ a :Restriction ;
+            :onProperty <http://www.uni.lu/dataprotection#OWLObjectProperty_c2d389de_7681_40df_b3e8_00982e1ae1f2> ;
+            :someValuesFrom <http://www.uni.lu/dataprotection#OWLClass_b628f28a_bd8c_471e_9c61_9548ff8cfd58> ],
+        <http://www.uni.lu/dataprotection#OWLClass_080c5ed8_aa3c_4bfd_af54_dc6e2a546d8b> ;
+    :equivalentClass [ a :Class ;
+            :unionOf ( <http://www.uni.lu/dataprotection#OWLClass_02b07422_386e_4a70_8c4a_c2534b513fb5> <http://www.uni.lu/dataprotection#OWLClass_301e1bec_ae1a_4601_9bea_a35fe79e4ea3> <http://www.uni.lu/dataprotection#OWLClass_c37e1def_c49d_4171_94ca_7d6912ef2acf> ) ] .
+
+<http://www.uni.lu/dataprotection#OWLClass_f993be7a_344f_4fee_9a35_75f1e3b367c5> a :Class ;
+    rdfs:label "LegalJustification"@en ;
+    rdfs:comment "Reason to perform the processing which is based on legal grounds, such as an legitimate interest of the data controller."@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_7ef6aaee_8d1b_4e22_bee2_f64f4332c477>,
+        <http://www.uni.lu/dataprotection#OWLClass_ba7850fa_6664_4b14_91d4_b8307ae8481d> .
+
+<http://www.uni.lu/dataprotection#OWLClass_15f536e2_2946_4aca_b996_2615e37e729a> a :Class ;
+    rdfs:label "Trust"@en ;
+    rdfs:comment """DPH s. 3.4.2
+
+Controllers should document, to data subjects and to the general public, that they will process data in a lawful and transparent manner. Processing operations must not be performed in secret and should not have unforeseeable negative effects. Controllers should ensure that customers, clients or citizens are informed about the use of their data. Further, controllers, so far as possible, must act in a way which promptly complies with the wishes of the data subject, especially where his or her consent forms the legal basis for the data processing."""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_eccd3a99_0368_4293_a3d1_e344dc5bd0a1> .
+
+<http://www.uni.lu/dataprotection#OWLClass_99a373a5_bae0_4769_a675_7bf1a8467f00> a :Class ;
+    rdfs:label "Person"@en ;
+    rdfs:comment "An individual or organization involved in the processing of personal data."@en ;
+    :disjointWith <http://www.uni.lu/dataprotection#OWLClass_ed8bdd2f_f171_49c2_9386_576fe410d791> .
+
+<http://www.uni.lu/dataprotection#OWLClass_c750844c_48fa_4fbd_8619_b8b9b1e967db> a :Class ;
+    rdfs:label "ProcessingRule"@en ;
+    rdfs:comment """DPH ch. 4
+
+Principles are necessarily of a general nature. Their application to concrete situations leaves a certain margin of interpretation and choice of means. Under CoE law, it is left to the Parties to Convention 108 to clarify this margin of interpretation in their domestic law. The situation in EU law is different: for the establishment of data protection in the internal market, it was deemed necessary to have more detailed rules already at the EU level in order to harmonise the level of data protection of the national laws of the Member States. The Data Protection Directive establishes, under the principles set out in its Article 6, a layer of detailed rules which must be faithfully implemented in national law. The following remarks on detailed data protection rules at the European level deal, therefore, predominantly with EU law."""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_af4ae221_0c41_4b82_8ff9_7561e9d9c6cd> .
+
+<http://www.uni.lu/dataprotection#OWLClass_8fd1b241_6e73_4771_9cf7_4a995dd8311b> a :Class ;
+    rdfs:label "DataSubjectRight"@en ;
+    rdfs:comment """DPH s. 5.1
+
+The effectiveness of legal rules in general and data subjects’ rights in particular, depends to a considerable extent on the existence of appropriate mechanisms to enforce them. In European data protection law, the data subject must be empowered by national law to protect his or her data. Independent supervisory authorities must also be established by national law to assist the data subjects in exercising their rights and to supervise the processing of personal data. Additionally, the right to an effective remedy, as guaranteed under the ECHR and the Charter, demands that judicial remedies be available to every person."""@en ;
+    skos:closeMatch <http://www.estrellaproject.org/lkif-core/norm.owl#Right> .
+
+<http://www.uni.lu/dataprotection#OWLClass_413e4c1b_7d3b_4fc1_98c0_b782b533aae8> a :Class ;
+    rdfs:label "Controller"@en ;
+    rdfs:comment """Article 4(5)
+
+the natural or legal person, public authority, agency or any other body which alone or jointly with others determines the purposes, conditions and means of the processing of personal data; where the purposes, conditions and means of processing are determined by Union law or Member State law, the controller or the specific criteria for his nomination may be designated by Union law or by Member State law."""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_99a373a5_bae0_4769_a675_7bf1a8467f00> .
+
+<http://www.uni.lu/dataprotection#OWLClass_be0e1d3c_0330_4bd1_994f_919bb4962315> a :Class ;
+    rdfs:label "DataSubject"@en ;
+    rdfs:comment """Article 4(1)
+
+An identified natural person or a natural person who can be identified, directly or indirectly, by means reasonably likely to be used by the controller or by any other natural or legal person, in particular by reference to an identification number, location data, online identifier or to one or more factors specific to the physical, physiological, genetic, mental, economic, cultural or social identity of that person."""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_99a373a5_bae0_4769_a675_7bf1a8467f00> ;
+    skos:closeMatch <http://www.estrellaproject.org/lkif-core/legal-action.owl#Natural_Person> .
+
+<http://www.uni.lu/dataprotection#OWLClass_ed8bdd2f_f171_49c2_9386_576fe410d791> a :Class ;
+    rdfs:label "PersonalData"@en ;
+    rdfs:comment """Article 4(2)
+
+Any information relating to a data subject."""@en .
+
+<http://www.uni.lu/dataprotection#OWLClass_f234596c_9040_4f87_bd51_49ec017fd3d5> a :Class ;
+    rdfs:label "SensitiveData"@en ;
+    rdfs:comment """Article 9.1
+
+Personal data revealing race or ethnic origin, political opinions, religion or beliefs, trade-union membership, and the processing of genetic data or data concerning health or sex life or criminal convictions or related security measures."""@en ;
+    rdfs:subClassOf <http://www.uni.lu/dataprotection#OWLClass_ed8bdd2f_f171_49c2_9386_576fe410d791> ;
+    :equivalentClass [ a :Class ;
+            :unionOf ( <http://www.uni.lu/dataprotection#OWLClass_ea967b60_4d4f_41e0_97fe_8d7dd514619c> [ a :Class ;
+                        :oneOf ( <http://www.uni.lu/dataprotection#OWLNamedIndividual_ad6121f2_bdc0_4ea7_a67e_372f70b08f9a> <http://www.uni.lu/dataprotection#OWLNamedIndividual_f39efa62_7202_46d8_9736_7be3966f2ee4> <http://www.uni.lu/dataprotection#OWLNamedIndividual_8de904ed_c312_4b94_8936_21ff4dc59afc> <http://www.uni.lu/dataprotection#OWLNamedIndividual_2f06aa66_4ab7_41c6_9b94_c2cb13e9691f> <http://www.uni.lu/dataprotection#OWLNamedIndividual_e572ffb6_feda_492a_83c1_2ab982d3af11> <http://www.uni.lu/dataprotection#OWLNamedIndividual_f7438c24_0ad0_44ee_a402_760d6d3aaa99> <http://www.uni.lu/dataprotection#OWLNamedIndividual_55e57984_3d3c_4ba0_8321_6c74aaf17d36> <http://www.uni.lu/dataprotection#OWLNamedIndividual_80f23d4a_5825_4858_af79_1c67c5289684> <http://www.uni.lu/dataprotection#OWLNamedIndividual_a91304fc_bb35_41cd_a8f0_8cf07c096e4a> ) ] ) ] .
+
+dc: terms:modified "2012-06-14"^^xsd:date ;
+    terms:publisher <http://purl.org/dc/aboutdcmi#DCMI> ;
+    terms:title "Dublin Core Metadata Element Set, Version 1.1"@en .
+
+<http://www.uni.lu/dataprotection#OWLObjectProperty_570763f7_9a02_4787_bf15_dea159241d52> a :InverseFunctionalProperty,
+        :ObjectProperty ;
+    rdfs:label "processingHasRequirement"@en ;
+    rdfs:domain <http://www.uni.lu/dataprotection#OWLClass_080c5ed8_aa3c_4bfd_af54_dc6e2a546d8b> ;
+    rdfs:range <http://www.uni.lu/dataprotection#OWLClass_c750844c_48fa_4fbd_8619_b8b9b1e967db> .
+
+<http://www.uni.lu/dataprotection#OWLClass_080c5ed8_aa3c_4bfd_af54_dc6e2a546d8b> a :Class ;
+    rdfs:label "DataProcessing"@en ;
+    rdfs:comment """Article 4(3)
+
+Any operation or set of operations which is performed upon personal data or sets of personal data, whether or not by automated means, such as collection, recording, organization, structuring, storage, adaptation or alteration, retrieval, consultation, use, disclosure by transmission, dissemination or otherwise making available, alignment or combination, erasure or destruction."""@en ;
+    :disjointWith <http://www.uni.lu/dataprotection#OWLClass_99a373a5_bae0_4769_a675_7bf1a8467f00>,
+        <http://www.uni.lu/dataprotection#OWLClass_ed8bdd2f_f171_49c2_9386_576fe410d791> .
+
+[] a :AllDisjointClasses ;
+    :members ( <http://www.uni.lu/dataprotection#OWLClass_3c993f72_4546_4509_b66b_425999f0118d> <http://www.uni.lu/dataprotection#OWLClass_70533b01_01ad_4c16_92d7_d37ff183d561> <http://www.uni.lu/dataprotection#OWLClass_bfbcc9ac_862a_454f_8a67_a52f688d75ca> ) .
+
