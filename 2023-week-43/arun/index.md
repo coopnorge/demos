@@ -62,15 +62,20 @@ https://github.com/release-drafter/release-drafter
 ![Create PR](./create-pr-seq.png)
 
 ---
+<!-- backgroundColor: #232529 -->
+
+# Demo
+
+---
+<!-- backgroundColor: white -->
 
 #
-<!-- backgroundColor: white -->
 ![Merge](./merge-seq.png)
 
 ---
 <!-- backgroundColor: #232529 -->
 
-# Demo
+# Demo 2
 
 ---
 <!-- backgroundColor: #232529 -->
@@ -83,4 +88,7 @@ https://github.com/release-drafter/release-drafter
 ---
 <!-- backgroundColor: #232529 -->
 
-# Thank you
+# Thank you for joining
+
+## Special thanks to @nhhagen and @bendiknesbo for help
+## throughout the process
