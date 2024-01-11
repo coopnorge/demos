@@ -1,6 +1,6 @@
 {
 	"composefiles": {
-		"docker-compose.yml": [
+		"docker-compose.yaml": [
 			{
 				"name": "golang",
 				"tag": "1.16-buster",
