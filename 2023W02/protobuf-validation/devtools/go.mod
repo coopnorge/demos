@@ -1,6 +1,6 @@
 module devtools.invalid
 
-go 1.19
+go 1.21
 
 require (
 	github.com/cortesi/modd v0.0.0-20211215124449-6083f9d1c171
