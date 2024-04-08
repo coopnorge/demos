@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package coopnorge.store.v1;
+
+// The Store Information API service.
+service StoreInformationAPI {
+  // This method returns a single store based in the ID in the request.
+  rpc GetStore(GetStoreRequest) returns (GetStoreResponse);
+}
+
+// Parameters for GetStore request.
+message GetStoreRequest {
+  // The identifier for the Store.
+  string id = 1;
+}
+
+// Response for GetStore
+message GetStoreResponse {
+  Store store = 1;
+}
+
+
+// The message describes a Store which is a physical outlet which is part of a
+// specific coop chain.
+message Store {
+  // The identifier for the Store.
+  string id = 1;
+  // The store's name.
+  string name = 2;
+}

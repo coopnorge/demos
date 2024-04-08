@@ -1,0 +1,21 @@
+# https://docs.buf.build/configuration/v1/buf-gen-yaml
+version: v1
+managed:
+  # https://docs.buf.build/generate/managed-mode
+  # https://docs.buf.build/tour/use-managed-mode
+  enabled: true
+  go_package_prefix:
+    default: github.com/coopnorge/bendik-connectrpc
+plugins:
+  # The plugins needs to be installed from golang-devtools: https://github.com/coopnorge/engineering-docker-images/blob/main/images/devtools-golang-v1beta1/context/tools.go
+  - plugin: go
+    # https://developers.google.com/protocol-buffers/docs/reference/go-generated
+    out: .
+    opt:
+      - paths=import
+      - module=github.com/coopnorge/bendik-connectrpc
+  - plugin: connect-go
+    out: .
+    opt:
+      - paths=import
+      - module=github.com/coopnorge/bendik-connectrpc
