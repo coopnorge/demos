@@ -15,9 +15,15 @@ grpcurl:
 
 curl:
 	curl \
-    --header "Content-Type: application/json" \
-    --data '{"id": "2"}' \
-    http://localhost:8080/coopnorge.store.v1.StoreInformationAPI/GetStore
+	--header "Content-Type: application/json" \
+	--data '{"id": "2"}' \
+	http://localhost:8080/coopnorge.store.v1.StoreInformationAPI/GetStore
+
+buf-curl:
+	buf curl \
+	--schema proto/coopnorge/store/v1/store_api.proto  \
+	--data '{"id": "2"}' \
+	http://localhost:8080/coopnorge.store.v1.StoreInformationAPI/GetStore
 
 run-client:
 	go run github.com/coopnorge/bendik-connectrpc/cmd/client

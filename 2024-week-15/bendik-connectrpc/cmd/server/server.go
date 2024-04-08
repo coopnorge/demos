@@ -82,3 +82,6 @@ func (s *StoreServer) GetStore(_ context.Context, req *connect.Request[storev1.G
 	})
 	return res, nil
 }
+
+// gRPC method signature:
+// func (s *StoreServer) GetStore(ctx context.Context, req *storev1.GetStoreRequest) (*storev1.GetStoreResponse, error)
