@@ -1,0 +1,10 @@
+version: v1
+lint:
+  use:
+    - DEFAULT
+    - COMMENTS
+    - PACKAGE_NO_IMPORT_CYCLE
+breaking:
+  use:
+    - FILE
+  ignore_unstable_packages: true
