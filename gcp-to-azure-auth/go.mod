@@ -1,6 +1,6 @@
 module gcp-to-azure-auth
 
-go 1.20
+go 1.22
 
 require (
 	cloud.google.com/go/iam v0.4.0
