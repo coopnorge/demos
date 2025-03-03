@@ -1,0 +1,18 @@
+name: Security
+on:
+  push: {}
+  pull_request: {}
+  schedule:
+    - cron: '0 0 * * 1'
+
+permissions:
+  contents: read
+  actions: read
+  packages: read
+  security-events: write
+
+jobs:
+  supply-chain-security-validation:
+    name: Supply Chain
+    uses: coopnorge/github-workflow-supply-chain-security-validation/.github/workflows/supply-chain-security-validation.yaml@main
+    secrets: inherit
