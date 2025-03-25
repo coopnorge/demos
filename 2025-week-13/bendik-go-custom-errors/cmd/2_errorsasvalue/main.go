@@ -25,13 +25,18 @@ func main() {
 		panic("valueErrAsPointer was not matched with errors.As (second param is double pointer)")
 	}
 
+	valueErr := &ValueError{}
+	if errors.As(err, &valueErr) {
+		log.Printf("Got ValueError with value: %s", valueErr.Value)
+	}
+
 	log.Printf("Done.")
 }
 
 func valueErrAsPointer() error {
-	return &ValueError{""}
+	return &ValueError{"foobar"}
 }
 
 func valueErrAsValue() error {
-	return ValueError{}
+	return ValueError{"foobar"}
 }

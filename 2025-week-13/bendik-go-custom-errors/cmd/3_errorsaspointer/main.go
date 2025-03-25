@@ -22,6 +22,11 @@ func main() {
 		panic("pointerErrAsPointer was not matched with errors.As (second param is double pointer)")
 	}
 
+	pointerErr := &PointerError{}
+	if errors.As(err, &pointerErr) {
+		log.Printf("Got PointerError with value: %s", pointerErr.Value)
+	}
+
 	log.Printf("Done.")
 }
 
@@ -30,5 +35,5 @@ func main() {
 //}
 
 func pointerErrAsPointer() error {
-	return &PointerError{}
+	return &PointerError{"foobar"}
 }
