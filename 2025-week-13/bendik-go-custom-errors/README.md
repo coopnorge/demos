@@ -7,3 +7,12 @@ The PR comment that prompted this demo:
 
 Implemented for this demo session:
 <https://github.com/coopnorge/engineering-issues/issues/442>
+
+Go released native support for `errors.Is`, `errors.As`, and the `Unwrap` method
+(and the `%w` formatting verb) in
+[Go 1.13](https://go.dev/doc/go1.13#error_wrapping).
+
+Popular multi-error libraries before Go released native support:
+
+- [`github.com/pkg/errors`](https://github.com/pkg/errors)
+- [`github.com/uber-go/multierr`](https://github.com/uber-go/multierr)
