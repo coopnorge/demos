@@ -8,10 +8,12 @@ type Animal interface {
 	Speak()
 }
 
-type Dog struct{}
+type Dog struct {
+	Owner string
+}
 
 func (d *Dog) Speak() {
-	fmt.Printf("Woof!\n")
+	fmt.Printf("Woof %s!\n", d.Owner)
 }
 
 // GetAnimal returns an Animal interface.
@@ -40,7 +42,7 @@ func main() {
 	} else {
 		fmt.Println("a1 is NOT nil (Trap!)")
 		fmt.Printf("Value: %v, Type: %T\n", a1, a1)
-		// a1.Speak()
+		a1.Speak()
 	}
 
 	fmt.Println("------------------------------------------------")
