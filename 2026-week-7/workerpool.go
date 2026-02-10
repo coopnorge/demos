@@ -1,7 +1,7 @@
 package main
 
 func processWithLimitWorkerPool(items []string, maxWorkers int) {
-	jobs := make(chan string, len(items))
+	jobs := make(chan string, maxWorkers)
 	doneCh := make(chan struct{})
 
 	// Start workers
