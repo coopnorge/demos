@@ -13,7 +13,7 @@ require (
 	github.com/joho/godotenv v1.4.0
 	github.com/mitchellh/mapstructure v1.5.0
 	github.com/pkg/profile v1.7.0
-	github.com/sirupsen/logrus v1.8.1
+	github.com/sirupsen/logrus v1.8.3
 	github.com/spf13/cobra v1.4.0
 	github.com/spf13/pflag v1.0.5
 	github.com/spf13/viper v1.11.0
