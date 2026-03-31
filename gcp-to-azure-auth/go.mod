@@ -5,7 +5,7 @@ go 1.24.0
 require (
 	cloud.google.com/go/iam v0.4.0
 	github.com/Azure/azure-storage-blob-go v0.15.0
-	github.com/AzureAD/microsoft-authentication-library-for-go v0.7.0
+	github.com/AzureAD/microsoft-authentication-library-for-go v0.9.0
 	github.com/spf13/viper v1.13.0
 	google.golang.org/genproto v0.0.0-20220916172020-2692e8806bfa
 )
