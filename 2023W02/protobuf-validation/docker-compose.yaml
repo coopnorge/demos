@@ -21,7 +21,7 @@ services:
     ports:
       - "127.0.0.1:32604:32604"
   grpcurl:
-    image: docker.io/fullstorydev/grpcurl:latest@sha256:d42ef512419560776bee5bb51e338a1734a0edb99f450b6d98fd98bcc93796f3
+    image: docker.io/fullstorydev/grpcurl:latest@sha256:085e183ca334eb4e81ca81ee12cbb2b2737505d1d77f5e33dabc5d066593d998
     network_mode: host
   mockoauth2:
     image: ghcr.io/navikt/mock-oauth2-server:0.3.5@sha256:3d96dbc475c11ee62f14fd8025ace900c3cffa87da2cfdb7765c8dccc42de223
