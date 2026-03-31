@@ -1,4 +1,4 @@
-FROM docker.io/mikefarah/yq:4@sha256:495c1e1db2d653cce61a06da52cfca0c7d68d6249cc6e61b2a134d92c609c016 AS yq
+FROM docker.io/mikefarah/yq:4@sha256:603ebff15eb308a05f1c5b8b7613179cad859aed3ec9fdd04f2ef5d32345950e AS yq
 FROM docker.io/jeffail/benthos:4@sha256:7949a2219a265150d3676c1ac108712ac4c03b9a52176d6f735c3e5131cc7b91 AS benthos
 FROM docker.io/library/golang:1.18.5-bullseye@sha256:c362804a0f4e21a7006e36212cbcec6b2888c01dd560d577e74e33d32e12013f AS golang
 # FROM docker.io/google/cloud-sdk:slim@sha256:2c63781317816109976151a4f233222926dd62baee33d402a5fb9ee2707c9745
