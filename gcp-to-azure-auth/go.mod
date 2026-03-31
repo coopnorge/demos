@@ -5,7 +5,7 @@ go 1.24.0
 require (
 	cloud.google.com/go/iam v1.5.3
 	github.com/Azure/azure-storage-blob-go v0.15.0
-	github.com/AzureAD/microsoft-authentication-library-for-go v0.9.0
+	github.com/AzureAD/microsoft-authentication-library-for-go v1.7.0
 	github.com/spf13/viper v1.13.0
 	google.golang.org/genproto v0.0.0-20250603155806-513f23925822
 )
@@ -20,7 +20,7 @@ require (
 	github.com/fsnotify/fsnotify v1.5.4 // indirect
 	github.com/go-logr/logr v1.4.3 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
-	github.com/golang-jwt/jwt/v4 v4.5.2 // indirect
+	github.com/golang-jwt/jwt/v5 v5.2.2 // indirect
 	github.com/google/s2a-go v0.1.9 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/googleapis/enterprise-certificate-proxy v0.3.6 // indirect
