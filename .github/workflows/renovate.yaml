@@ -1,0 +1,28 @@
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      log-level:
+        description: "Override default log level"
+        required: false
+        default: "debug"
+        type: string
+  schedule:
+    # At 07:30 AM and 12:30 PM, every day
+    - cron: "30 7,12 * * *"
+
+jobs:
+  renovate:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    permissions:
+      contents: write
+      pull-requests: write
+      id-token: write
+      issues: write
+    uses: coopnorge/github-workflow-renovate/.github/workflows/renovate.yaml@v0
+    secrets: inherit
+    with:
+      config-file: ".github/renovate.json5"
+      log-level: ${{ inputs.log-level }}
