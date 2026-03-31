@@ -1,3 +1,3 @@
-FROM docker.io/library/alpine:3.13@sha256:826f70e0ac33e99a72cf20fb0571245a8fee52d68cb26d8bc58e53bfa65dcdfa
+FROM docker.io/library/alpine:3.13@sha256:469b6e04ee185740477efa44ed5bdd64a07bbdd6c7e5f5d169e540889597b911
 
 RUN ["echo", "example"]
