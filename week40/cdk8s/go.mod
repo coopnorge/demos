@@ -5,12 +5,14 @@ go 1.25.0
 require (
 	github.com/aws/constructs-go/constructs/v3 v3.4.344
 	github.com/aws/jsii-runtime-go v1.127.0
-	github.com/cdk8s-team/cdk8s-core-go/cdk8s v1.63.145
+	github.com/cdk8s-team/cdk8s-core-go/cdk8s/v2 v2.70.51
 	github.com/cdk8s-team/cdk8s-plus-go/cdk8splus20 v1.0.0-beta.187
 )
 
 require (
 	github.com/Masterminds/semver/v3 v3.4.0 // indirect
+	github.com/aws/constructs-go/constructs/v10 v10.0.0 // indirect
+	github.com/cdk8s-team/cdk8s-core-go/cdk8s v1.5.86 // indirect
 	github.com/fatih/color v1.18.0 // indirect
 	github.com/mattn/go-colorable v0.1.14 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
