@@ -18,7 +18,7 @@ click = "^8.0.0"
 dataclasses = { version = "^0.8", python = ">=3.6,<3.7" }
 pydantic = {extras = ["dotenv"], version = "^1.8.2"}
 typer = "^0.24.0"
-jsonschema = "^3.2.0"
+jsonschema = "^4.0.0"
 PyYAML = "^6.0.0"
 
 [tool.poetry.dev-dependencies]
