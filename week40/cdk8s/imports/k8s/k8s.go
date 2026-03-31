@@ -9,7 +9,7 @@ import (
 
 	"example.com/cdk8s/imports/k8s/internal"
 	"github.com/aws/constructs-go/constructs/v3"
-	"github.com/cdk8s-team/cdk8s-core-go/cdk8s"
+	"github.com/cdk8s-team/cdk8s-core-go/cdk8s/v2"
 )
 
 // Affinity is a group of affinity scheduling rules.
@@ -2565,7 +2565,6 @@ func (k *jsiiProxy_KubeApiService) AddDependency(dependencies ...constructs.ICon
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeApiService) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -2833,7 +2832,6 @@ func (k *jsiiProxy_KubeApiServiceList) AddDependency(dependencies ...constructs.
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeApiServiceList) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -3123,7 +3121,6 @@ func (k *jsiiProxy_KubeBinding) AddDependency(dependencies ...constructs.IConstr
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeBinding) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -3409,7 +3406,6 @@ func (k *jsiiProxy_KubeCertificateSigningRequest) AddDependency(dependencies ...
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeCertificateSigningRequest) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -3677,7 +3673,6 @@ func (k *jsiiProxy_KubeCertificateSigningRequestList) AddDependency(dependencies
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeCertificateSigningRequestList) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -3967,7 +3962,6 @@ func (k *jsiiProxy_KubeClusterRole) AddDependency(dependencies ...constructs.ICo
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeClusterRole) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -4237,7 +4231,6 @@ func (k *jsiiProxy_KubeClusterRoleBinding) AddDependency(dependencies ...constru
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeClusterRoleBinding) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -4505,7 +4498,6 @@ func (k *jsiiProxy_KubeClusterRoleBindingList) AddDependency(dependencies ...con
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeClusterRoleBindingList) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -4783,7 +4775,6 @@ func (k *jsiiProxy_KubeClusterRoleBindingListV1Alpha1) AddDependency(dependencie
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeClusterRoleBindingListV1Alpha1) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -5077,7 +5068,6 @@ func (k *jsiiProxy_KubeClusterRoleBindingV1Alpha1) AddDependency(dependencies ..
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeClusterRoleBindingV1Alpha1) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -5359,7 +5349,6 @@ func (k *jsiiProxy_KubeClusterRoleList) AddDependency(dependencies ...constructs
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeClusterRoleList) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -5637,7 +5626,6 @@ func (k *jsiiProxy_KubeClusterRoleListV1Alpha1) AddDependency(dependencies ...co
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeClusterRoleListV1Alpha1) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -5929,7 +5917,6 @@ func (k *jsiiProxy_KubeClusterRoleV1Alpha1) AddDependency(dependencies ...constr
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeClusterRoleV1Alpha1) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -6213,7 +6200,6 @@ func (k *jsiiProxy_KubeComponentStatus) AddDependency(dependencies ...constructs
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeComponentStatus) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -6483,7 +6469,6 @@ func (k *jsiiProxy_KubeComponentStatusList) AddDependency(dependencies ...constr
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeComponentStatusList) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -6775,7 +6760,6 @@ func (k *jsiiProxy_KubeConfigMap) AddDependency(dependencies ...constructs.ICons
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeConfigMap) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -7043,7 +7027,6 @@ func (k *jsiiProxy_KubeConfigMapList) AddDependency(dependencies ...constructs.I
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeConfigMapList) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -7341,7 +7324,6 @@ func (k *jsiiProxy_KubeControllerRevision) AddDependency(dependencies ...constru
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeControllerRevision) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -7609,7 +7591,6 @@ func (k *jsiiProxy_KubeControllerRevisionList) AddDependency(dependencies ...con
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeControllerRevisionList) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -7899,7 +7880,6 @@ func (k *jsiiProxy_KubeCronJob) AddDependency(dependencies ...constructs.IConstr
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeCronJob) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -8167,7 +8147,6 @@ func (k *jsiiProxy_KubeCronJobList) AddDependency(dependencies ...constructs.ICo
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeCronJobList) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -8445,7 +8424,6 @@ func (k *jsiiProxy_KubeCronJobListV1Beta1) AddDependency(dependencies ...constru
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeCronJobListV1Beta1) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -8735,7 +8713,6 @@ func (k *jsiiProxy_KubeCronJobV1Beta1) AddDependency(dependencies ...constructs.
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeCronJobV1Beta1) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -9017,7 +8994,6 @@ func (k *jsiiProxy_KubeCsiDriver) AddDependency(dependencies ...constructs.ICons
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeCsiDriver) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -9285,7 +9261,6 @@ func (k *jsiiProxy_KubeCsiDriverList) AddDependency(dependencies ...constructs.I
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeCsiDriverList) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -9575,7 +9550,6 @@ func (k *jsiiProxy_KubeCsiNode) AddDependency(dependencies ...constructs.IConstr
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeCsiNode) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -9843,7 +9817,6 @@ func (k *jsiiProxy_KubeCsiNodeList) AddDependency(dependencies ...constructs.ICo
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeCsiNodeList) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -10129,7 +10102,6 @@ func (k *jsiiProxy_KubeCsiStorageCapacityListV1Alpha1) AddDependency(dependencie
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeCsiStorageCapacityListV1Alpha1) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -10405,7 +10377,6 @@ func (k *jsiiProxy_KubeCsiStorageCapacityListV1Beta1) AddDependency(dependencies
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeCsiStorageCapacityListV1Beta1) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -10691,7 +10662,6 @@ func (k *jsiiProxy_KubeCsiStorageCapacityV1Alpha1) AddDependency(dependencies ..
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeCsiStorageCapacityV1Alpha1) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -11007,7 +10977,6 @@ func (k *jsiiProxy_KubeCsiStorageCapacityV1Beta1) AddDependency(dependencies ...
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeCsiStorageCapacityV1Beta1) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -11315,7 +11284,6 @@ func (k *jsiiProxy_KubeCustomResourceDefinition) AddDependency(dependencies ...c
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeCustomResourceDefinition) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -11583,7 +11551,6 @@ func (k *jsiiProxy_KubeCustomResourceDefinitionList) AddDependency(dependencies 
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeCustomResourceDefinitionList) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -11869,7 +11836,6 @@ func (k *jsiiProxy_KubeDaemonSet) AddDependency(dependencies ...constructs.ICons
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeDaemonSet) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -12137,7 +12103,6 @@ func (k *jsiiProxy_KubeDaemonSetList) AddDependency(dependencies ...constructs.I
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeDaemonSetList) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -12427,7 +12392,6 @@ func (k *jsiiProxy_KubeDeployment) AddDependency(dependencies ...constructs.ICon
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeDeployment) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -12695,7 +12659,6 @@ func (k *jsiiProxy_KubeDeploymentList) AddDependency(dependencies ...constructs.
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeDeploymentList) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -12983,7 +12946,6 @@ func (k *jsiiProxy_KubeEndpointSlice) AddDependency(dependencies ...constructs.I
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeEndpointSlice) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -13251,7 +13213,6 @@ func (k *jsiiProxy_KubeEndpointSliceList) AddDependency(dependencies ...construc
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeEndpointSliceList) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -13527,7 +13488,6 @@ func (k *jsiiProxy_KubeEndpointSliceListV1Beta1) AddDependency(dependencies ...c
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeEndpointSliceListV1Beta1) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -13825,7 +13785,6 @@ func (k *jsiiProxy_KubeEndpointSliceV1Beta1) AddDependency(dependencies ...const
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeEndpointSliceV1Beta1) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -13941,14 +13900,16 @@ type KubeEndpointSliceV1Beta1Props struct {
 // Example:
 // Name: "mysvc",
 // Subsets: [
-//   {
-//     Addresses: [{"ip": "10.10.1.1"}, {"ip": "10.10.2.2"}],
-//     Ports: [{"name": "a", "port": 8675}, {"name": "b", "port": 309}]
-//   },
-//   {
-//     Addresses: [{"ip": "10.10.3.3"}],
-//     Ports: [{"name": "a", "port": 93}, {"name": "b", "port": 76}]
-//   },
+//
+//	{
+//	  Addresses: [{"ip": "10.10.1.1"}, {"ip": "10.10.2.2"}],
+//	  Ports: [{"name": "a", "port": 8675}, {"name": "b", "port": 309}]
+//	},
+//	{
+//	  Addresses: [{"ip": "10.10.3.3"}],
+//	  Ports: [{"name": "a", "port": 93}, {"name": "b", "port": 76}]
+//	},
+//
 // ]
 type KubeEndpoints interface {
 	cdk8s.ApiObject
@@ -14126,7 +14087,6 @@ func (k *jsiiProxy_KubeEndpoints) AddDependency(dependencies ...constructs.ICons
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeEndpoints) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -14394,7 +14354,6 @@ func (k *jsiiProxy_KubeEndpointsList) AddDependency(dependencies ...constructs.I
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeEndpointsList) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -14699,7 +14658,6 @@ func (k *jsiiProxy_KubeEvent) AddDependency(dependencies ...constructs.IConstruc
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeEvent) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -14967,7 +14925,6 @@ func (k *jsiiProxy_KubeEventList) AddDependency(dependencies ...constructs.ICons
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeEventList) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -15245,7 +15202,6 @@ func (k *jsiiProxy_KubeEventListV1Beta1) AddDependency(dependencies ...construct
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeEventListV1Beta1) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -15577,7 +15533,6 @@ func (k *jsiiProxy_KubeEventV1Beta1) AddDependency(dependencies ...constructs.IC
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeEventV1Beta1) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -15899,7 +15854,6 @@ func (k *jsiiProxy_KubeEviction) AddDependency(dependencies ...constructs.IConst
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeEviction) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -16177,7 +16131,6 @@ func (k *jsiiProxy_KubeFlowSchemaListV1Beta1) AddDependency(dependencies ...cons
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeFlowSchemaListV1Beta1) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -16457,7 +16410,6 @@ func (k *jsiiProxy_KubeFlowSchemaV1Beta1) AddDependency(dependencies ...construc
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeFlowSchemaV1Beta1) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -16739,7 +16691,6 @@ func (k *jsiiProxy_KubeHorizontalPodAutoscaler) AddDependency(dependencies ...co
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeHorizontalPodAutoscaler) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -17007,7 +16958,6 @@ func (k *jsiiProxy_KubeHorizontalPodAutoscalerList) AddDependency(dependencies .
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeHorizontalPodAutoscalerList) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -17283,7 +17233,6 @@ func (k *jsiiProxy_KubeHorizontalPodAutoscalerListV2Beta1) AddDependency(depende
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeHorizontalPodAutoscalerListV2Beta1) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -17559,7 +17508,6 @@ func (k *jsiiProxy_KubeHorizontalPodAutoscalerListV2Beta2) AddDependency(depende
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeHorizontalPodAutoscalerListV2Beta2) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -17847,7 +17795,6 @@ func (k *jsiiProxy_KubeHorizontalPodAutoscalerV2Beta1) AddDependency(dependencie
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeHorizontalPodAutoscalerV2Beta1) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -18127,7 +18074,6 @@ func (k *jsiiProxy_KubeHorizontalPodAutoscalerV2Beta2) AddDependency(dependencie
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeHorizontalPodAutoscalerV2Beta2) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -18409,7 +18355,6 @@ func (k *jsiiProxy_KubeIngress) AddDependency(dependencies ...constructs.IConstr
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeIngress) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -18679,7 +18624,6 @@ func (k *jsiiProxy_KubeIngressClass) AddDependency(dependencies ...constructs.IC
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeIngressClass) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -18947,7 +18891,6 @@ func (k *jsiiProxy_KubeIngressClassList) AddDependency(dependencies ...construct
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeIngressClassList) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -19237,7 +19180,6 @@ func (k *jsiiProxy_KubeIngressList) AddDependency(dependencies ...constructs.ICo
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeIngressList) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -19529,7 +19471,6 @@ func (k *jsiiProxy_KubeJob) AddDependency(dependencies ...constructs.IConstruct)
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeJob) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -19797,7 +19738,6 @@ func (k *jsiiProxy_KubeJobList) AddDependency(dependencies ...constructs.IConstr
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeJobList) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -20087,7 +20027,6 @@ func (k *jsiiProxy_KubeLease) AddDependency(dependencies ...constructs.IConstruc
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeLease) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -20355,7 +20294,6 @@ func (k *jsiiProxy_KubeLeaseList) AddDependency(dependencies ...constructs.ICons
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeLeaseList) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -20643,7 +20581,6 @@ func (k *jsiiProxy_KubeLimitRange) AddDependency(dependencies ...constructs.ICon
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeLimitRange) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -20911,7 +20848,6 @@ func (k *jsiiProxy_KubeLimitRangeList) AddDependency(dependencies ...constructs.
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeLimitRangeList) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -21205,7 +21141,6 @@ func (k *jsiiProxy_KubeLocalSubjectAccessReview) AddDependency(dependencies ...c
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeLocalSubjectAccessReview) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -21487,7 +21422,6 @@ func (k *jsiiProxy_KubeMutatingWebhookConfiguration) AddDependency(dependencies 
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeMutatingWebhookConfiguration) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -21755,7 +21689,6 @@ func (k *jsiiProxy_KubeMutatingWebhookConfigurationList) AddDependency(dependenc
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeMutatingWebhookConfigurationList) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -22045,7 +21978,6 @@ func (k *jsiiProxy_KubeNamespace) AddDependency(dependencies ...constructs.ICons
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeNamespace) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -22313,7 +22245,6 @@ func (k *jsiiProxy_KubeNamespaceList) AddDependency(dependencies ...constructs.I
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeNamespaceList) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -22607,7 +22538,6 @@ func (k *jsiiProxy_KubeNetworkPolicy) AddDependency(dependencies ...constructs.I
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeNetworkPolicy) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -22875,7 +22805,6 @@ func (k *jsiiProxy_KubeNetworkPolicyList) AddDependency(dependencies ...construc
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeNetworkPolicyList) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -23165,7 +23094,6 @@ func (k *jsiiProxy_KubeNode) AddDependency(dependencies ...constructs.IConstruct
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeNode) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -23433,7 +23361,6 @@ func (k *jsiiProxy_KubeNodeList) AddDependency(dependencies ...constructs.IConst
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeNodeList) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -23727,7 +23654,6 @@ func (k *jsiiProxy_KubePersistentVolume) AddDependency(dependencies ...construct
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubePersistentVolume) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -23995,7 +23921,6 @@ func (k *jsiiProxy_KubePersistentVolumeClaim) AddDependency(dependencies ...cons
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubePersistentVolumeClaim) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -24263,7 +24188,6 @@ func (k *jsiiProxy_KubePersistentVolumeClaimList) AddDependency(dependencies ...
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubePersistentVolumeClaimList) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -24555,7 +24479,6 @@ func (k *jsiiProxy_KubePersistentVolumeList) AddDependency(dependencies ...const
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubePersistentVolumeList) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -24851,7 +24774,6 @@ func (k *jsiiProxy_KubePod) AddDependency(dependencies ...constructs.IConstruct)
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubePod) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -25119,7 +25041,6 @@ func (k *jsiiProxy_KubePodDisruptionBudget) AddDependency(dependencies ...constr
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubePodDisruptionBudget) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -25387,7 +25308,6 @@ func (k *jsiiProxy_KubePodDisruptionBudgetList) AddDependency(dependencies ...co
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubePodDisruptionBudgetList) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -25665,7 +25585,6 @@ func (k *jsiiProxy_KubePodDisruptionBudgetListV1Beta1) AddDependency(dependencie
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubePodDisruptionBudgetListV1Beta1) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -25953,7 +25872,6 @@ func (k *jsiiProxy_KubePodDisruptionBudgetV1Beta1) AddDependency(dependencies ..
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubePodDisruptionBudgetV1Beta1) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -26231,7 +26149,6 @@ func (k *jsiiProxy_KubePodList) AddDependency(dependencies ...constructs.IConstr
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubePodList) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -26525,7 +26442,6 @@ func (k *jsiiProxy_KubePodSecurityPolicyListV1Beta1) AddDependency(dependencies 
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubePodSecurityPolicyListV1Beta1) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -26805,7 +26721,6 @@ func (k *jsiiProxy_KubePodSecurityPolicyV1Beta1) AddDependency(dependencies ...c
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubePodSecurityPolicyV1Beta1) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -27085,7 +27000,6 @@ func (k *jsiiProxy_KubePodTemplate) AddDependency(dependencies ...constructs.ICo
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubePodTemplate) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -27353,7 +27267,6 @@ func (k *jsiiProxy_KubePodTemplateList) AddDependency(dependencies ...constructs
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubePodTemplateList) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -27645,7 +27558,6 @@ func (k *jsiiProxy_KubePriorityClass) AddDependency(dependencies ...constructs.I
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubePriorityClass) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -27913,7 +27825,6 @@ func (k *jsiiProxy_KubePriorityClassList) AddDependency(dependencies ...construc
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubePriorityClassList) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -28189,7 +28100,6 @@ func (k *jsiiProxy_KubePriorityClassListV1Alpha1) AddDependency(dependencies ...
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubePriorityClassListV1Alpha1) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -28489,7 +28399,6 @@ func (k *jsiiProxy_KubePriorityClassV1Alpha1) AddDependency(dependencies ...cons
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubePriorityClassV1Alpha1) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -28779,7 +28688,6 @@ func (k *jsiiProxy_KubePriorityLevelConfigurationListV1Beta1) AddDependency(depe
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubePriorityLevelConfigurationListV1Beta1) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -29057,7 +28965,6 @@ func (k *jsiiProxy_KubePriorityLevelConfigurationV1Beta1) AddDependency(dependen
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubePriorityLevelConfigurationV1Beta1) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -29337,7 +29244,6 @@ func (k *jsiiProxy_KubeReplicaSet) AddDependency(dependencies ...constructs.ICon
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeReplicaSet) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -29605,7 +29511,6 @@ func (k *jsiiProxy_KubeReplicaSetList) AddDependency(dependencies ...constructs.
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeReplicaSetList) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -29897,7 +29802,6 @@ func (k *jsiiProxy_KubeReplicationController) AddDependency(dependencies ...cons
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeReplicationController) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -30165,7 +30069,6 @@ func (k *jsiiProxy_KubeReplicationControllerList) AddDependency(dependencies ...
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeReplicationControllerList) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -30457,7 +30360,6 @@ func (k *jsiiProxy_KubeResourceQuota) AddDependency(dependencies ...constructs.I
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeResourceQuota) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -30725,7 +30627,6 @@ func (k *jsiiProxy_KubeResourceQuotaList) AddDependency(dependencies ...construc
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeResourceQuotaList) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -31017,7 +30918,6 @@ func (k *jsiiProxy_KubeRole) AddDependency(dependencies ...constructs.IConstruct
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeRole) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -31287,7 +31187,6 @@ func (k *jsiiProxy_KubeRoleBinding) AddDependency(dependencies ...constructs.ICo
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeRoleBinding) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -31555,7 +31454,6 @@ func (k *jsiiProxy_KubeRoleBindingList) AddDependency(dependencies ...constructs
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeRoleBindingList) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -31831,7 +31729,6 @@ func (k *jsiiProxy_KubeRoleBindingListV1Alpha1) AddDependency(dependencies ...co
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeRoleBindingListV1Alpha1) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -32123,7 +32020,6 @@ func (k *jsiiProxy_KubeRoleBindingV1Alpha1) AddDependency(dependencies ...constr
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeRoleBindingV1Alpha1) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -32405,7 +32301,6 @@ func (k *jsiiProxy_KubeRoleList) AddDependency(dependencies ...constructs.IConst
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeRoleList) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -32683,7 +32578,6 @@ func (k *jsiiProxy_KubeRoleListV1Alpha1) AddDependency(dependencies ...construct
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeRoleListV1Alpha1) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -32971,7 +32865,6 @@ func (k *jsiiProxy_KubeRoleV1Alpha1) AddDependency(dependencies ...constructs.IC
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeRoleV1Alpha1) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -33251,7 +33144,6 @@ func (k *jsiiProxy_KubeRuntimeClass) AddDependency(dependencies ...constructs.IC
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeRuntimeClass) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -33519,7 +33411,6 @@ func (k *jsiiProxy_KubeRuntimeClassList) AddDependency(dependencies ...construct
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeRuntimeClassList) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -33797,7 +33688,6 @@ func (k *jsiiProxy_KubeRuntimeClassListV1Alpha1) AddDependency(dependencies ...c
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeRuntimeClassListV1Alpha1) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -34075,7 +33965,6 @@ func (k *jsiiProxy_KubeRuntimeClassListV1Beta1) AddDependency(dependencies ...co
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeRuntimeClassListV1Beta1) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -34377,7 +34266,6 @@ func (k *jsiiProxy_KubeRuntimeClassV1Alpha1) AddDependency(dependencies ...const
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeRuntimeClassV1Alpha1) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -34657,7 +34545,6 @@ func (k *jsiiProxy_KubeRuntimeClassV1Beta1) AddDependency(dependencies ...constr
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeRuntimeClassV1Beta1) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -34945,7 +34832,6 @@ func (k *jsiiProxy_KubeScale) AddDependency(dependencies ...constructs.IConstruc
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeScale) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -35227,7 +35113,6 @@ func (k *jsiiProxy_KubeSecret) AddDependency(dependencies ...constructs.IConstru
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeSecret) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -35495,7 +35380,6 @@ func (k *jsiiProxy_KubeSecretList) AddDependency(dependencies ...constructs.ICon
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeSecretList) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -35801,7 +35685,6 @@ func (k *jsiiProxy_KubeSelfSubjectAccessReview) AddDependency(dependencies ...co
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeSelfSubjectAccessReview) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -36085,7 +35968,6 @@ func (k *jsiiProxy_KubeSelfSubjectRulesReview) AddDependency(dependencies ...con
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeSelfSubjectRulesReview) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -36365,7 +36247,6 @@ func (k *jsiiProxy_KubeService) AddDependency(dependencies ...constructs.IConstr
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeService) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -36633,7 +36514,6 @@ func (k *jsiiProxy_KubeServiceAccount) AddDependency(dependencies ...constructs.
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeServiceAccount) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -36901,7 +36781,6 @@ func (k *jsiiProxy_KubeServiceAccountList) AddDependency(dependencies ...constru
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeServiceAccountList) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -37201,7 +37080,6 @@ func (k *jsiiProxy_KubeServiceList) AddDependency(dependencies ...constructs.ICo
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeServiceList) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -37496,7 +37374,6 @@ func (k *jsiiProxy_KubeStatefulSet) AddDependency(dependencies ...constructs.ICo
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeStatefulSet) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -37764,7 +37641,6 @@ func (k *jsiiProxy_KubeStatefulSetList) AddDependency(dependencies ...constructs
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeStatefulSetList) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -38057,7 +37933,6 @@ func (k *jsiiProxy_KubeStatus) AddDependency(dependencies ...constructs.IConstru
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeStatus) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -38347,7 +38222,6 @@ func (k *jsiiProxy_KubeStorageClass) AddDependency(dependencies ...constructs.IC
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeStorageClass) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -38615,7 +38489,6 @@ func (k *jsiiProxy_KubeStorageClassList) AddDependency(dependencies ...construct
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeStorageClassList) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -38921,7 +38794,6 @@ func (k *jsiiProxy_KubeStorageVersionListV1Alpha1) AddDependency(dependencies ..
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeStorageVersionListV1Alpha1) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -39199,7 +39071,6 @@ func (k *jsiiProxy_KubeStorageVersionV1Alpha1) AddDependency(dependencies ...con
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeStorageVersionV1Alpha1) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -39477,7 +39348,6 @@ func (k *jsiiProxy_KubeSubjectAccessReview) AddDependency(dependencies ...constr
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeSubjectAccessReview) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -39755,7 +39625,6 @@ func (k *jsiiProxy_KubeTokenRequest) AddDependency(dependencies ...constructs.IC
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeTokenRequest) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -40035,7 +39904,6 @@ func (k *jsiiProxy_KubeTokenReview) AddDependency(dependencies ...constructs.ICo
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeTokenReview) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -40315,7 +40183,6 @@ func (k *jsiiProxy_KubeValidatingWebhookConfiguration) AddDependency(dependencie
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeValidatingWebhookConfiguration) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -40583,7 +40450,6 @@ func (k *jsiiProxy_KubeValidatingWebhookConfigurationList) AddDependency(depende
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeValidatingWebhookConfigurationList) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -40873,7 +40739,6 @@ func (k *jsiiProxy_KubeVolumeAttachment) AddDependency(dependencies ...construct
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeVolumeAttachment) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -41141,7 +41006,6 @@ func (k *jsiiProxy_KubeVolumeAttachmentList) AddDependency(dependencies ...const
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeVolumeAttachmentList) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -41417,7 +41281,6 @@ func (k *jsiiProxy_KubeVolumeAttachmentListV1Alpha1) AddDependency(dependencies 
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeVolumeAttachmentListV1Alpha1) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -41709,7 +41572,6 @@ func (k *jsiiProxy_KubeVolumeAttachmentV1Alpha1) AddDependency(dependencies ...c
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (k *jsiiProxy_KubeVolumeAttachmentV1Alpha1) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {

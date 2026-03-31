@@ -7,7 +7,7 @@ import (
 
 	"example.com/cdk8s/imports/securityistioio/internal"
 	"github.com/aws/constructs-go/constructs/v3"
-	"github.com/cdk8s-team/cdk8s-core-go/cdk8s"
+	"github.com/cdk8s-team/cdk8s-core-go/cdk8s/v2"
 )
 
 type AuthorizationPolicy interface {
@@ -186,7 +186,6 @@ func (a *jsiiProxy_AuthorizationPolicy) AddDependency(dependencies ...constructs
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (a *jsiiProxy_AuthorizationPolicy) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -568,7 +567,6 @@ func (p *jsiiProxy_PeerAuthentication) AddDependency(dependencies ...constructs.
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (p *jsiiProxy_PeerAuthentication) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -887,7 +885,6 @@ func (r *jsiiProxy_RequestAuthentication) AddDependency(dependencies ...construc
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (r *jsiiProxy_RequestAuthentication) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {

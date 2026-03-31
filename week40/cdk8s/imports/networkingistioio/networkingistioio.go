@@ -7,7 +7,7 @@ import (
 
 	"example.com/cdk8s/imports/networkingistioio/internal"
 	"github.com/aws/constructs-go/constructs/v3"
-	"github.com/cdk8s-team/cdk8s-core-go/cdk8s"
+	"github.com/cdk8s-team/cdk8s-core-go/cdk8s/v2"
 )
 
 type DestinationRule interface {
@@ -186,7 +186,6 @@ func (d *jsiiProxy_DestinationRule) AddDependency(dependencies ...constructs.ICo
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (d *jsiiProxy_DestinationRule) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -1124,7 +1123,6 @@ func (e *jsiiProxy_EnvoyFilter) AddDependency(dependencies ...constructs.IConstr
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (e *jsiiProxy_EnvoyFilter) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -1583,7 +1581,6 @@ func (g *jsiiProxy_Gateway) AddDependency(dependencies ...constructs.IConstruct)
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (g *jsiiProxy_Gateway) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -1943,7 +1940,6 @@ func (s *jsiiProxy_ServiceEntry) AddDependency(dependencies ...constructs.IConst
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (s *jsiiProxy_ServiceEntry) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -2285,7 +2281,6 @@ func (s *jsiiProxy_Sidecar) AddDependency(dependencies ...constructs.IConstruct)
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (s *jsiiProxy_Sidecar) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -2657,7 +2652,6 @@ func (v *jsiiProxy_VirtualService) AddDependency(dependencies ...constructs.ICon
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (v *jsiiProxy_VirtualService) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -3288,7 +3282,6 @@ func (w *jsiiProxy_WorkloadEntry) AddDependency(dependencies ...constructs.ICons
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (w *jsiiProxy_WorkloadEntry) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
@@ -3580,7 +3573,6 @@ func (w *jsiiProxy_WorkloadGroup) AddDependency(dependencies ...constructs.ICons
 // Applies a set of RFC-6902 JSON-Patch operations to the manifest synthesized for this API object.
 //
 // TODO: EXAMPLE
-//
 func (w *jsiiProxy_WorkloadGroup) AddJsonPatch(ops ...cdk8s.JsonPatch) {
 	args := []interface{}{}
 	for _, a := range ops {
