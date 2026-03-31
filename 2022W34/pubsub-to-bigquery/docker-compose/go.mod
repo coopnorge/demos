@@ -3,7 +3,7 @@ module github.com/coopnorge/demos/2022W34/pubsub-to-bigquery/docker-compose
 go 1.25.6
 
 require (
-	github.com/GoogleCloudPlatform/protoc-gen-bq-schema v0.0.0-20220624154704-34288dc182e3
+	github.com/GoogleCloudPlatform/protoc-gen-bq-schema v1.1.0
 	github.com/bufbuild/buf v1.66.1
 	github.com/go-task/task/v3 v3.49.1
 )
