@@ -137,9 +137,12 @@ github.com/kr/fs
 github.com/mattn/go-ieproxy
 # github.com/mitchellh/go-homedir v1.1.0
 github.com/mitchellh/go-homedir
-# github.com/otiai10/copy v1.7.0
+# github.com/otiai10/copy v1.14.1
 ## explicit
 github.com/otiai10/copy
+# github.com/otiai10/mint v1.6.3
+github.com/otiai10/mint
+github.com/otiai10/mint/mquery
 # github.com/pkg/errors v0.9.1
 github.com/pkg/errors
 # github.com/pkg/sftp v1.13.3
@@ -213,9 +216,11 @@ golang.org/x/oauth2/google/internal/externalaccount
 golang.org/x/oauth2/internal
 golang.org/x/oauth2/jws
 golang.org/x/oauth2/jwt
-# golang.org/x/sys v0.0.0-20220715151400-c0bba94af5f8
+# golang.org/x/sync v0.8.0
+golang.org/x/sync/errgroup
+golang.org/x/sync/semaphore
+# golang.org/x/sys v0.24.0
 golang.org/x/sys/cpu
-golang.org/x/sys/internal/unsafeheader
 golang.org/x/sys/unix
 golang.org/x/sys/windows
 golang.org/x/sys/windows/registry
