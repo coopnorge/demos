@@ -1,6 +1,6 @@
-# github.com/cucumber/gherkin-go/v11 v11.0.0
-github.com/cucumber/gherkin-go/v11
-# github.com/cucumber/godog v0.11.0
+# github.com/cucumber/gherkin/go/v26 v26.2.0
+github.com/cucumber/gherkin/go/v26
+# github.com/cucumber/godog v0.15.1
 ## explicit
 github.com/cucumber/godog
 github.com/cucumber/godog/colors
@@ -13,20 +13,17 @@ github.com/cucumber/godog/internal/parser
 github.com/cucumber/godog/internal/storage
 github.com/cucumber/godog/internal/tags
 github.com/cucumber/godog/internal/utils
-# github.com/cucumber/messages-go/v10 v10.0.3
-github.com/cucumber/messages-go/v10
-# github.com/gofrs/uuid v3.3.0+incompatible
+# github.com/cucumber/messages/go/v21 v21.0.1
+github.com/cucumber/messages/go/v21
+# github.com/gofrs/uuid v4.3.1+incompatible
 github.com/gofrs/uuid
-# github.com/gogo/protobuf v1.3.1
-github.com/gogo/protobuf/io
-github.com/gogo/protobuf/proto
-# github.com/hashicorp/go-immutable-radix v1.3.0
+# github.com/hashicorp/go-immutable-radix v1.3.1
 github.com/hashicorp/go-immutable-radix
-# github.com/hashicorp/go-memdb v1.3.0
+# github.com/hashicorp/go-memdb v1.3.4
 github.com/hashicorp/go-memdb
 # github.com/hashicorp/golang-lru v0.5.4
 github.com/hashicorp/golang-lru/simplelru
-# github.com/spf13/pflag v1.0.5
+# github.com/spf13/pflag v1.0.7
 github.com/spf13/pflag
 # github.com/xeipuuv/gojsonpointer v0.0.0-20180127040702-4e3ac2762d5f
 github.com/xeipuuv/gojsonpointer
