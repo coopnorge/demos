@@ -2,13 +2,18 @@ package fakestorage
 
 import (
 	"encoding/json"
+	"errors"
 	"net/http"
+	"os"
+	"syscall"
+
+	"github.com/fsouza/fake-gcs-server/internal/backend"
 )
 
 type jsonResponse struct {
 	status       int
 	header       http.Header
-	data         interface{}
+	data         any
 	errorMessage string
 }
 
@@ -25,9 +30,9 @@ func jsonToHTTPHandler(h jsonHandler) http.HandlerFunc {
 		}
 
 		status := resp.getStatus()
-		var data interface{}
+		var data any
 		if status > 399 {
-			data = newErrorResponse(status, resp.getErrorMessage(status), nil)
+			data = newErrorResponse(status, resp.getErrorMessage(status), resp.getErrorList(status))
 		} else {
 			data = resp.data
 		}
@@ -52,4 +57,28 @@ func (r *jsonResponse) getErrorMessage(status int) string {
 		return r.errorMessage
 	}
 	return http.StatusText(status)
+}
+
+func (r *jsonResponse) getErrorList(status int) []apiError {
+	if status == http.StatusOK {
+		return nil
+	} else {
+		return []apiError{{
+			Domain:  "global",
+			Reason:  http.StatusText(status),
+			Message: r.getErrorMessage(status),
+		}}
+	}
+}
+
+func errToJsonResponse(err error) jsonResponse {
+	status := 0
+	var pathError *os.PathError
+	if errors.As(err, &pathError) && pathError.Err == syscall.ENAMETOOLONG {
+		status = http.StatusBadRequest
+	}
+	if err == backend.PreConditionFailed {
+		status = http.StatusPreconditionFailed
+	}
+	return jsonResponse{errorMessage: err.Error(), status: status}
 }

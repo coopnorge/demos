@@ -14,6 +14,7 @@ import (
 
 	"github.com/c2fo/vfs/v6"
 	"github.com/c2fo/vfs/v6/backend"
+	"github.com/c2fo/vfs/v6/options"
 	"github.com/c2fo/vfs/v6/utils"
 )
 
@@ -24,7 +25,7 @@ const defaultAutoDisconnectDuration = 10
 
 var defaultClientGetter func(utils.Authority, Options) (Client, io.Closer, error)
 
-// FileSystem implements vfs.Filesystem for the SFTP filesystem.
+// FileSystem implements vfs.FileSystem for the SFTP filesystem.
 type FileSystem struct {
 	options    vfs.Options
 	sftpclient Client
@@ -40,7 +41,7 @@ func (fs *FileSystem) Retry() vfs.Retry {
 }
 
 // NewFile function returns the SFTP implementation of vfs.File.
-func (fs *FileSystem) NewFile(authority, filePath string) (vfs.File, error) {
+func (fs *FileSystem) NewFile(authority, filePath string, opts ...options.NewFileOption) (vfs.File, error) {
 	if fs == nil {
 		return nil, errors.New("non-nil sftp.FileSystem pointer is required")
 	}
@@ -60,6 +61,7 @@ func (fs *FileSystem) NewFile(authority, filePath string) (vfs.File, error) {
 		fileSystem: fs,
 		Authority:  auth,
 		path:       path.Clean(filePath),
+		opts:       opts,
 	}, nil
 }
 
@@ -153,7 +155,6 @@ func (fs *FileSystem) connTimerStop() {
 
 // WithOptions sets options for client and returns the filesystem (chainable)
 func (fs *FileSystem) WithOptions(opts vfs.Options) *FileSystem {
-
 	// only set options if vfs.Options is sftp.Options
 	if opts, ok := opts.(Options); ok {
 		fs.options = opts
@@ -181,12 +182,13 @@ func NewFileSystem() *FileSystem {
 func init() {
 	defaultClientGetter = getClient
 
-	// registers a default Filesystem
+	// registers a default FileSystem
 	backend.Register(Scheme, NewFileSystem())
 }
 
 // Client is an interface to make it easier to test
 type Client interface {
+	Chmod(path string, mode os.FileMode) error
 	Chtimes(path string, atime, mtime time.Time) error
 	Create(path string) (*_sftp.File, error)
 	MkdirAll(path string) error

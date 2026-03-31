@@ -1,18 +1,22 @@
 package azure
 
 import (
+	"errors"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"os"
 	"path"
 	"strings"
 	"time"
 
-	"github.com/Azure/azure-storage-blob-go/azblob"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
+	"github.com/Azure/azure-sdk-for-go/sdk/storage/azblob/bloberror"
 
 	"github.com/c2fo/vfs/v6"
 	"github.com/c2fo/vfs/v6/backend"
+	"github.com/c2fo/vfs/v6/options"
+	"github.com/c2fo/vfs/v6/options/delete"
+	"github.com/c2fo/vfs/v6/options/newfile"
 	"github.com/c2fo/vfs/v6/utils"
 )
 
@@ -21,6 +25,7 @@ type File struct {
 	fileSystem *FileSystem
 	container  string
 	name       string
+	opts       []options.NewFileOption
 	tempFile   *os.File
 	isDirty    bool
 }
@@ -37,16 +42,25 @@ func (f *File) Close() error {
 
 		client, err := f.fileSystem.Client()
 		if err != nil {
-			return err
+			return utils.WrapCloseError(err)
 		}
 
 		if _, err := f.Seek(0, 0); err != nil {
-			return err
+			return utils.WrapCloseError(err)
 		}
 
 		if f.isDirty {
-			if err := client.Upload(f, f.tempFile); err != nil {
-				return err
+			var contentType string
+			for _, o := range f.opts {
+				switch o := o.(type) {
+				case *newfile.ContentType:
+					contentType = *(*string)(o)
+				default:
+				}
+			}
+
+			if err := client.Upload(f, f.tempFile, contentType); err != nil {
+				return utils.WrapCloseError(err)
 			}
 		}
 	}
@@ -58,9 +72,20 @@ func (f *File) Close() error {
 // when f.Close() is called.
 func (f *File) Read(p []byte) (n int, err error) {
 	if err := f.checkTempFile(); err != nil {
-		return 0, err
+		return 0, utils.WrapReadError(err)
 	}
-	return f.tempFile.Read(p)
+	read, err := f.tempFile.Read(p)
+	if err != nil {
+		// if we got io.EOF, we'll return the read and the EOF error
+		// because io.Copy looks for EOF to determine if it's done
+		// and doesn't support error wrapping
+		if errors.Is(err, io.EOF) {
+			return read, io.EOF
+		}
+		return read, utils.WrapReadError(err)
+	}
+
+	return read, nil
 }
 
 // Seek implements the io.Seeker interface.  For this to work with Azure Blob Storage, a temporary local copy of
@@ -68,21 +93,25 @@ func (f *File) Read(p []byte) (n int, err error) {
 // when f.Close() is called.
 func (f *File) Seek(offset int64, whence int) (int64, error) {
 	if err := f.checkTempFile(); err != nil {
-		return 0, nil
+		return 0, utils.WrapSeekError(err)
 	}
-	return f.tempFile.Seek(offset, whence)
+	pos, err := f.tempFile.Seek(offset, whence)
+	if err != nil {
+		return 0, utils.WrapSeekError(err)
+	}
+	return pos, nil
 }
 
 // Write implements the io.Writer interface.  Writes are performed against a temporary local file.  The temp file is
 // closed and flushed to Azure with f.Close() is called.
 func (f *File) Write(p []byte) (int, error) {
 	if err := f.checkTempFile(); err != nil {
-		return 0, err
+		return 0, utils.WrapWriteError(err)
 	}
 
 	n, err := f.tempFile.Write(p)
 	if err != nil {
-		return 0, err
+		return 0, utils.WrapWriteError(err)
 	}
 
 	f.isDirty = true
@@ -103,7 +132,7 @@ func (f *File) Exists() (bool, error) {
 	}
 	_, err = client.Properties(f.Location().(*Location).ContainerURL(), f.Path())
 	if err != nil {
-		if err.(azblob.StorageError).ServiceCode() != "BlobNotFound" {
+		if !bloberror.HasCode(err, bloberror.BlobNotFound) {
 			return false, err
 		}
 		return false, nil
@@ -124,7 +153,7 @@ func (f *File) Location() vfs.Location {
 // name at the given location. If the given location is also azure, the azure API for copying
 // files will be utilized, otherwise, standard io.Copy will be done to the new file.
 func (f *File) CopyToLocation(location vfs.Location) (vfs.File, error) {
-	newFile, err := location.NewFile(utils.RemoveLeadingSlash(f.Name()))
+	newFile, err := location.NewFile(utils.RemoveLeadingSlash(f.Name()), f.opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -137,10 +166,26 @@ func (f *File) CopyToLocation(location vfs.Location) (vfs.File, error) {
 }
 
 // CopyToFile puts the contents of the receiver (f *File) into the passed vfs.File parameter.
-func (f *File) CopyToFile(file vfs.File) error {
+func (f *File) CopyToFile(file vfs.File) (err error) {
+	// Close file (f) reader regardless of an error
+	defer func() {
+		// close writer
+		wErr := file.Close()
+		// close reader
+		rErr := f.Close()
+		//
+		if err == nil {
+			if wErr != nil {
+				err = wErr
+			} else if rErr != nil {
+				err = rErr
+			}
+		}
+	}()
+
 	// validate seek is at 0,0 before doing copy
-	if err := backend.ValidateCopySeekPosition(f); err != nil {
-		return err
+	if verr := backend.ValidateCopySeekPosition(f); verr != nil {
+		return verr
 	}
 
 	azFile, ok := file.(*File)
@@ -161,15 +206,15 @@ func (f *File) CopyToFile(file vfs.File) error {
 		fileBufferSize = fs.options.FileBufferSize
 	}
 
-	if err := utils.TouchCopyBuffered(file, f, fileBufferSize); err != nil {
-		return err
+	if terr := utils.TouchCopyBuffered(file, f, fileBufferSize); terr != nil {
+		return terr
 	}
 
-	if err := file.Close(); err != nil {
-		return err
+	if cerr := file.Close(); cerr != nil {
+		return cerr
 	}
 
-	return f.Close()
+	return err
 }
 
 // MoveToLocation copies the receiver to the passed location.  After the copy succeeds, the original is deleted.
@@ -192,7 +237,10 @@ func (f *File) MoveToFile(file vfs.File) error {
 }
 
 // Delete deletes the file.
-func (f *File) Delete() error {
+// If delete.AllVersions option is provided, each version of the file is deleted. NOTE: if soft deletion is enabled,
+// it will mark all versions as soft deleted, and they will be removed by Azure as per soft deletion policy.
+// Returns any error returned by the API.
+func (f *File) Delete(opts ...options.DeleteOption) error {
 	if err := f.Close(); err != nil {
 		return err
 	}
@@ -201,7 +249,25 @@ func (f *File) Delete() error {
 	if err != nil {
 		return err
 	}
-	return client.Delete(f)
+
+	var allVersions bool
+	for _, o := range opts {
+		switch o.(type) {
+		case delete.AllVersions, delete.DeleteAllVersions:
+			allVersions = true
+		default:
+		}
+	}
+
+	if err := client.Delete(f); err != nil {
+		return err
+	}
+
+	if allVersions {
+		return client.DeleteAllVersions(f)
+	}
+
+	return err
 }
 
 // LastModified returns the last modified time as a time.Time
@@ -227,7 +293,7 @@ func (f *File) Size() (uint64, error) {
 	if err != nil {
 		return 0, err
 	}
-	return props.Size, nil
+	return uint64(*props.Size), nil
 }
 
 // Path returns full path with leading slash.
@@ -254,7 +320,16 @@ func (f *File) Touch() error {
 	}
 
 	if !exists {
-		return client.Upload(f, strings.NewReader(""))
+		var contentType string
+		for _, o := range f.opts {
+			switch o := o.(type) {
+			case *newfile.ContentType:
+				contentType = *(*string)(o)
+			default:
+			}
+		}
+
+		return client.Upload(f, strings.NewReader(""), contentType)
 	}
 
 	props, err := client.Properties(f.Location().(*Location).ContainerURL(), f.Path())
@@ -262,8 +337,8 @@ func (f *File) Touch() error {
 		return err
 	}
 
-	newMetadata := make(map[string]string)
-	newMetadata["updated"] = "true"
+	newMetadata := make(map[string]*string)
+	newMetadata["updated"] = to.Ptr("true")
 	if err := client.SetMetadata(f, newMetadata); err != nil {
 		return err
 	}
@@ -292,7 +367,7 @@ func (f *File) checkTempFile() error {
 			return err
 		}
 		if !exists {
-			tf, tfErr := ioutil.TempFile("", fmt.Sprintf("%s.%d", path.Base(f.Name()), time.Now().UnixNano()))
+			tf, tfErr := os.CreateTemp("", fmt.Sprintf("%s.%d", path.Base(f.Name()), time.Now().UnixNano()))
 			if tfErr != nil {
 				return tfErr
 			}
@@ -303,7 +378,7 @@ func (f *File) checkTempFile() error {
 				return dlErr
 			}
 
-			tf, tfErr := ioutil.TempFile("", fmt.Sprintf("%s.%d", path.Base(f.Name()), time.Now().UnixNano()))
+			tf, tfErr := os.CreateTemp("", fmt.Sprintf("%s.%d", path.Base(f.Name()), time.Now().UnixNano()))
 			if tfErr != nil {
 				return tfErr
 			}

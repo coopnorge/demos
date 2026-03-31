@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	"github.com/c2fo/vfs/v6"
+	"github.com/c2fo/vfs/v6/options"
 	"github.com/c2fo/vfs/v6/utils"
 )
 
@@ -166,7 +167,7 @@ func (l *Location) FileSystem() vfs.FileSystem {
 }
 
 // NewFile returns a new file instance at the given path, relative to the current location.
-func (l *Location) NewFile(relFilePath string) (vfs.File, error) {
+func (l *Location) NewFile(relFilePath string, opts ...options.NewFileOption) (vfs.File, error) {
 	if l == nil {
 		return nil, errors.New(errNilLocationReceiver)
 	}
@@ -179,17 +180,18 @@ func (l *Location) NewFile(relFilePath string) (vfs.File, error) {
 		name:       utils.EnsureLeadingSlash(path.Join(l.path, relFilePath)),
 		container:  l.container,
 		fileSystem: l.fileSystem,
+		opts:       opts,
 	}, nil
 }
 
 // DeleteFile deletes the file at the given path, relative to the current location.
-func (l *Location) DeleteFile(relFilePath string) error {
+func (l *Location) DeleteFile(relFilePath string, opts ...options.DeleteOption) error {
 	file, err := l.NewFile(utils.RemoveLeadingSlash(relFilePath))
 	if err != nil {
 		return err
 	}
 
-	return file.Delete()
+	return file.Delete(opts...)
 }
 
 // URI returns a URI string for the azure location.

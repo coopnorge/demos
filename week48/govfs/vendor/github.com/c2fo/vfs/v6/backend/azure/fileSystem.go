@@ -4,13 +4,13 @@ import (
 	"errors"
 	"fmt"
 	"net/url"
-	"os"
 	"path"
 	"regexp"
 	"strings"
 
 	"github.com/c2fo/vfs/v6"
 	"github.com/c2fo/vfs/v6/backend"
+	"github.com/c2fo/vfs/v6/options"
 	"github.com/c2fo/vfs/v6/utils"
 )
 
@@ -58,7 +58,7 @@ func (fs *FileSystem) Client() (Client, error) {
 }
 
 // NewFile returns the azure implementation of vfs.File
-func (fs *FileSystem) NewFile(volume, absFilePath string) (vfs.File, error) {
+func (fs *FileSystem) NewFile(volume, absFilePath string, opts ...options.NewFileOption) (vfs.File, error) {
 	if fs == nil {
 		return nil, errors.New(errNilFileSystemReceiver)
 	}
@@ -75,6 +75,7 @@ func (fs *FileSystem) NewFile(volume, absFilePath string) (vfs.File, error) {
 		fileSystem: fs,
 		container:  volume,
 		name:       path.Clean(absFilePath),
+		opts:       opts,
 	}, nil
 }
 
@@ -127,14 +128,19 @@ func init() {
 	backend.Register(Scheme, NewFileSystem())
 }
 
-// ParsePath is a utility function used by vfssiple to separate the host from the path.  The first parameter returned
+// ParsePath is a utility function used by vfssimple to separate the host from the path.  The first parameter returned
 // is the host and the second parameter is the path.
 func ParsePath(p string) (host, pth string, err error) {
 	if p == "/" {
 		return "", "", errors.New("no container specified for Azure path")
 	}
-	l := strings.Split(p, string(os.PathSeparator))
-	return l[1], utils.EnsureTrailingSlash(utils.EnsureLeadingSlash(path.Join(l[2:]...))), nil
+	isLocation := strings.HasSuffix(p, "/")
+	l := strings.Split(p, "/")
+	p = utils.EnsureLeadingSlash(path.Join(l[2:]...))
+	if isLocation {
+		p = utils.EnsureTrailingSlash(p)
+	}
+	return l[1], p, nil
 }
 
 // IsValidURI us a utility function used by vfssimple to determine if the given URI is a valid Azure URI

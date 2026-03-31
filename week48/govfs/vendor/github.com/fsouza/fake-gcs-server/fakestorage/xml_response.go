@@ -3,13 +3,58 @@ package fakestorage
 import (
 	"encoding/xml"
 	"net/http"
+	"strings"
 )
 
 type xmlResponse struct {
 	status       int
 	header       http.Header
-	data         interface{}
+	data         any
 	errorMessage string
+}
+
+type xmlResponseBody struct {
+	XMLName xml.Name `xml:"PostResponse"`
+	Bucket  string
+	Etag    struct {
+		Value string `xml:",innerxml"`
+	}
+	Key      string
+	Location string
+}
+
+type ListBucketResult struct {
+	XMLName        xml.Name       `xml:"ListBucketResult"`
+	Name           string         `xml:"Name"`
+	CommonPrefixes []CommonPrefix `xml:"CommonPrefixes,omitempty"`
+	Delimiter      string         `xml:"Delimiter"`
+	Prefix         string         `xml:"Prefix"`
+	KeyCount       int            `xml:"KeyCount"`
+	Contents       []Contents     `xml:"Contents"`
+}
+
+type Contents struct {
+	XMLName      xml.Name `xml:"Contents"`
+	Key          string   `xml:"Key"`
+	Generation   int64    `xml:"Generation"`
+	LastModified string   `xml:"LastModified"`
+	ETag         ETag
+	Size         int64 `xml:"Size"`
+}
+
+type CommonPrefix struct {
+	Prefix string `xml:"Prefix"`
+}
+
+type ETag struct {
+	Value string `xml:",innerxml"`
+}
+
+func (e *ETag) Equals(etag string) bool {
+	trim := func(s string) string {
+		return strings.TrimPrefix(strings.TrimSuffix(s, "\""), "\"")
+	}
+	return trim(e.Value) == trim(etag)
 }
 
 type xmlHandler = func(r *http.Request) xmlResponse
@@ -25,7 +70,7 @@ func xmlToHTTPHandler(h xmlHandler) http.HandlerFunc {
 		}
 
 		status := resp.getStatus()
-		var data interface{}
+		var data any
 		if status > 399 {
 			data = newErrorResponse(status, resp.getErrorMessage(status), nil)
 		} else {
@@ -33,8 +78,31 @@ func xmlToHTTPHandler(h xmlHandler) http.HandlerFunc {
 		}
 
 		w.WriteHeader(status)
-		xml.NewEncoder(w).Encode(data)
+
+		dataBytes, ok := data.([]byte)
+		if ok {
+			w.Write(dataBytes)
+		} else {
+			xml.NewEncoder(w).Encode(data)
+		}
 	}
+}
+
+func createXmlResponseBody(bucketName, etag, key, location string) []byte {
+	responseBody := xmlResponseBody{
+		Bucket: bucketName,
+		Etag: struct {
+			Value string `xml:",innerxml"`
+		}{etag},
+		Location: location,
+		Key:      key,
+	}
+	x, err := xml.Marshal(responseBody)
+	if err != nil {
+		return nil
+	}
+
+	return []byte(xml.Header + string(x))
 }
 
 func (r *xmlResponse) getStatus() int {
