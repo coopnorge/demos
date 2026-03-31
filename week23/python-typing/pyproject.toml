@@ -17,7 +17,7 @@ python = "^3.6.2"
 click = "^7.1.0"
 dataclasses = { version = "^0.8", python = ">=3.6,<3.7" }
 pydantic = {extras = ["dotenv"], version = "^1.8.2"}
-typer = "^0.3.2"
+typer = "^0.24.0"
 jsonschema = "^3.2.0"
 PyYAML = "^5.4.1"
 
