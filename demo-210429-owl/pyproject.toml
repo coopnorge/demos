@@ -8,7 +8,7 @@ authors = []
 python = "^3.6.1"
 
 [tool.poetry.dev-dependencies]
-rdflib-jsonld = "^0.5.0"
+rdflib-jsonld = "^0.6.0"
 rdflib = "^5.0.0"
 pylode = "^2.8.3"
 pyyaml = "^5.3.1"
