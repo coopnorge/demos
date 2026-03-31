@@ -1,9 +1,9 @@
 module gitlab.com/aucampia/eg/service-golang
 
-go 1.24.0
+go 1.26.0
 
 require (
-	github.com/coopnorge/go-masker-lib v0.0.1
+	github.com/coopnorge/go-masker-lib v0.2.1
 	github.com/cortesi/modd v0.0.0-20211215124449-6083f9d1c171
 	github.com/envoyproxy/protoc-gen-validate v1.3.0
 	github.com/go-playground/validator/v10 v10.11.0
@@ -17,7 +17,7 @@ require (
 	github.com/spf13/cobra v1.4.0
 	github.com/spf13/pflag v1.0.5
 	github.com/spf13/viper v1.11.0
-	github.com/stretchr/testify v1.8.1
+	github.com/stretchr/testify v1.11.1
 	google.golang.org/grpc v1.79.3
 	google.golang.org/grpc/cmd/protoc-gen-go-grpc v1.2.0
 	google.golang.org/protobuf v1.36.10
