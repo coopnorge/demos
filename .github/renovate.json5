@@ -1,0 +1,3 @@
+{
+  "extends": ["github>coopnorge/github-workflow-renovate"]
+}
