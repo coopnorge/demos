@@ -312,14 +312,14 @@ pycairo = ">=1.16,<2.0"
 
 [[package]]
 name = "pylode"
-version = "2.9.1"
+version = "2.10.3"
 description = "An OWL ontology documentation tool using Python and templating, based on LODE."
 optional = false
 python-versions = "*"
 groups = ["dev"]
 files = [
-    {file = "pyLODE-2.9.1-py2.py3-none-any.whl", hash = "sha256:7ee289ed5f9bdc875fc6afe5336d3bfba87d9e32f64defab45dae0f9b05d13b7"},
-    {file = "pyLODE-2.9.1.tar.gz", hash = "sha256:f5bc0d7aa5c13cc8a73eaef7d21e96e714f6ae5151cdfa02f1a6ab33cb6e5ffe"},
+    {file = "pyLODE-2.10.3-py2.py3-none-any.whl", hash = "sha256:d00578f64ff4e4f2cc03d19cbec0f954223084e644aa19346d67119864cb67f4"},
+    {file = "pyLODE-2.10.3.tar.gz", hash = "sha256:de40985adaa75396e582dcb1816f82cbdee26ba41ccaa91da60bffcf9831b365"},
 ]
 
 [package.dependencies]
