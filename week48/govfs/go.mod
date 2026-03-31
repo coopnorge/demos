@@ -9,6 +9,6 @@ require (
 	github.com/sirupsen/logrus v1.9.4
 	github.com/spf13/cobra v1.2.1
 	github.com/stretchr/testify v1.11.1
-	gopkg.in/guregu/null.v4 v4.0.0
+	gopkg.in/guregu/null.v6 v6.0.0
 	modernc.org/mathutil v1.7.1
 )
