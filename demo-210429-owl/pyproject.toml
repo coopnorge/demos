@@ -9,7 +9,7 @@ python = "^3.6.1"
 
 [tool.poetry.dev-dependencies]
 rdflib-jsonld = "^0.6.0"
-rdflib = "^5.0.0"
+rdflib = "^7.0.0"
 pylode = "^3.0.0"
 pyyaml = "^6.0.0"
 #"yocho.rdflib-xtl" = "^0.3.0"
