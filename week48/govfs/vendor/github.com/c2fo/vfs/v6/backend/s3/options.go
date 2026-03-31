@@ -8,6 +8,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/credentials/ec2rolecreds"
+	"github.com/aws/aws-sdk-go/aws/credentials/stscreds"
 	"github.com/aws/aws-sdk-go/aws/defaults"
 	"github.com/aws/aws-sdk-go/aws/ec2metadata"
 	"github.com/aws/aws-sdk-go/aws/request"
@@ -18,21 +19,24 @@ import (
 
 // Options holds s3-specific options.  Currently only client options are used.
 type Options struct {
-	AccessKeyID           string `json:"accessKeyId,omitempty"`
-	SecretAccessKey       string `json:"secretAccessKey,omitempty"`
-	SessionToken          string `json:"sessionToken,omitempty"`
-	Region                string `json:"region,omitempty"`
-	Endpoint              string `json:"endpoint,omitempty"`
-	ACL                   string `json:"acl,omitempty"`
-	Retry                 request.Retryer
-	MaxRetries            int
-	FileBufferSize        int   // Buffer size in bytes used with utils.TouchCopyBuffered
-	DownloadPartitionSize int64 // Partition size in bytes used to multipart download large files using S3 Downloader
+	AccessKeyID                 string `json:"accessKeyId,omitempty"`
+	SecretAccessKey             string `json:"secretAccessKey,omitempty"`
+	SessionToken                string `json:"sessionToken,omitempty"`
+	Region                      string `json:"region,omitempty"`
+	RoleARN                     string `json:"roleARN,omitempty"`
+	Endpoint                    string `json:"endpoint,omitempty"`
+	ACL                         string `json:"acl,omitempty"`
+	ForcePathStyle              bool   `json:"forcePathStyle,omitempty"`
+	DisableServerSideEncryption bool   `json:"disableServerSideEncryption,omitempty"`
+	Retry                       request.Retryer
+	MaxRetries                  int
+	FileBufferSize              int   // Buffer size in bytes used with utils.TouchCopyBuffered
+	DownloadPartitionSize       int64 // Partition size in bytes used to multipart download of large files using s3manager.Downloader
+	UploadPartitionSize         int64 // Partition size in bytes used to multipart upload of large files using s3manager.Uploader
 }
 
 // getClient setup S3 client
 func getClient(opt Options) (s3iface.S3API, error) {
-
 	// setup default config
 	awsConfig := defaults.Config()
 
@@ -41,6 +45,11 @@ func getClient(opt Options) (s3iface.S3API, error) {
 		awsConfig.WithRegion(opt.Region)
 	} else if val, ok := os.LookupEnv("AWS_DEFAULT_REGION"); ok {
 		awsConfig.WithRegion(val)
+	}
+
+	// set filepath for minio users
+	if opt.ForcePathStyle {
+		awsConfig.S3ForcePathStyle = &opt.ForcePathStyle
 	}
 
 	// use specific endpoint, otherwise, will use aws "default endpoint resolver" based on region
@@ -67,6 +76,12 @@ func getClient(opt Options) (s3iface.S3API, error) {
 	)
 	if err != nil {
 		return nil, err
+	}
+
+	if opt.RoleARN != "" {
+		// Create role credentials
+		creds := stscreds.NewCredentials(s, opt.RoleARN)
+		return s3.New(s, &aws.Config{Credentials: creds}), nil
 	}
 
 	// return client instance
@@ -97,7 +112,7 @@ func initCredentialProviderChain(opt Options) ([]credentials.Provider, error) {
 	// * Access Key ID:     AWS_ACCESS_KEY_ID or AWS_ACCESS_KEY
 	//
 	// * Secret Access Key: AWS_SECRET_ACCESS_KEY or AWS_SECRET_KEY
-	p = append(p, &credentials.EnvProvider{}) // nolint:gocritic // appendCombine
+	p = append(p, &credentials.EnvProvider{}) //nolint:gocritic // appendCombine
 
 	// Path to the shared credentials file.
 	//

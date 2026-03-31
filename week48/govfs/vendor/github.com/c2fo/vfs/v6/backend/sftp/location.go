@@ -2,7 +2,6 @@ package sftp
 
 import (
 	"errors"
-	"fmt"
 	"os"
 	"path"
 	"regexp"
@@ -10,6 +9,7 @@ import (
 	"unicode/utf8"
 
 	"github.com/c2fo/vfs/v6"
+	"github.com/c2fo/vfs/v6/options"
 	"github.com/c2fo/vfs/v6/utils"
 )
 
@@ -23,7 +23,6 @@ type Location struct {
 // List calls SFTP ReadDir to list all files in the location's path.
 // If you have many thousands of files at the given location, this could become quite expensive.
 func (l *Location) List() ([]string, error) {
-
 	var filenames []string
 	client, err := l.fileSystem.Client(l.Authority)
 	if err != nil {
@@ -50,7 +49,6 @@ func (l *Location) List() ([]string, error) {
 
 // ListByPrefix calls SFTP ReadDir with the location's path modified relatively by the prefix arg passed to the function.
 func (l *Location) ListByPrefix(prefix string) ([]string, error) {
-
 	var filenames []string
 	client, err := l.fileSystem.Client(l.Authority)
 	if err != nil {
@@ -91,7 +89,6 @@ func (l *Location) ListByPrefix(prefix string) ([]string, error) {
 // ListByRegex retrieves the filenames of all the files at the location's current path, then filters out all those
 // that don't match the given regex. The resource considerations of List() apply here as well.
 func (l *Location) ListByRegex(regex *regexp.Regexp) ([]string, error) {
-
 	filenames, err := l.List()
 	if err != nil {
 		return []string{}, err
@@ -108,7 +105,7 @@ func (l *Location) ListByRegex(regex *regexp.Regexp) ([]string, error) {
 
 // Volume returns the Authority the location is contained in.
 func (l *Location) Volume() string {
-	return fmt.Sprint(l.Authority)
+	return l.Authority.String()
 }
 
 // Path returns the path the location references in most SFTP calls.
@@ -118,7 +115,6 @@ func (l *Location) Path() string {
 
 // Exists returns true if the remote SFTP file exists.
 func (l *Location) Exists() (bool, error) {
-
 	client, err := l.fileSystem.Client(l.Authority)
 	if err != nil {
 		return false, err
@@ -177,7 +173,7 @@ func (l *Location) ChangeDir(relativePath string) error {
 
 // NewFile uses the properties of the calling location to generate a vfs.File (backed by an sftp.File). The filePath
 // argument is expected to be a relative path to the location's current path.
-func (l *Location) NewFile(filePath string) (vfs.File, error) {
+func (l *Location) NewFile(filePath string, opts ...options.NewFileOption) (vfs.File, error) {
 	if l == nil {
 		return nil, errors.New("non-nil sftp.Location pointer receiver is required")
 	}
@@ -192,18 +188,19 @@ func (l *Location) NewFile(filePath string) (vfs.File, error) {
 		fileSystem: l.fileSystem,
 		Authority:  l.Authority,
 		path:       utils.EnsureLeadingSlash(path.Join(l.path, filePath)),
+		opts:       opts,
 	}
 	return newFile, nil
 }
 
 // DeleteFile removes the file at fileName path.
-func (l *Location) DeleteFile(fileName string) error {
+func (l *Location) DeleteFile(fileName string, opts ...options.DeleteOption) error {
 	file, err := l.NewFile(fileName)
 	if err != nil {
 		return err
 	}
 
-	return file.Delete()
+	return file.Delete(opts...)
 }
 
 // FileSystem returns a vfs.fileSystem interface of the location's underlying fileSystem.
@@ -213,7 +210,7 @@ func (l *Location) FileSystem() vfs.FileSystem {
 
 // URI returns the Location's URI as a string.
 func (l *Location) URI() string {
-	return utils.GetLocationURI(l)
+	return utils.EncodeURI(l.FileSystem().Scheme(), l.Authority.UserInfo().Username(), l.Authority.HostPortStr(), l.Path())
 }
 
 // String implement fmt.Stringer, returning the location's URI as the default string.

@@ -1,85 +1,83 @@
 /*
-Package sftp SFTP VFS implementation.
+Package sftp - SFTP VFS implementation.
 
-Usage
+# Usage
 
 Rely on github.com/c2fo/vfs/v6/backend
 
-  import(
-	  "github.com/c2fo/vfs/v6/backend"
-	  "github.com/c2fo/vfs/v6/backend/sftp"
-  )
+	  import(
+		  "github.com/c2fo/vfs/v6/backend"
+		  "github.com/c2fo/vfs/v6/backend/sftp"
+	  )
 
-  func UseFs() error {
-	  fs := backend.Backend(sftp.Scheme)
-	  ...
-  }
+	  func UseFs() error {
+		  fs := backend.Backend(sftp.Scheme)
+		  ...
+	  }
 
 Or call directly:
 
-  import "github.com/c2fo/vfs/v6/backend/sftp"
+	  import "github.com/c2fo/vfs/v6/backend/sftp"
 
-  func DoSomething() {
-	  fs := sftp.NewFilesystem()
+	  func DoSomething() {
+		  fs := sftp.NewFileSystem()
 
-	  location, err := fs.NewLocation("myuser@server.com:22", "/some/path/")
-	  if err != nil {
-		 #handle error
+		  location, err := fs.NewLocation("myuser@server.com:22", "/some/path/")
+		  if err != nil {
+			 #handle error
+		  }
+		  ...
 	  }
-	  ...
-  }
 
-sftp can be augmented with some implementation-specific methods.  Backend returns vfs.Filesystem interface so it
-would have to be cast as sftp.Filesystem to use them.
+sftp can be augmented with some implementation-specific methods.  Backend returns vfs.FileSystem interface so it
+would have to be cast as sftp.FileSystem to use them.
 
 These methods are chainable:
 (*FileSystem) WithClient(client interface{}) *FileSystem
 (*FileSystem) WithOptions(opts vfs.Options) *FileSystem
 
+	  func DoSomething() {
+		  // cast if fs was created using backend.Backend().  Not necessary if created directly from sftp.NewFileSystem().
+		  fs := backend.Backend(sftp.Scheme)
+		  fs = fs.(*sftp.FileSystem)
 
-  func DoSomething() {
+		  // to pass specific client
+		  sshClient, err := ssh.Dial("tcp", "myuser@server.com:22", &ssh.ClientConfig{
+			  User:            "someuser",
+			  Auth:            []ssh.AuthMethod{ssh.Password("mypassword")},
+			  HostKeyCallback: ssh.InsecureIgnoreHostKey,
+		  })
+		  #handle error
+		  client, err := _sftp.NewClient(sshClient)
+		  #handle error
 
-	  // cast if fs was created using backend.Backend().  Not necessary if created directly from sftp.NewFilesystem().
-	  fs := backend.Backend(sftp.Scheme)
-	  fs = fs.(*sftp.Filesystem)
+		  fs = fs.WithClient(client)
 
-	  // to pass specific client
-	  sshClient, err := ssh.Dial("tcp", "myuser@server.com:22", &ssh.ClientConfig{
-		  User:            "someuser",
-		  Auth:            []ssh.AuthMethod{ssh.Password("mypassword")},
-		  HostKeyCallback: ssh.InsecureIgnoreHostKey,
-	  })
-	  #handle error
-	  client, err := _sftp.NewClient(sshClient)
-	  #handle error
+		  // to pass in client options. See Options for more info.  Note that changes to Options will make nil any client.
+		  // This behavior ensures that changes to settings will get applied to a newly created client.
+		  fs = fs.WithOptions(
+			  sftp.Options{
+				  KeyFilePath:   "/home/Bob/.ssh/id_rsa",
+				  KeyPassphrase: "s3cr3t",
+				  KnownHostsCallback: ssh.InsecureIgnoreHostKey,
+			  },
+		  )
 
-	  fs = fs.WithClient(client)
+		  location, err := fs.NewLocation("myuser@server.com:22", "/some/path/")
+		  #handle error
 
-	  // to pass in client options. See Options for more info.  Note that changes to Options will make nil any client.
-	  // This behavior ensures that changes to settings will get applied to a newly created client.
-	  fs = fs.WithOptions(
-		  sftp.Options{
-			  KeyFilePath:   "/home/Bob/.ssh/id_rsa",
-			  KeyPassphrase: "s3cr3t",
-			  KnownHostsCallback: ssh.InsecureIgnoreHostKey,
-		  },
-	  )
+		  file := location.NewFile("myfile.txt")
+		  #handle error
 
-	  location, err := fs.NewLocation("myuser@server.com:22", "/some/path/")
-	  #handle error
+		  _, err := file.Write([]bytes("some text")
+		  #handle error
 
-	  file := location.NewFile("myfile.txt")
-	  #handle error
+		  err := file.Close()
+		  #handle error
 
-	  _, err := file.Write([]bytes("some text")
-	  #handle error
+	  }
 
-	  err := file.Close()
-	  #handle error
-
-  }
-
-Authentication
+# Authentication
 
 Authentication, by default, occurs automatically when Client() is called. Since user is part of the URI authority section
 (Volume), auth is handled slightly differently than other vfs backends.
@@ -88,18 +86,18 @@ A client is initialized lazily, meaning we only make a connection to the server 
 options until then.  The authenticated session is closed any time WithOption(), WithClient(), or Close() occurs.  Currently,
 that means that closing a file belonging to an fs will break the connection of any other open file on the same fs.
 
-USERNAME
+# USERNAME
 
 User may only be set in the URI authority section (Volume in vfs parlance).
 
-     scheme             host
-     __/             ___/____  port
-    /  \            /        \ /\
-    sftp://someuser@server.com:22/path/to/file.txt
-           \____________________/ \______________/
-           \______/       \               \
-               /     authority section    path
-         username       (Volume)
+	 scheme             host
+	 __/             ___/____  port
+	/  \            /        \ /\
+	sftp://someuser@server.com:22/path/to/file.txt
+	       \____________________/ \______________/
+	       \______/       \               \
+	           /     authority section    path
+	     username       (Volume)
 
 sftp vfs backend accepts either a password or an ssh key, with or without a passphrase.
 
@@ -110,30 +108,53 @@ Passwords may be passed via Options.Password or via the environmental variable V
 SSH keys may be passed via Options.KeyFilePath and (optionally) Options.KeyPassphrase.  They can also be passed via
 environmental variables VFS_SFTP_KEYFILE and VFS_SFTP_KEYFILE_PASSPHRASE, respectively.
 
-Note that as of Go 1.12, OPENSSH private key format is not supported when encrypted (with passphrase).
-See https://github.com/golang/go/issues/18692
-To force creation of PEM format(instead of OPENSSH format), use `ssh-keygen -m PEM`
-
-KNOWN HOSTS
+# KNOWN HOSTS
 
 Known hosts ensures that the server you're connecting to hasn't been somehow redirected to another server, collecting
 your info (man-in-the-middle attack).  Handling for this can be accomplished via:
-1. Options.KnownHostsString which accepts a string.
-2. Options.KnownHostsFile or environmental variable VFS_SFTP_KNOWN_HOSTS_FILE which accepts a path to a known_hosts file.
-3. Options.KnownHostsCallback which allows you to specify any of the ssh.AuthMethod functions.  Environmental variable
-   VFS_SFTP_INSECURE_KNOWN_HOSTS will set this callback function to ssh.InsecureIgnoreHostKey which may be helpful
-   for testing but should not be used in production.
-4. Defaults to trying to find and use <homedir>/.ssh/known_hosts.  For unix, system-wide location /etc/ssh/.ssh/known hosts is also checked.
-   SSH doesn't exist natively on Windows and each third-party implementation has a different location for known_hosts. Because
-   of this, no attempt is made to find a system-wide file for Windows.  It's better to specify in KnownHostsFile in that case.
+ 1. Options.KnownHostsString which accepts a string.
+ 2. Options.KnownHostsFile or environmental variable VFS_SFTP_KNOWN_HOSTS_FILE which accepts a path to a known_hosts file.
+ 3. Options.KnownHostsCallback which allows you to specify any of the ssh.AuthMethod functions.  Environmental variable
+    VFS_SFTP_INSECURE_KNOWN_HOSTS will set this callback function to ssh.InsecureIgnoreHostKey which may be helpful
+    for testing but should not be used in production.
+ 4. Defaults to trying to find and use <homedir>/.ssh/known_hosts.
+    For unix, system-wide location /etc/ssh/.ssh/known hosts is also checked.
+    SSH doesn't exist natively on Windows and each third-party implementation has a different location for known_hosts. Because
+    of this, no attempt is made to find a system-wide file for Windows.  It's better to specify in KnownHostsFile in that case.
 
-OTHER OPTIONS
+# OTHER OPTIONS
 
-Passing in multiple key exchange algorithms is supported - these are specified as a slice.
+Passing in multiple host key algorithms, key exchange algorithms is supported - these are specified as string slices.
 Example:
-`"keyExchanges":["diffie-hellman-group-a256", "ecdh-sha2-nistp256"]`
 
-AutoDisconnect
+	fs = fs.WithOptions(
+		sftp.Options{
+			KeyExchanges: []string{ "diffie-hellman-group-a256", "ecdh-sha2-nistp256" },
+			Ciphers: []string{ "aes256-ctr", "aes192-ctr", "aes128-ctr" },
+			MACs: []string{ "hmac-sha2-256", "hmac-sha2-512" },
+			HostKeyAlgorithms: []string{ "ssh-rsa", "ssh-ed25519" },
+			// other settings
+		},
+	  )
+
+# FilePermissions
+
+The `FilePermissions` option allows you to specify the file permissions for files created or modified using the SFTP backend.
+These permissions will override the sftp server or underlying filesystem's umask (default permissions). Permissions should
+be specified using an octal literal (e.g., `0777` for full read, write, and execute permissions for all users).
+
+Example:
+
+		fs = fs.WithOptions(
+	 		sftp.Options{
+	 			FilePermissions: "0777", // Correctly specify permissions as octal (in string form)
+				// other settings
+			},
+		)
+
+When a file is opened for Write() or Touch()'d, the specified `FilePermissions` will be applied to the file.
+
+# AutoDisconnect
 
 When dialing a TCP connection, Go doesn't disconnect for you.  This is true even when the connection falls out of scope, and even when
 garbage collection is forced.  The connection must be explicitly closed.  Unfortunately, VFS.FileSystem has no explicit close mechanism.
@@ -150,7 +171,7 @@ Any server request action using the same underlying FileSystem (and therefore sf
 should be the most desirable behavior.
 
 	func doSFTPStuff() {
-		fs := sftp.NewFilesystem()
+		fs := sftp.NewFileSystem()
 		loc, err := fs.NewLocation("myuser@server.com:22", "/some/path/")
 		file1, _ := loc.NewFile("file1.txt")
 		file2, _ := loc.NewFile("file2.txt")
@@ -167,7 +188,7 @@ should be the most desirable behavior.
 		doSFTPStuff()
 		// even though the vfs sftp objects have fallen out of scope, our connection remains UNTIL the timer counts down
 
-		// do more work (that take longer than 10 seconds
+		// do more work (that take longer than 10 seconds)
 		doOtherTimeConsumingStuff()
 
 		// at some point during the above, the sftp connection will have closed
@@ -176,6 +197,5 @@ should be the most desirable behavior.
 NOTE: AutoDisconnect has nothing to do with "keep alive".  Here we're only concerned with releasing resources, not keeping
 the server from disconnecting us.  If that is something you want, you'd have to implement yourself, injecting your own
 client using WithClient().
-
 */
 package sftp

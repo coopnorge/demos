@@ -2,12 +2,15 @@ package mem
 
 import (
 	"errors"
+	"fmt"
+	"os"
 	"path"
 	"regexp"
 	"sort"
 	"strings"
 
 	"github.com/c2fo/vfs/v6"
+	"github.com/c2fo/vfs/v6/options"
 	"github.com/c2fo/vfs/v6/utils"
 )
 
@@ -21,14 +24,12 @@ type Location struct {
 
 // String implements io.Stringer by returning the location's URI as a string
 func (l *Location) String() string {
-
 	return l.URI()
 }
 
 // List finds all of the files living at the current location and returns them in a slice of strings.
 // If there are no files at location, then an empty slice will be returned
 func (l *Location) List() ([]string, error) {
-
 	locPath := l.Path()
 	// setting mapRef to this value for code readability
 	mapRef := l.fileSystem.fsMap
@@ -47,7 +48,6 @@ func (l *Location) List() ([]string, error) {
 // returns all file base names whose full paths contain that substring
 // Returns empty slice if nothing found
 func (l *Location) ListByPrefix(prefix string) ([]string, error) {
-
 	list := make([]string, 0)
 	str := path.Join(l.Path(), prefix)
 	mapRef := l.fileSystem.fsMap
@@ -71,7 +71,6 @@ func (l *Location) ListByPrefix(prefix string) ([]string, error) {
 // found that matched the regular expression.  Returns an
 // empty slice upon nothing found
 func (l *Location) ListByRegex(regex *regexp.Regexp) ([]string, error) {
-
 	list := make([]string, 0)
 	str := l.Path()
 	mapRef := l.fileSystem.fsMap
@@ -93,16 +92,13 @@ func (l *Location) Volume() string {
 
 // Path returns the full, absolute path of the location with leading and trailing slashes
 func (l *Location) Path() string {
-
 	// just to be sure that we return a trailing and leading slash
 	str := utils.EnsureTrailingSlash(path.Clean(l.name))
 	return utils.EnsureLeadingSlash(str)
-
 }
 
 // Exists always returns true on locations
 func (l *Location) Exists() (bool, error) {
-
 	l.exists = true
 	return true, nil
 }
@@ -133,7 +129,6 @@ func (l *Location) NewLocation(relLocPath string) (vfs.Location, error) {
 		exists:     false,
 		volume:     l.Volume(),
 	}, nil
-
 }
 
 // ChangeDir simply changes the directory of the location
@@ -144,19 +139,15 @@ func (l *Location) ChangeDir(relLocPath string) error {
 	}
 	l.name = path.Join(l.name, relLocPath)
 	return nil
-
 }
 
 // FileSystem returns the type of file system location exists on, if it exists at all
 func (l *Location) FileSystem() vfs.FileSystem {
-
 	return l.fileSystem
-
 }
 
 // NewFile creates a vfs.File given its relative path and tags it onto "l's" path
-func (l *Location) NewFile(relFilePath string) (vfs.File, error) {
-
+func (l *Location) NewFile(relFilePath string, opts ...options.NewFileOption) (vfs.File, error) {
 	if relFilePath == "" {
 		return nil, errors.New("cannot use empty name for file")
 	}
@@ -168,8 +159,9 @@ func (l *Location) NewFile(relFilePath string) (vfs.File, error) {
 	// after validating the path, we check to see if the
 	// file already exists. if it does, return a reference to it
 	mapRef := l.fileSystem.fsMap
+	relativeLocationPath := utils.EnsureTrailingSlash(path.Dir(path.Join(l.Path(), relFilePath)))
 	if _, ok := mapRef[l.volume]; ok {
-		fileList := mapRef[l.volume].filesHere(l.Path())
+		fileList := mapRef[l.volume].filesHere(relativeLocationPath)
 		for _, file := range fileList {
 			if file.name == path.Base(relFilePath) {
 				fileCopy := deepCopy(file)
@@ -184,27 +176,27 @@ func (l *Location) NewFile(relFilePath string) (vfs.File, error) {
 	str := relFilePath
 	nameStr := path.Join(pref, str)
 
-	loc, err := l.fileSystem.NewLocation(l.Volume(), utils.EnsureTrailingSlash(path.Dir(nameStr)))
-	if err != nil {
-		return nil, err
-	}
 	file := &File{
 		name: path.Base(nameStr),
+		opts: opts,
 	}
-	file.memFile = newMemFile(file, loc)
+	newLoc := *l
+	newLoc.name = relativeLocationPath
+	file.memFile = newMemFile(file, &newLoc)
 	return file, nil
 }
 
 // DeleteFile locates the file given the fileName and calls delete on it
-func (l *Location) DeleteFile(relFilePath string) error {
-	l.fileSystem.Lock()
-	defer l.fileSystem.Unlock()
+func (l *Location) DeleteFile(relFilePath string, _ ...options.DeleteOption) error {
 	err := utils.ValidateRelativeFilePath(relFilePath)
 	if err != nil {
 		return err
 	}
 	vol := l.Volume()
 	fullPath := path.Join(l.Path(), relFilePath)
+
+	l.fileSystem.mu.Lock()
+	defer l.fileSystem.mu.Unlock()
 	mapRef := l.fileSystem.fsMap
 	if _, ok := mapRef[vol]; ok {
 		if thisObj, ok2 := mapRef[vol][fullPath]; ok2 {
@@ -214,14 +206,15 @@ func (l *Location) DeleteFile(relFilePath string) error {
 			thisObj.i = nil
 			thisObj = nil
 			mapRef[vol][fullPath] = nil // setting that key to nil so it truly no longer lives on this system
+			delete(mapRef[vol], fullPath)
 			return nil
 		}
 	}
-	return errors.New("this file does not exist")
+
+	return fmt.Errorf("unable to delete file: %w", os.ErrNotExist)
 }
 
 // URI returns the URI of the location if the location exists
 func (l *Location) URI() string {
-
 	return utils.GetLocationURI(l)
 }

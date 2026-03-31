@@ -10,6 +10,7 @@ import (
 	"google.golang.org/api/iterator"
 
 	"github.com/c2fo/vfs/v6"
+	"github.com/c2fo/vfs/v6/options"
 	"github.com/c2fo/vfs/v6/utils"
 )
 
@@ -34,7 +35,20 @@ func (l *Location) List() ([]string, error) {
 // ListByPrefix returns a slice of file base names and any error, if any
 // List functions return only file basenames
 func (l *Location) ListByPrefix(filenamePrefix string) ([]string, error) {
-	prefix := utils.RemoveLeadingSlash(utils.EnsureTrailingSlash(path.Join(l.prefix, filenamePrefix)))
+	prefix := utils.RemoveLeadingSlash(path.Join(l.prefix, filenamePrefix))
+	// add trailing slash to location prefix when file query prefix is empty:
+	//     NewLocation("/some/path/").ListByPrefix("")
+	// OR when it ended with a slash (for directory level searches):
+	//     NewLocation("/some/path/").ListByPrefix("dir1/dir2/")
+	// obviously we don't want to add a trailing slash if we're looking for a file prefix:
+	//     NewLocation("/some/path/").ListByPrefix("dir1/MyFilePrefix")
+	if filenamePrefix == "" || filenamePrefix[len(filenamePrefix)-1:] == "/" {
+		prefix = utils.EnsureTrailingSlash(prefix)
+	}
+	// remove location prefix altogether if this is the root
+	if prefix == "/" {
+		prefix = ""
+	}
 	d := path.Dir(prefix)
 	q := &storage.Query{
 		Delimiter: "/",
@@ -143,7 +157,7 @@ func (l *Location) FileSystem() vfs.FileSystem {
 }
 
 // NewFile returns a new file instance at the given path, relative to the current location.
-func (l *Location) NewFile(filePath string) (vfs.File, error) {
+func (l *Location) NewFile(filePath string, opts ...options.NewFileOption) (vfs.File, error) {
 	if l == nil {
 		return nil, errors.New("non-nil gs.Location pointer is required")
 	}
@@ -158,18 +172,19 @@ func (l *Location) NewFile(filePath string) (vfs.File, error) {
 		fileSystem: l.fileSystem,
 		bucket:     l.bucket,
 		key:        utils.EnsureLeadingSlash(path.Join(l.prefix, filePath)),
+		opts:       opts,
 	}
 	return newFile, nil
 }
 
 // DeleteFile deletes the file at the given path, relative to the current location.
-func (l *Location) DeleteFile(fileName string) error {
+func (l *Location) DeleteFile(fileName string, opts ...options.DeleteOption) error {
 	file, err := l.NewFile(fileName)
 	if err != nil {
 		return err
 	}
 
-	return file.Delete()
+	return file.Delete(opts...)
 }
 
 // URI returns a URI string for the GCS location.

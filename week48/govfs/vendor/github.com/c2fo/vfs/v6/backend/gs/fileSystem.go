@@ -6,9 +6,11 @@ import (
 
 	"cloud.google.com/go/storage"
 	"golang.org/x/net/context"
+	"google.golang.org/api/option"
 
 	"github.com/c2fo/vfs/v6"
 	"github.com/c2fo/vfs/v6/backend"
+	"github.com/c2fo/vfs/v6/options"
 	"github.com/c2fo/vfs/v6/utils"
 )
 
@@ -18,21 +20,22 @@ const name = "Google Cloud Storage"
 
 // FileSystem implements vfs.FileSystem for the GCS file system.
 type FileSystem struct {
-	client  *storage.Client
-	ctx     context.Context
-	options vfs.Options
+	client        *storage.Client
+	ctx           context.Context
+	options       vfs.Options
+	clientCreator ClientCreator
 }
 
 // Retry will return a retrier provided via options, or a no-op if none is provided.
 func (fs *FileSystem) Retry() vfs.Retry {
-	if options, _ := fs.options.(Options); options.Retry != nil {
-		return options.Retry
+	if opts, _ := fs.options.(Options); opts.Retry != nil {
+		return opts.Retry
 	}
 	return vfs.DefaultRetryer()
 }
 
 // NewFile function returns the gcs implementation of vfs.File.
-func (fs *FileSystem) NewFile(volume, name string) (vfs.File, error) {
+func (fs *FileSystem) NewFile(volume, name string, opts ...options.NewFileOption) (vfs.File, error) {
 	if fs == nil {
 		return nil, errors.New("non-nil gs.FileSystem pointer is required")
 	}
@@ -46,6 +49,7 @@ func (fs *FileSystem) NewFile(volume, name string) (vfs.File, error) {
 		fileSystem: fs,
 		bucket:     volume,
 		key:        path.Clean(name),
+		opts:       opts,
 	}, nil
 }
 
@@ -83,7 +87,7 @@ func (fs *FileSystem) Scheme() string {
 func (fs *FileSystem) Client() (*storage.Client, error) {
 	if fs.client == nil {
 		gsClientOpts := parseClientOptions(fs.options)
-		client, err := storage.NewClient(fs.ctx, gsClientOpts...)
+		client, err := fs.clientCreator.NewClient(fs.ctx, gsClientOpts...)
 		if err != nil {
 			return nil, err
 		}
@@ -114,14 +118,30 @@ func (fs *FileSystem) WithClient(client *storage.Client) *FileSystem {
 	return fs
 }
 
-// NewFileSystem initializer for FileSystem struct accepts google cloud storage client and returns Filesystem or error.
+// ClientCreator defines an interface for creating a new Google Cloud Storage client.
+type ClientCreator interface {
+	NewClient(ctx context.Context, opts ...option.ClientOption) (*storage.Client, error)
+}
+
+// defaultClientCreator is the default implementation of ClientCreator.
+type defaultClientCreator struct{}
+
+// NewClient is a function that creates a new Google Cloud Storage client.
+func (d *defaultClientCreator) NewClient(ctx context.Context, opts ...option.ClientOption) (*storage.Client, error) {
+	return storage.NewClient(ctx, opts...)
+}
+
+// NewFileSystem initializer for FileSystem struct accepts google cloud storage client and returns FileSystem or error.
 func NewFileSystem() *FileSystem {
-	fs := &FileSystem{}
-	fs = fs.WithContext(context.Background())
+	fs := &FileSystem{
+		ctx:           context.Background(),
+		clientCreator: &defaultClientCreator{},
+	}
+
 	return fs
 }
 
 func init() {
-	// registers a default Filesystem
+	// registers a default FileSystem
 	backend.Register(Scheme, NewFileSystem())
 }

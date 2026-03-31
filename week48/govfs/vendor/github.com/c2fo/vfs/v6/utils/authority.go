@@ -1,149 +1,150 @@
 package utils
 
 import (
+	"errors"
 	"fmt"
+	"net/url"
+	"regexp"
+	"strconv"
 	"strings"
-
-	"github.com/pkg/errors"
 )
+
+/*
+   URI parlance (see https://www.rfc-editor.org/rfc/rfc3986.html#section-3.2):
+
+       foo://example.com:8042/over/there?name=ferret#nose
+       \_/   \______________/\_________/ \_________/ \__/
+        |           |            |            |        |
+     scheme     authority       path        query   fragment
+
+   Where:
+     authority   = [ userinfo "@" ] host [ ":" port ]
+     userinfo    = *( unreserved / pct-encoded / sub-delims / ":" )
+     host        = IP-literal / IPv4address / reg-name
+     port        = *DIGIT
+     reg-name    = *( unreserved / pct-encoded / sub-delims )
+     unreserved  = ALPHA / DIGIT / "-" / "." / "_" / "~"
+     sub-delims  = "!" / "$" / "&" / "'" / "(" / ")" / "*" / "+" / "," / ";" / "="
+     pct-encoded = "%" HEXDIG HEXDIG
+*/
 
 // Authority represents host, port and userinfo (user/pass) in a URI
 type Authority struct {
-	User, Pass, Host, raw string
+	host string
+	port uint16
+	url  *url.URL
+}
+
+// UserInfo represents user/pass portion of a URI
+type UserInfo struct {
+	url *url.URL
+}
+
+// Username returns the username of a URI UserInfo.  May be an empty string.
+func (u UserInfo) Username() string {
+	return u.url.User.Username()
+}
+
+// Password returns the password of a URI UserInfo.  May be an empty string.
+func (u UserInfo) Password() string {
+	p, _ := u.url.User.Password()
+	return p
 }
 
 // String() returns a string representation of authority.  It does not include password per
-// https://tools.ietf.org/html/rfc3986#section-3.2.1:
-//   Applications should not render as clear text any data after the first colon (":") character found within a userinfo
-//   subcomponent unless the data after the colon is the empty string (indicating no password).
+// https://tools.ietf.org/html/rfc3986#section-3.2.1
+//
+//	Applications should not render as clear text any data after the first colon (":") character found within a userinfo
+//	subcomponent unless the data after the colon is the empty string (indicating no password).
 func (a Authority) String() string {
-	if a.User != "" {
-		return fmt.Sprintf("%s@%s", a.User, a.Host)
+	authority := a.HostPortStr()
+	if a.UserInfo().Username() != "" {
+		authority = fmt.Sprintf("%s@%s", a.UserInfo().Username(), authority)
 	}
-	return a.Host
+	return authority
 }
+
+// UserInfo returns the userinfo section of authority.  userinfo is username and password(deprecated).
+func (a Authority) UserInfo() UserInfo {
+	return UserInfo{
+		url: a.url,
+	}
+}
+
+// Host returns the host portion of an authority
+func (a Authority) Host() string {
+	return a.url.Hostname()
+}
+
+// Port returns the port portion of an authority
+func (a Authority) Port() uint16 {
+	return a.port
+}
+
+// HostPortStr returns a concatenated string of host and port from authority, separated by a colon, ie "host.com:1234"
+func (a Authority) HostPortStr() string {
+	if a.Port() != 0 {
+		return fmt.Sprintf("%s:%d", a.Host(), a.Port())
+	}
+	return a.Host()
+}
+
+var schemeRE = regexp.MustCompile("^[A-Za-z][A-Za-z0-9+.-]*://")
 
 // NewAuthority initializes Authority struct by parsing authority string.
 func NewAuthority(authority string) (Authority, error) {
 	if authority == "" {
 		return Authority{}, errors.New("authority string may not be empty")
 	}
-	u, p, h, err := parseAuthority(authority)
+
+	var err error
+	matched := schemeRE.MatchString(authority)
+	if !matched {
+		authority = "scheme://" + authority
+	}
+
+	u, err := url.Parse(authority)
 	if err != nil {
 		return Authority{}, err
 	}
 
+	host, portStr := splitHostPort(u.Host)
+	var port uint16
+	if portStr != "" {
+		val, err := strconv.ParseUint(portStr, 10, 16)
+		if err != nil {
+			return Authority{}, err
+		}
+		port = uint16(val)
+	}
+
 	return Authority{
-		User: u,
-		Pass: p,
-		Host: h,
-		raw:  authority,
+		host: host,
+		port: port,
+		url:  u,
 	}, nil
 }
 
-/*
-	NOTE: Below was mostly taken line-for-line from the "url" package (https://github.com/golang/go/blob/master/src/net/url/url.go),
-	minus unencoding and some unused split logic.  Unfortunately none of it was exposed in a way that could be used for parsing Authority.
+// splitHostPort separates host and port. If the port is not valid, it returns
+// the entire input as host, and it doesn't check the validity of the host.
+// Unlike net.SplitHostPort, but per RFC 3986, it requires ports to be numeric.
+func splitHostPort(hostPort string) (host, port string) {
+	host = hostPort
 
-		Copyright (c) 2009 The Go Authors. All rights reserved.
-
-		Redistribution and use in source and binary forms, with or without
-		modification, are permitted provided that the following conditions are
-		met:
-
-		   * Redistributions of source code must retain the above copyright
-		notice, this list of conditions and the following disclaimer.
-		   * Redistributions in binary form must reproduce the above
-		copyright notice, this list of conditions and the following disclaimer
-		in the documentation and/or other materials provided with the
-		distribution.
-		   * Neither the name of Google Inc. nor the names of its
-		contributors may be used to endorse or promote products derived from
-		this software without specific prior written permission.
-
-		THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-		"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-		LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-		A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-		OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-		SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-		LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-		DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-		THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-		(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-		OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
-
-func parseAuthority(authority string) (username, password, host string, err error) {
-	i := strings.LastIndex(authority, "@")
-	if i < 0 {
-		host, err = parseHost(authority)
-	} else {
-		host, err = parseHost(authority[i+1:])
+	colon := strings.LastIndexByte(host, ':')
+	if colon != -1 && validOptionalPort(host[colon:]) {
+		host, port = host[:colon], host[colon+1:]
 	}
-	if err != nil {
-		return "", "", "", err
-	}
-	if i < 0 {
-		return "", "", host, nil
-	}
-	userinfo := authority[:i]
-	if !validUserinfo(userinfo) {
-		return "", "", host, errors.New("invalid userinfo")
-	}
-	if !strings.Contains(userinfo, ":") {
-		username = userinfo
-	} else {
-		username, password = split(userinfo, ":")
+
+	if strings.HasPrefix(host, "[") && strings.HasSuffix(host, "]") {
+		host = host[1 : len(host)-1]
 	}
 
 	return
 }
 
-func split(s, c string) (string, string) {
-	i := strings.Index(s, c)
-	return s[:i], s[i+len(c):]
-}
-
-func validUserinfo(s string) bool {
-	for _, r := range s {
-		if r >= 'A' && r <= 'Z' {
-			continue
-		}
-		if r >= 'a' && r <= 'z' {
-			continue
-		}
-		if r >= '0' && r <= '9' {
-			continue
-		}
-		switch r {
-		case '-', '.', '_', ':', '~', '!', '$', '&', '\'',
-			'(', ')', '*', '+', ',', ';', '=', '%', '@':
-			continue
-		default:
-			return false
-		}
-	}
-	return true
-}
-
-func parseHost(host string) (string, error) {
-	if strings.HasPrefix(host, "[") {
-		// Parse an IP-Literal in RFC 3986 and RFC 6874.
-		// E.g., "[fe80::1]", "[fe80::1%25en0]", "[fe80::1]:80".
-		i := strings.LastIndex(host, "]")
-		if i < 0 {
-			return "", errors.New("missing ']' in host")
-		}
-		colonPort := host[i+1:]
-		if !validOptionalPort(colonPort) {
-			return "", fmt.Errorf("invalid port %q after host", colonPort)
-		}
-	}
-
-	return host, nil
-}
-
+// validOptionalPort reports whether port is either an empty string
+// or matches /^:\d*$/
 func validOptionalPort(port string) bool {
 	if port == "" {
 		return true
@@ -157,4 +158,68 @@ func validOptionalPort(port string) bool {
 		}
 	}
 	return true
+}
+
+// EncodeUserInfo takes an unencoded URI authority userinfo string and encodes it
+func EncodeUserInfo(rawUserInfo string) string {
+	parts := strings.SplitN(rawUserInfo, ":", 2)
+	encodedParts := make([]string, len(parts))
+	for i, part := range parts {
+		encoded := url.QueryEscape(part)
+		decoded := strings.NewReplacer(
+			"%21", "!", "%24", "$", "%26", "&", "%27", "'",
+			"%28", "(", "%29", ")", "%2A", "*", "%2B", "+",
+			"%2C", ",", "%3B", ";", "%3D", "=",
+		).Replace(encoded)
+		encodedParts[i] = decoded
+	}
+	return strings.Join(encodedParts, ":")
+}
+
+// EncodeAuthority takes an unencoded URI authority string and encodes it
+func EncodeAuthority(rawAuthority string) string {
+	var userInfo, hostPort string
+
+	// Split the authority into user info and hostPort
+	atIndex := strings.LastIndex(rawAuthority, "@")
+	if atIndex != -1 {
+		userInfo = rawAuthority[:atIndex]
+		hostPort = rawAuthority[atIndex+1:]
+	} else {
+		hostPort = rawAuthority
+	}
+
+	// Encode userInfo if present
+	if userInfo != "" {
+		userInfo = EncodeUserInfo(userInfo)
+	}
+
+	// Split host and port
+	var host, port string
+	hostPortSplit := strings.SplitN(hostPort, ":", 2)
+	if len(hostPortSplit) > 0 {
+		host = hostPortSplit[0]
+	}
+	if len(hostPortSplit) > 1 {
+		port = hostPortSplit[1]
+	}
+
+	// Encode host and port
+	encodedHost := url.QueryEscape(host)
+	var encodedPort string
+	if port != "" {
+		encodedPort = url.QueryEscape(port)
+	}
+
+	// Reconstruct the encoded authority string
+	var encodedAuthority string
+	if userInfo != "" {
+		encodedAuthority = userInfo + "@"
+	}
+	encodedAuthority += encodedHost
+	if encodedPort != "" {
+		encodedAuthority += ":" + encodedPort
+	}
+
+	return encodedAuthority
 }

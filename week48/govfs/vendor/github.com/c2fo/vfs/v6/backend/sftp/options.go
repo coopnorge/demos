@@ -1,20 +1,19 @@
 package sftp
 
 import (
+	"errors"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"os"
-	"path"
+	"path/filepath"
 	"runtime"
-	"strings"
+	"strconv"
 
 	"github.com/mitchellh/go-homedir"
 	_sftp "github.com/pkg/sftp"
 	"golang.org/x/crypto/ssh"
 	"golang.org/x/crypto/ssh/knownhosts"
 
-	"github.com/c2fo/vfs/v6"
 	"github.com/c2fo/vfs/v6/utils"
 )
 
@@ -28,19 +27,84 @@ type Options struct {
 	KnownHostsFile     string              `json:"knownHostsFile,omitempty"` // env var VFS_SFTP_KNOWN_HOSTS_FILE
 	KnownHostsString   string              `json:"knownHostsString,omitempty"`
 	KeyExchanges       []string            `json:"keyExchanges,omitempty"`
+	Ciphers            []string            `json:"ciphers,omitempty"`
+	MACs               []string            `json:"macs,omitempty"`
+	HostKeyAlgorithms  []string            `json:"hostKeyAlgorithms,omitempty"`
 	AutoDisconnect     int                 `json:"autoDisconnect,omitempty"` // seconds before disconnecting. default: 10
 	KnownHostsCallback ssh.HostKeyCallback // env var VFS_SFTP_INSECURE_KNOWN_HOSTS
-	Retry              vfs.Retry
-	MaxRetries         int
-	FileBufferSize     int // Buffer Size In Bytes Used with utils.TouchCopyBuffered
+	FileBufferSize     int                 `json:"fileBufferSize,omitempty"`  // Buffer Size In Bytes Used with utils.TouchCopyBuffered
+	FilePermissions    *string             `json:"filePermissions,omitempty"` // Default File Permissions for new files
 }
 
-// Note that as of 1.12, OPENSSH private key format is not supported when encrypt (with passphrase).
-// See https://github.com/golang/go/issues/18692
-// To force creation of PEM format(instead of OPENSSH format), use ssh-keygen -m PEM
+// GetFileMode converts the FilePermissions string to os.FileMode.
+func (o *Options) GetFileMode() (*os.FileMode, error) {
+	if o.FilePermissions == nil {
+		return nil, nil
+	}
+
+	// Convert the string to an unsigned integer, interpreting it as an octal value
+	parsed, err := strconv.ParseUint(*o.FilePermissions, 0, 32)
+	if err != nil {
+		return nil, fmt.Errorf("invalid file mode: %v", err)
+	}
+	mode := os.FileMode(parsed)
+	return &mode, nil
+}
+
+var defaultSSHConfig = &ssh.ClientConfig{
+	HostKeyAlgorithms: []string{
+		"rsa-sha2-256-cert-v01@openssh.com",
+		"rsa-sha2-512-cert-v01@openssh.com",
+		"ssh-rsa-cert-v01@openssh.com",
+		"ecdsa-sha2-nistp256-cert-v01@openssh.com",
+		"ecdsa-sha2-nistp384-cert-v01@openssh.com",
+		"ecdsa-sha2-nistp521-cert-v01@openssh.com",
+		"ssh-ed25519-cert-v01@openssh.com",
+		"ssh-ed25519",
+		"ecdsa-sha2-nistp256",
+		"ecdsa-sha2-nistp384",
+		"ecdsa-sha2-nistp521",
+		"ssh-rsa",
+		"rsa-sha2-256",
+		"rsa-sha2-512",
+		"sk-ssh-ed25519@openssh.com",
+		"sk-ecdsa-sha2-nistp256@openssh.com",
+	},
+	Config: ssh.Config{
+		KeyExchanges: []string{
+			"curve25519-sha256",
+			"curve25519-sha256@libssh.org",
+			"ecdh-sha2-nistp256",
+			"ecdh-sha2-nistp384",
+			"ecdh-sha2-nistp521",
+			"diffie-hellman-group-exchange-sha256",
+			"diffie-hellman-group16-sha512",
+			"diffie-hellman-group18-sha512",
+			"diffie-hellman-group14-sha256",
+			"diffie-hellman-group14-sha1",
+		},
+		Ciphers: []string{
+			"aes128-gcm@openssh.com",
+			"aes256-gcm@openssh.com",
+			"chacha20-poly1305@openssh.com",
+			"aes256-ctr",
+			"aes192-ctr",
+			"aes128-ctr",
+			"aes128-cbc",
+			"3des-cbc",
+		},
+		MACs: []string{
+			"hmac-sha2-256-etm@openssh.com",
+			"hmac-sha2-512-etm@openssh.com",
+			"hmac-sha2-256",
+			"hmac-sha2-512",
+			"hmac-sha1",
+			"hmac-sha1-96",
+		},
+	},
+}
 
 func getClient(authority utils.Authority, opts Options) (Client, io.Closer, error) {
-
 	// setup Authentication
 	authMethods, err := getAuthMethods(opts)
 	if err != nil {
@@ -52,23 +116,17 @@ func getClient(authority utils.Authority, opts Options) (Client, io.Closer, erro
 	if err != nil {
 		return nil, nil, err
 	}
-	// To avoid ssh: handshake failed: ssh: no common algorithm for key exchange;
-	// client offered: [curve25519-sha256@libssh.org ecdh-sha2-nistp256 ecdh-sha2-nistp384 ecdh-sha2-	nistp521 diffie-hellman-group14-sha1],
-	// server offered: [diffie-hellman-group-exchange-sha256 ]
-	// Now receive KeyExchange algorithm as an option
-	sshConfig := ssh.Config{KeyExchanges: opts.KeyExchanges}
 
 	// Define the Client Config
-	config := &ssh.ClientConfig{
-		User:            authority.User,
-		Auth:            authMethods,
-		HostKeyCallback: hostKeyCallback,
-		Config:          sshConfig,
-	}
+	config := getSShConfig(opts)
+	config.User = authority.UserInfo().Username()
+	config.Auth = authMethods
+	config.HostKeyCallback = hostKeyCallback
+
 	// default to port 22
-	host := authority.Host
-	if !strings.Contains(host, ":") {
-		host = fmt.Sprintf("%s%s", host, ":22")
+	host := fmt.Sprintf("%s:%d", authority.Host(), authority.Port())
+	if authority.Port() == 0 {
+		host = fmt.Sprintf("%s:%d", host, 22)
 	}
 
 	// TODO begin timeout until session is created
@@ -85,11 +143,32 @@ func getClient(authority utils.Authority, opts Options) (Client, io.Closer, erro
 	return sftpClient, sshConn, nil
 }
 
+// getSShConfig gets ssh config from Options
+func getSShConfig(opts Options) *ssh.ClientConfig {
+	// copy default config
+	config := *defaultSSHConfig
+
+	// override default config with any user-defined config
+	if opts.HostKeyAlgorithms != nil {
+		config.HostKeyAlgorithms = opts.HostKeyAlgorithms
+	}
+	if opts.Ciphers != nil {
+		config.Config.Ciphers = opts.Ciphers
+	}
+	if opts.KeyExchanges != nil {
+		config.Config.KeyExchanges = opts.KeyExchanges
+	}
+	if opts.MACs != nil {
+		config.Config.MACs = opts.MACs
+	}
+
+	return &config
+}
+
 // getHostKeyCallback gets host key callback for all known_hosts files
 func getHostKeyCallback(opts Options) (ssh.HostKeyCallback, error) {
 	var knownHostsFiles []string
 	switch {
-
 	// use explicit callback in Options
 	case opts.KnownHostsCallback != nil:
 		return opts.KnownHostsCallback, nil
@@ -131,7 +210,7 @@ func getHostKeyCallback(opts Options) (ssh.HostKeyCallback, error) {
 
 	// use env var known_hosts file path, ie, /home/bob/.ssh/known_hosts
 	case os.Getenv("VFS_SFTP_INSECURE_KNOWN_HOSTS") != "":
-		return ssh.InsecureIgnoreHostKey(), nil //nolint:gosec // this is only use if a uer specifically call it (testing)
+		return ssh.InsecureIgnoreHostKey(), nil //nolint:gosec // this is only used if a user specifically calls it (testing)
 
 	// use user/system-wide known_hosts paths (as defined by OpenSSH https://man.openbsd.org/ssh)
 	default:
@@ -152,15 +231,18 @@ func findHomeSystemKnownHosts(knownHostsFiles []string) ([]string, error) {
 	if err != nil {
 		return nil, err
 	}
-	homeKnonwHostsPath := utils.EnsureLeadingSlash(path.Join(home, ".ssh/known_hosts"))
+	homeKnownHostsPath := filepath.Join(home, ".ssh", "known_hosts")
+	if runtime.GOOS != "windows" {
+		homeKnownHostsPath = utils.EnsureLeadingSlash(homeKnownHostsPath)
+	}
 
 	// check file existence first to prevent auto-vivification of file
-	found, err := foundFile(homeKnonwHostsPath)
-	if err != nil && err != os.ErrNotExist {
+	found, err := foundFile(homeKnownHostsPath)
+	if err != nil && !errors.Is(err, os.ErrNotExist) {
 		return nil, err
 	}
 	if found {
-		knownHostsFiles = append(knownHostsFiles, homeKnonwHostsPath)
+		knownHostsFiles = append(knownHostsFiles, homeKnownHostsPath)
 	}
 
 	// add /etc/ssh/.ssh/known_hosts for unix-like systems.  SSH doesn't exist natively on Windows and each
@@ -168,7 +250,7 @@ func findHomeSystemKnownHosts(knownHostsFiles []string) ([]string, error) {
 	if runtime.GOOS != "windows" {
 		// check file existence first to prevent auto-vivification of file
 		found, err := foundFile(systemWideKnownHosts)
-		if err != nil && err != os.ErrNotExist {
+		if err != nil && !errors.Is(err, os.ErrNotExist) {
 			return nil, err
 		}
 		if found {
@@ -226,8 +308,7 @@ func getAuthMethods(opts Options) ([]ssh.AuthMethod, error) {
 }
 
 func getKeyFile(file, passphrase string) (key ssh.Signer, err error) {
-
-	buf, err := ioutil.ReadFile(file) //nolint:gosec
+	buf, err := os.ReadFile(file) //nolint:gosec
 	if err != nil {
 		return
 	}

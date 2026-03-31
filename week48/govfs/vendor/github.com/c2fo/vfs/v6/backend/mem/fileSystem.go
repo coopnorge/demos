@@ -6,12 +6,13 @@ import (
 
 	"github.com/c2fo/vfs/v6"
 	"github.com/c2fo/vfs/v6/backend"
+	"github.com/c2fo/vfs/v6/options"
 	"github.com/c2fo/vfs/v6/utils"
 )
 
 // Scheme defines the FileSystem type's underlying implementation.
 const Scheme = "mem"
-const name = "In-Memory Filesystem"
+const name = "In-Memory FileSystem"
 
 type fsObject struct {
 	isFile bool
@@ -21,7 +22,7 @@ type objMap map[string]*fsObject
 
 // FileSystem implements vfs.FileSystem for an in-memory file system.
 type FileSystem struct {
-	sync.Mutex
+	mu    sync.Mutex
 	fsMap map[string]objMap
 }
 
@@ -38,8 +39,7 @@ func (fs *FileSystem) Retry() vfs.Retry {
 // If a file is written to before a touch call, Write() will take care of that call.  This is
 // true for other functions as well and existence only poses a problem in the context of deletion
 // or copying FROM a non-existent file.
-func (fs *FileSystem) NewFile(volume, absFilePath string) (vfs.File, error) {
-
+func (fs *FileSystem) NewFile(volume, absFilePath string, opts ...options.NewFileOption) (vfs.File, error) {
 	err := utils.ValidateAbsoluteFilePath(absFilePath)
 	if err != nil {
 		return nil, err
@@ -49,24 +49,31 @@ func (fs *FileSystem) NewFile(volume, absFilePath string) (vfs.File, error) {
 	if err != nil {
 		return nil, err
 	}
-	mapRef := location.(*Location).fileSystem.fsMap
-	if _, ok := mapRef[volume]; ok {
-		fileList := mapRef[volume].filesHere(location.Path())
-		for _, file := range fileList {
-			if file.name == path.Base(absFilePath) {
-				fileCopy := deepCopy(file)
-				file.location = location
-				fileCopy.(*File).memFile = file
-				return fileCopy, nil
+
+	fs.mu.Lock()
+	defer fs.mu.Unlock()
+	if _, ok := fs.fsMap[volume]; ok {
+		for _, obj := range fs.fsMap[volume] {
+			if obj.isFile && obj.i.(*memFile).location.Path() == location.Path() {
+				if obj.i.(*memFile).name == path.Base(absFilePath) {
+					vfsFile := &File{
+						name:            obj.i.(*memFile).name,
+						memFile:         obj.i.(*memFile),
+						readWriteSeeker: NewReadWriteSeekerWithData(obj.i.(*memFile).contents),
+						opts:            opts,
+					}
+					return vfsFile, nil
+				}
 			}
 		}
 	}
 	// validateAbsFile path will throw an error if there was a trailing slash, hence not calling path.Clean()
 	file := &File{
 		name: path.Base(absFilePath),
+		opts: opts,
 	}
 
-	memFile := newMemFile(file, location)
+	memFile := newMemFile(file, location.(*Location))
 	file.memFile = memFile
 	return file, nil
 }
@@ -75,7 +82,6 @@ func (fs *FileSystem) NewFile(volume, absFilePath string) (vfs.File, error) {
 // A location always exists. If a file is created on a location that has not yet
 // been made in the fsMap, then the location will be created with the file
 func (fs *FileSystem) NewLocation(volume, absLocPath string) (vfs.Location, error) {
-
 	err := utils.ValidateAbsoluteLocationPath(absLocPath)
 	if err != nil {
 		return nil, err
@@ -87,7 +93,6 @@ func (fs *FileSystem) NewLocation(volume, absLocPath string) (vfs.Location, erro
 		exists:     false,
 		volume:     volume,
 	}, nil
-
 }
 
 // Name returns the name of the underlying FileSystem
@@ -102,18 +107,15 @@ func (fs *FileSystem) Scheme() string {
 
 // NewFileSystem is used to initialize the file system struct for an in-memory FileSystem.
 func NewFileSystem() *FileSystem {
-
 	return &FileSystem{
 		sync.Mutex{},
 		make(map[string]objMap),
 	}
-
 }
 
 func init() {
 	// Even though the map is being made here, a call to
 	backend.Register(Scheme, NewFileSystem())
-
 }
 
 // getKeys is used to get a list of absolute paths on a specified volume. These paths are a mixture of files and locations
@@ -128,11 +130,9 @@ func (o objMap) getKeys() []string {
 // fileHere returns a list of file pointers found at the absolute location path provided.
 // If none are there, returns an empty slice
 func (o objMap) filesHere(absLocPath string) []*memFile {
-
 	paths := o.getKeys()
 	fileList := make([]*memFile, 0)
 	for i := range paths {
-
 		object := o[paths[i]]                         // retrieve the object
 		if ok := object != nil && object.isFile; ok { // if the object is a file, cast its interface, i, to a file and append to the slice
 			file := object.i.(*memFile)
@@ -147,11 +147,9 @@ func (o objMap) filesHere(absLocPath string) []*memFile {
 // fileNamesHere returns a list of base names of files found at the absolute location path provided.
 // If none are there, returns an empty slice
 func (o objMap) fileNamesHere(absLocPath string) []string {
-
 	paths := o.getKeys()
 	fileList := make([]string, 0)
 	for i := range paths {
-
 		object := o[paths[i]]               // retrieve the object
 		if object != nil && object.isFile { // if the object is a file, cast its interface, i, to a file and append the name to the slice
 			file := object.i.(*memFile)
@@ -165,12 +163,12 @@ func (o objMap) fileNamesHere(absLocPath string) []string {
 
 func deepCopy(srcFile *memFile) vfs.File {
 	destination := &File{
-		name: srcFile.name,
+		name:            srcFile.name,
+		memFile:         srcFile,
+		readWriteSeeker: NewReadWriteSeekerWithData(srcFile.contents),
 	}
 
 	destination.memFile = srcFile
-	destination.exists = srcFile.exists
-	destination.isOpen = srcFile.isOpen
-	destination.contents = srcFile.contents
+	destination.readWriteSeeker = NewReadWriteSeekerWithData(srcFile.contents)
 	return destination
 }

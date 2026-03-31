@@ -1,43 +1,54 @@
 package s3
 
 import (
-	"bytes"
+	"context"
+	"errors"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net/url"
 	"os"
 	"path"
+	"strings"
 	"time"
 
-	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/awserr"
 	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/aws/aws-sdk-go/service/s3/s3iface"
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
+	"github.com/aws/aws-sdk-go/service/s3/s3manager/s3manageriface"
 
 	"github.com/c2fo/vfs/v6"
-	"github.com/c2fo/vfs/v6/backend"
 	"github.com/c2fo/vfs/v6/mocks"
+	"github.com/c2fo/vfs/v6/options"
+	"github.com/c2fo/vfs/v6/options/delete"
+	"github.com/c2fo/vfs/v6/options/newfile"
 	"github.com/c2fo/vfs/v6/utils"
 )
 
+const defaultPartitionSize = int64(32 * 1024 * 1024)
+
 // File implements vfs.File interface for S3 fs.
 type File struct {
-	fileSystem  *FileSystem
-	bucket      string
-	key         string
-	tempFile    *os.File
-	writeBuffer *bytes.Buffer
-}
+	fileSystem *FileSystem
+	bucket     string
+	key        string
+	opts       []options.NewFileOption
 
-// Downloader interface needed to mock S3 Downloader data access object in tests
-type Downloader interface {
-	Download(w io.WriterAt, input *s3.GetObjectInput, options ...func(downloader *s3manager.Downloader)) (n int64, err error)
+	// seek-related fields
+	cursorPos  int64
+	seekCalled bool
 
-	DownloadWithContext(ctx aws.Context, w io.WriterAt, input *s3.GetObjectInput, options ...func(*s3manager.Downloader)) (n int64, err error)
+	// read-related fields
+	reader      io.ReadCloser
+	readCalled  bool
+	readEOFSeen bool
 
-	DownloadWithIterator(ctx aws.Context, iter s3manager.BatchDownloadIterator, opts ...func(*s3manager.Downloader)) error
+	// write-related fields
+	tempFileWriter     *os.File
+	s3Writer           *io.PipeWriter
+	cancelFunc         context.CancelFunc
+	writeCalled        bool
+	s3WriterCompleteCh chan struct{}
 }
 
 // Info Functions
@@ -61,24 +72,21 @@ func (f *File) Path() string {
 	return utils.EnsureLeadingSlash(f.key)
 }
 
-// Exists returns a boolean of whether or not the object exists on s3, based on a call for
+// Exists returns whether (boolean) the object exists on s3, based on a call for
 // the object's HEAD through the s3 API.
 func (f *File) Exists() (bool, error) {
 	_, err := f.getHeadObject()
-	code := ""
 	if err != nil {
-		code = err.(awserr.Error).Code()
-	}
-	if err != nil && (code == s3.ErrCodeNoSuchKey || code == "NotFound") {
-		return false, nil
-	} else if err != nil {
+		if errors.Is(err, vfs.ErrNotExist) {
+			return false, nil
+		}
 		return false, err
 	}
 
 	return true, nil
 }
 
-// Size returns the ContentLength value from an s3 HEAD request on the file's object.
+// Size returns the ContentLength value from an S3 HEAD request on the file's object.
 func (f *File) Size() (uint64, error) {
 	head, err := f.getHeadObject()
 	if err != nil {
@@ -101,10 +109,25 @@ func (f *File) Location() vfs.Location {
 
 // CopyToFile puts the contents of File into the targetFile passed. Uses the S3 CopyObject
 // method if the target file is also on S3, otherwise uses io.CopyBuffer.
-func (f *File) CopyToFile(file vfs.File) error {
+func (f *File) CopyToFile(file vfs.File) (err error) {
+	// Close file (f) reader regardless of an error
+	defer func() {
+		// close writer
+		wErr := file.Close()
+		// close reader
+		rErr := f.Close()
+		//
+		if err == nil {
+			if wErr != nil {
+				err = wErr
+			} else if rErr != nil {
+				err = rErr
+			}
+		}
+	}()
 	// validate seek is at 0,0 before doing copy
-	if err := backend.ValidateCopySeekPosition(f); err != nil {
-		return err
+	if f.cursorPos != 0 {
+		return vfs.CopyToNotPossible
 	}
 
 	// if target is S3
@@ -135,11 +158,11 @@ func (f *File) CopyToFile(file vfs.File) error {
 		return err
 	}
 	// Close target to flush and ensure that cursor isn't at the end of the file when the caller reopens for read
-	if cerr := file.Close(); cerr != nil {
-		return cerr
+	if err := file.Close(); err != nil {
+		return err
 	}
-	// Close file (f) reader
-	return f.Close()
+
+	return err
 }
 
 // MoveToFile puts the contents of File into the targetFile passed using File.CopyToFile.
@@ -181,9 +204,9 @@ func (f *File) CopyToLocation(location vfs.Location) (vfs.File, error) {
 // CRUD Operations
 
 // Delete clears any local temp file, or write buffer from read/writes to the file, then makes
-// a DeleteObject call to s3 for the file. Returns any error returned by the API.
-func (f *File) Delete() error {
-	f.writeBuffer = nil
+// a DeleteObject call to s3 for the file. If delete.AllVersions option is provided,
+// DeleteObject call is made to s3 for each version of the file. Returns any error returned by the API.
+func (f *File) Delete(opts ...options.DeleteOption) error {
 	if err := f.Close(); err != nil {
 		return err
 	}
@@ -193,87 +216,292 @@ func (f *File) Delete() error {
 		return err
 	}
 
+	var allVersions bool
+	for _, o := range opts {
+		switch o.(type) {
+		case delete.AllVersions, delete.DeleteAllVersions:
+			allVersions = true
+		default:
+		}
+	}
+
 	_, err = client.DeleteObject(&s3.DeleteObjectInput{
 		Key:    &f.key,
 		Bucket: &f.bucket,
 	})
+	if err != nil {
+		return err
+	}
+
+	if allVersions {
+		objectVersions, err := f.getAllObjectVersions(client)
+		if err != nil {
+			return err
+		}
+
+		for _, version := range objectVersions.Versions {
+			if _, err = client.DeleteObject(&s3.DeleteObjectInput{
+				Key:       &f.key,
+				Bucket:    &f.bucket,
+				VersionId: version.VersionId,
+			}); err != nil {
+				return err
+			}
+		}
+	}
+
 	return err
 }
 
 // Close cleans up underlying mechanisms for reading from and writing to the file. Closes and removes the
-// local temp file, and triggers a write to s3 of anything in the f.writeBuffer if it has been created.
-func (f *File) Close() error {
-	if f.tempFile != nil {
-		err := f.tempFile.Close()
-		if err != nil {
-			return err
-		}
+// local temp file, and triggers a Write to S3 of anything in the f.writeBuffer if it has been created.
+func (f *File) Close() error { //nolint:gocyclo
+	defer func() {
+		f.reader = nil
+		f.cancelFunc = nil
+		f.s3Writer = nil
 
-		err = os.Remove(f.tempFile.Name())
-		if err != nil && !os.IsNotExist(err) {
-			return err
-		}
+		// reset state
+		f.cursorPos = 0
+		f.seekCalled = false
+		f.readCalled = false
+		f.writeCalled = false
+		f.readEOFSeen = false
+	}()
 
-		f.tempFile = nil
+	// cleanup reader (unless reader is also the writer tempfile)
+	if f.reader != nil && !f.writeCalled {
+		// close reader
+		if err := f.reader.Close(); err != nil {
+			return utils.WrapCloseError(err)
+		}
 	}
 
-	if f.writeBuffer != nil {
-		client, err := f.fileSystem.Client()
-		if err != nil {
-			return err
+	// finalize writer
+	wroteFile := false
+	if f.s3Writer != nil {
+		// close s3Writer
+		if err := f.s3Writer.Close(); err != nil {
+			return utils.WrapCloseError(err)
 		}
-
-		uploader := s3manager.NewUploaderWithClient(client)
-		uploadInput := uploadInput(f)
-		uploadInput.Body = f.writeBuffer
-
-		_, err = uploader.Upload(uploadInput)
-		if err != nil {
-			return err
+		wroteFile = true
+	} else if f.tempFileWriter != nil { // s3Writer is nil but tempFileWriter is not nil (seek after write, write after seek)
+		// write tempFileWriter to s3
+		if err := f.tempToS3(); err != nil {
+			return utils.WrapCloseError(err)
 		}
-
-		f.writeBuffer = nil
-		return waitUntilFileExists(f, 5)
+		wroteFile = true
 	}
+
+	// cleanup tempFileWriter
+	if f.tempFileWriter != nil {
+		if err := f.cleanupTempFile(); err != nil {
+			return utils.WrapCloseError(err)
+		}
+	}
+
+	// wait for file to exist
+	if wroteFile {
+		// read s3WriterCompleteCh if it exists
+		if f.writeCalled && f.s3Writer != nil && f.s3WriterCompleteCh != nil {
+			// wait for s3Writer to complete
+			<-f.s3WriterCompleteCh
+			// close s3WriterCompleteCh channel
+			close(f.s3WriterCompleteCh)
+		}
+		err := waitUntilFileExists(f, 5)
+		if err != nil {
+			return utils.WrapCloseError(err)
+		}
+	}
+
+	// close reader
+	if f.reader != nil && !f.writeCalled {
+		err := f.reader.Close()
+		if err != nil {
+			return utils.WrapCloseError(err)
+		}
+	}
+
 	return nil
 }
 
-// Read implements the standard for io.Reader. For this to work with an s3 file, a temporary local copy of
-// the file is created, and reads work on that. This file is closed and removed upon calling f.Close()
+func (f *File) tempToS3() error {
+	// ensure cursor is at 0
+	if _, err := f.tempFileWriter.Seek(0, 0); err != nil {
+		return err
+	}
+
+	// write tempFileWriter to s3
+	client, err := f.fileSystem.Client()
+	if err != nil {
+		return err
+	}
+
+	uploader := getUploader(client, withUploadPartitionSize(f.getDownloadPartitionSize()))
+	uploadInput := uploadInput(f)
+	uploadInput.Body = f.tempFileWriter
+
+	_, err = uploader.UploadWithContext(context.Background(), uploadInput)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// Read implements the standard for io.Reader.
 func (f *File) Read(p []byte) (n int, err error) {
-	if err := f.checkTempFile(); err != nil {
-		return 0, err
+	// check/initialize for reader
+	r, err := f.getReader()
+	if err != nil {
+		return 0, utils.WrapReadError(err)
 	}
-	return f.tempFile.Read(p)
+
+	read, err := r.Read(p)
+	if err != nil {
+		if !errors.Is(err, io.EOF) {
+			return 0, utils.WrapReadError(err)
+		}
+		// s3 reader returns io.EOF when reading the last byte (but not past the last byte) to save on bandwidth,
+		// but we want to return io.EOF only when reading past the last byte
+		if f.readEOFSeen {
+			return 0, io.EOF
+		}
+		sz, err := f.Size()
+		if err != nil {
+			return 0, utils.WrapReadError(err)
+		}
+		if f.cursorPos+int64(read) > int64(sz) {
+			return read, utils.WrapReadError(err)
+		}
+		f.readEOFSeen = true
+	}
+
+	f.cursorPos += int64(read)
+	f.readCalled = true
+
+	return read, nil
 }
 
-// Seek implements the standard for io.Seeker. A temporary local copy of the s3 file is created (the same
-// one used for Reads) which Seek() acts on. This file is closed and removed upon calling f.Close()
+func (f *File) cleanupTempFile() error {
+	if f.tempFileWriter != nil {
+		err := f.tempFileWriter.Close()
+		if err != nil {
+			return err
+		}
+
+		err = os.Remove(f.tempFileWriter.Name())
+		if err != nil {
+			return err
+		}
+
+		f.tempFileWriter = nil
+	}
+
+	return nil
+}
+
+// Seek implements the standard for io.Seeker.
 func (f *File) Seek(offset int64, whence int) (int64, error) {
-	if err := f.checkTempFile(); err != nil {
-		return 0, err
+	// get length of file
+	var length uint64
+	if f.writeCalled {
+		// if write has been called, then the length is the cursorPos
+		length = uint64(f.cursorPos)
+	} else {
+		var err error
+		length, err = f.Size()
+		if err != nil {
+			return 0, utils.WrapSeekError(err)
+		}
 	}
-	return f.tempFile.Seek(offset, whence)
+
+	// invalidate reader (if any)
+	if f.reader != nil {
+		err := f.reader.Close()
+		if err != nil {
+			return 0, utils.WrapSeekError(err)
+		}
+
+		f.reader = nil
+	}
+
+	// invalidate s3Writer
+	if f.s3Writer != nil {
+		// cancel s3Writer
+		f.cancelFunc()
+		f.cancelFunc = nil
+
+		// close s3Writer
+		err := f.s3Writer.Close()
+		if err != nil {
+			return 0, utils.WrapSeekError(err)
+		}
+
+		f.s3Writer = nil
+	}
+
+	// update seek position for tempFileWriter writer (if any)
+	if f.tempFileWriter != nil {
+		// seek tempFileWriter
+		_, err := f.tempFileWriter.Seek(offset, whence)
+		if err != nil {
+			return 0, utils.WrapSeekError(err)
+		}
+	}
+
+	// update cursorPos
+	pos, err := utils.SeekTo(int64(length), f.cursorPos, offset, whence)
+	if err != nil {
+		return 0, utils.WrapSeekError(err)
+	}
+	f.cursorPos = pos
+
+	// Reset readEOFSeen if seeking to the beginning of the file
+	if f.cursorPos == 0 {
+		f.readEOFSeen = false
+	}
+
+	f.seekCalled = true
+	return f.cursorPos, nil
 }
 
-// Write implements the standard for io.Writer. A buffer is added to with each subsequent
-// write. When f.Close() is called, the contents of the buffer are used to initiate the
-// PutObject to s3. The underlying implementation uses s3manager which will determine whether
-// it is appropriate to call PutObject, or initiate a multi-part upload.
-func (f *File) Write(data []byte) (res int, err error) {
-	if f.writeBuffer == nil {
-		// note, initializing with 'data' and returning len(data), nil
-		// causes issues with some Write usages, notably csv.Writer
-		// so we simply initialize with no bytes and call the buffer Write after
-		//
-		// f.writeBuffer = bytes.NewBuffer(data)
-		// return len(data), nil
-		//
-		// so now we do:
-
-		f.writeBuffer = bytes.NewBuffer([]byte{})
+// Write implements the standard for io.Writer.  Note that writes are not committed to S3 until CLose() is called.
+func (f *File) Write(data []byte) (int, error) {
+	// check/initialize for writer
+	err := f.initWriters()
+	if err != nil {
+		return 0, utils.WrapWriteError(err)
 	}
-	return f.writeBuffer.Write(data)
+
+	// write to tempfile
+	written, err := f.tempFileWriter.Write(data)
+	if err != nil {
+		return 0, utils.WrapWriteError(err)
+	}
+
+	// write to s3
+	if f.s3Writer != nil {
+		// write to s3
+		s3written, err := f.s3Writer.Write(data)
+		if err != nil {
+			return 0, utils.WrapWriteError(err)
+		}
+
+		// ensure both writes are the same
+		if written != s3written {
+			return 0, utils.WrapWriteError(
+				fmt.Errorf("local write and s3 write are different sizes: local=%d, s3=%d", written, s3written),
+			)
+		}
+	}
+
+	// update cursorPos
+	f.cursorPos += int64(written)
+	f.writeCalled = true
+
+	return written, nil
 }
 
 // Touch creates a zero-length file on the vfs.File if no File exists.  Update File's last modified timestamp.
@@ -314,22 +542,46 @@ func (f *File) String() string {
 }
 
 /*
-	Private helper functions
+Private helper functions
 */
+func (f *File) getAllObjectVersions(client s3iface.S3API) (*s3.ListObjectVersionsOutput, error) {
+	prefix := utils.RemoveLeadingSlash(f.key)
+	objVers, err := client.ListObjectVersions(&s3.ListObjectVersionsInput{
+		Bucket: &f.bucket,
+		Prefix: &prefix,
+	})
+	return objVers, err
+}
+
 func (f *File) getHeadObject() (*s3.HeadObjectOutput, error) {
 	headObjectInput := new(s3.HeadObjectInput).SetKey(f.key).SetBucket(f.bucket)
 	client, err := f.fileSystem.Client()
 	if err != nil {
 		return nil, err
 	}
-	return client.HeadObject(headObjectInput)
+
+	head, err := client.HeadObject(headObjectInput)
+
+	return head, handleExistsError(err)
 }
 
 // For copy from S3-to-S3 when credentials are the same between source and target, return *s3.CopyObjectInput or error
-func (f *File) getCopyObjectInput(targetFile *File) (*s3.CopyObjectInput, error) {
+func (f *File) getCopyObjectInput(targetFile *File) (*s3.CopyObjectInput, error) { //nolint:gocyclo
 	// first we must determine if we're using the same s3 credentials for source and target before doing a native copy
 	isSameAccount := false
 	var ACL string
+
+	// get content type from source
+	var contentType string
+	if targetFile.opts == nil && f.opts != nil {
+		for _, o := range f.opts {
+			switch o := o.(type) {
+			case *newfile.ContentType:
+				contentType = string(*o)
+			default:
+			}
+		}
+	}
 
 	fileOptions := f.Location().FileSystem().(*FileSystem).options
 	targetOptions := targetFile.Location().FileSystem().(*FileSystem).options
@@ -367,6 +619,15 @@ func (f *File) getCopyObjectInput(targetFile *File) (*s3.CopyObjectInput, error)
 			SetBucket(targetFile.bucket).
 			SetCopySource(copySourceKey)
 
+		// set content type if it exists
+		if contentType != "" {
+			copyInput.SetContentType(contentType)
+		}
+
+		if f.fileSystem.options != nil && f.fileSystem.options.(Options).DisableServerSideEncryption {
+			copyInput.ServerSideEncryption = nil
+		}
+
 		// validate copyInput
 		if err := copyInput.Validate(); err != nil {
 			return nil, err
@@ -379,53 +640,22 @@ func (f *File) getCopyObjectInput(targetFile *File) (*s3.CopyObjectInput, error)
 	return nil, nil
 }
 
-func (f *File) checkTempFile() error {
-	if f.tempFile == nil {
-		localTempFile, err := f.copyToLocalTempReader()
-		if err != nil {
-			return err
-		}
-		f.tempFile = localTempFile
-	}
-
-	return nil
-}
-
-func (f *File) copyToLocalTempReader() (*os.File, error) {
-	// Create temp file
-	tmpFile, err := ioutil.TempFile("", fmt.Sprintf("%s.%d", f.Name(), time.Now().UnixNano()))
-	if err != nil {
-		return nil, err
-	}
-
-	// Create S3 Downloader, get client, and set partition size for multipart download
-	var partSize int64
-	if opts, ok := f.Location().FileSystem().(*FileSystem).options.(Options); ok {
-		if partSize = opts.DownloadPartitionSize; partSize == 0 {
-			partSize = 32 * 1024 * 1024 // 32 MB per partition default if opts.DownloadPartitionSize is 0
-		}
-	}
-
+func (f *File) copyS3ToLocalTempReader(tmpFile *os.File) error {
 	client, err := f.fileSystem.Client()
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	// Download file
-	_, err = getDownloader(client, partSize).Download(tmpFile, f.getObjectInput())
-	if err != nil {
-		return nil, err
-	}
+	input := new(s3.GetObjectInput).SetBucket(f.bucket).SetKey(f.key)
+	opt := withDownloadPartitionSize(f.getDownloadPartitionSize())
+	_, err = getDownloader(client, opt).
+		DownloadWithContext(context.Background(), tmpFile, input)
 
-	// Return temp file
-	return tmpFile, nil
+	return err
 }
 
-func (f *File) getObjectInput() *s3.GetObjectInput {
-	return new(s3.GetObjectInput).SetBucket(f.bucket).SetKey(f.key)
-}
-
-//TODO: need to provide an implementation-agnostic container for providing config options such as SSE
+// TODO: need to provide an implementation-agnostic container for providing config options such as SSE
 func uploadInput(f *File) *s3manager.UploadInput {
 	sseType := "AES256"
 	input := &s3manager.UploadInput{
@@ -438,9 +668,21 @@ func uploadInput(f *File) *s3manager.UploadInput {
 		f.fileSystem.options = Options{}
 	}
 
+	if f.fileSystem.options.(Options).DisableServerSideEncryption {
+		input.ServerSideEncryption = nil
+	}
+
 	if opts, ok := f.fileSystem.options.(Options); ok {
 		if opts.ACL != "" {
 			input.ACL = &opts.ACL
+		}
+	}
+
+	for _, o := range f.opts {
+		switch o := o.(type) {
+		case *newfile.ContentType:
+			input.ContentType = (*string)(o)
+		default:
 		}
 	}
 
@@ -485,8 +727,165 @@ func waitUntilFileExists(file vfs.File, retries int) error {
 	return nil
 }
 
-var getDownloader = func(client s3iface.S3API, partSize int64) Downloader {
-	return s3manager.NewDownloaderWithClient(client, func(d *s3manager.Downloader) {
+func (f *File) getReader() (io.ReadCloser, error) {
+	if f.reader == nil {
+		if f.writeCalled && f.tempFileWriter != nil {
+			// we've edited or truncated the file, so we need to read from the temp file which should already be at the
+			// current cursor position
+			f.reader = f.tempFileWriter
+		} else {
+			sz, err := f.Size()
+			if err != nil {
+				return nil, err
+			}
+			if sz == 0 {
+				// can't set range on empty file, so just return an empty ReadCloser
+				f.reader = io.NopCloser(strings.NewReader(""))
+			} else {
+				// Create the request to get the object
+				input := new(s3.GetObjectInput).
+					SetBucket(f.bucket).
+					SetKey(f.key).
+					SetRange(fmt.Sprintf("bytes=%d-", f.cursorPos))
+
+				// Get the client
+				client, err := f.fileSystem.Client()
+				if err != nil {
+					return nil, err
+				}
+
+				// Request the object
+				result, err := client.GetObject(input)
+				if err != nil {
+					return nil, err
+				}
+
+				// Set the reader to the body of the object
+				f.reader = result.Body
+			}
+		}
+	}
+	return f.reader, nil
+}
+
+func handleExistsError(err error) error {
+	if err != nil {
+		var awsErr awserr.Error
+		if errors.As(err, &awsErr) {
+			switch awsErr.Code() {
+			case s3.ErrCodeNoSuchKey, s3.ErrCodeNoSuchBucket, "NotFound":
+				return vfs.ErrNotExist
+			}
+		}
+		return err
+	}
+	return nil
+}
+
+func (f *File) initWriters() error {
+	if f.tempFileWriter == nil {
+		// Create temp file
+		tmpFile, err := os.CreateTemp("", fmt.Sprintf("vfs_s3_%s.%d", f.Name(), time.Now().UnixNano()))
+		if err != nil {
+			return err
+		}
+		f.tempFileWriter = tmpFile
+		if f.cursorPos != 0 {
+			// if file exists(because cursor position is non-zero), we need to copy the existing s3 file to temp
+			err := f.copyS3ToLocalTempReader(tmpFile)
+			if err != nil {
+				return err
+			}
+
+			// seek to cursorPos
+			if _, err := f.tempFileWriter.Seek(f.cursorPos, 0); err != nil {
+				return err
+			}
+		}
+	}
+
+	// if we haven't seeked yet, we need to get the s3Writer
+	if f.s3Writer == nil {
+		if !f.seekCalled && !f.readCalled {
+			w, err := f.getS3Writer()
+			if err != nil {
+				return err
+			}
+
+			// Set the reader to the body of the object
+			f.s3Writer = w
+		}
+	}
+
+	return nil
+}
+
+func (f *File) getS3Writer() (*io.PipeWriter, error) {
+	f.s3WriterCompleteCh = make(chan struct{}, 1)
+	pr, pw := io.Pipe()
+
+	client, err := f.fileSystem.Client()
+	if err != nil {
+		return nil, err
+	}
+	uploader := getUploader(client, withUploadPartitionSize(f.getUploadPartitionSize()))
+	ctx, cancel := context.WithCancel(context.Background())
+	f.cancelFunc = cancel
+	uploadInput := uploadInput(f)
+	uploadInput.Body = pr
+
+	go func(input *s3manager.UploadInput) {
+		defer cancel()
+		_, err := uploader.UploadWithContext(ctx, input)
+		if err != nil {
+			_ = pw.CloseWithError(err)
+		}
+		f.s3WriterCompleteCh <- struct{}{}
+	}(uploadInput)
+
+	return pw, nil
+}
+
+func (f *File) getUploadPartitionSize() int64 {
+	partSize := defaultPartitionSize
+	if f.fileSystem.options != nil {
+		if opts, ok := f.fileSystem.options.(Options); ok {
+			if opts.UploadPartitionSize != 0 {
+				partSize = opts.UploadPartitionSize
+			}
+		}
+	}
+	return partSize
+}
+
+func (f *File) getDownloadPartitionSize() int64 {
+	partSize := defaultPartitionSize
+	if f.fileSystem.options != nil {
+		if opts, ok := f.fileSystem.options.(Options); ok {
+			if opts.DownloadPartitionSize != 0 {
+				partSize = opts.DownloadPartitionSize
+			}
+		}
+	}
+	return partSize
+}
+
+func withDownloadPartitionSize(partSize int64) func(*s3manager.Downloader) {
+	return func(d *s3manager.Downloader) {
 		d.PartSize = partSize
-	})
+	}
+}
+
+func withUploadPartitionSize(partSize int64) func(*s3manager.Uploader) {
+	return func(u *s3manager.Uploader) {
+		u.PartSize = partSize
+	}
+}
+
+var getDownloader = func(client s3iface.S3API, opts ...func(d *s3manager.Downloader)) s3manageriface.DownloaderAPI {
+	return s3manager.NewDownloaderWithClient(client, opts...)
+}
+
+var getUploader = func(client s3iface.S3API, opts ...func(d *s3manager.Uploader)) s3manageriface.UploaderAPI {
+	return s3manager.NewUploaderWithClient(client, opts...)
 }

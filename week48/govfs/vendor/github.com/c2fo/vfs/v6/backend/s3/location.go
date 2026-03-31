@@ -10,6 +10,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/s3"
 
 	"github.com/c2fo/vfs/v6"
+	"github.com/c2fo/vfs/v6/options"
 	"github.com/c2fo/vfs/v6/utils"
 )
 
@@ -122,7 +123,7 @@ func (l *Location) ChangeDir(relativePath string) error {
 
 // NewFile uses the properties of the calling location to generate a vfs.File (backed by an s3.File). The filePath
 // argument is expected to be a relative path to the location's current path.
-func (l *Location) NewFile(filePath string) (vfs.File, error) {
+func (l *Location) NewFile(filePath string, opts ...options.NewFileOption) (vfs.File, error) {
 	if l == nil {
 		return nil, errors.New("non-nil s3.Location pointer is required")
 	}
@@ -137,18 +138,19 @@ func (l *Location) NewFile(filePath string) (vfs.File, error) {
 		fileSystem: l.fileSystem,
 		bucket:     l.bucket,
 		key:        utils.EnsureLeadingSlash(path.Join(l.prefix, filePath)),
+		opts:       opts,
 	}
 	return newFile, nil
 }
 
 // DeleteFile removes the file at fileName path.
-func (l *Location) DeleteFile(fileName string) error {
+func (l *Location) DeleteFile(fileName string, opts ...options.DeleteOption) error {
 	file, err := l.NewFile(fileName)
 	if err != nil {
 		return err
 	}
 
-	return file.Delete()
+	return file.Delete(opts...)
 }
 
 // FileSystem returns a vfs.FileSystem interface of the location's underlying file system.
