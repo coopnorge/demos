@@ -1,2 +1,2 @@
-FROM ghcr.io/coopnorge/engineering-docker-images/e0/devtools-terraform-v1beta1:latest@sha256:4791fd60f8fa5faaf692e988d81b9a0d3e45221113fb3c04ba66645367ef839e AS terraform-devtools
+FROM ghcr.io/coopnorge/engineering-docker-images/e0/devtools-terraform-v1beta1:latest@sha256:67cabc2618d81fe346cbf93aff0b43fc5f5f9f2f322571133135b9d1c6e23b00 AS terraform-devtools
 FROM google/cloud-sdk:latest@sha256:9b1a91ff271280e9f3499e5fc6ca0888f07b0399728efb915059e9fb4030a26c AS cloud-sdk
