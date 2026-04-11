@@ -5,7 +5,7 @@ go 1.25.0
 require (
 	github.com/aws/constructs-go/constructs/v3 v3.4.344
 	github.com/aws/jsii-runtime-go v1.127.0
-	github.com/cdk8s-team/cdk8s-core-go/cdk8s/v2 v2.70.52
+	github.com/cdk8s-team/cdk8s-core-go/cdk8s/v2 v2.70.53
 	github.com/cdk8s-team/cdk8s-plus-go/cdk8splus20 v1.0.0-beta.187
 )
 
