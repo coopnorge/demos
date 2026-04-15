@@ -5,7 +5,7 @@ go 1.25.8
 require (
 	github.com/cortesi/modd v0.8.1
 	github.com/envoyproxy/protoc-gen-validate v1.3.3
-	github.com/go-task/task/v3 v3.49.1
+	github.com/go-task/task/v3 v3.50.0
 	github.com/golang/mock v1.6.0
 	github.com/golang/protobuf v1.5.4
 	github.com/pseudomuto/protoc-gen-doc v1.5.1
@@ -15,9 +15,9 @@ require (
 
 require (
 	cel.dev/expr v0.25.1 // indirect
-	charm.land/bubbles/v2 v2.0.0 // indirect
-	charm.land/bubbletea/v2 v2.0.1 // indirect
-	charm.land/lipgloss/v2 v2.0.0 // indirect
+	charm.land/bubbles/v2 v2.1.0 // indirect
+	charm.land/bubbletea/v2 v2.0.2 // indirect
+	charm.land/lipgloss/v2 v2.0.2 // indirect
 	cloud.google.com/go v0.123.0 // indirect
 	cloud.google.com/go/auth v0.18.2 // indirect
 	cloud.google.com/go/auth/oauth2adapt v0.2.8 // indirect
@@ -77,7 +77,7 @@ require (
 	github.com/dustin/go-humanize v1.0.1 // indirect
 	github.com/elliotchance/orderedmap/v3 v3.1.0 // indirect
 	github.com/envoyproxy/go-control-plane/envoy v1.36.0 // indirect
-	github.com/fatih/color v1.18.0 // indirect
+	github.com/fatih/color v1.19.0 // indirect
 	github.com/felixge/httpsnoop v1.0.4 // indirect
 	github.com/fsnotify/fsnotify v1.9.0 // indirect
 	github.com/go-jose/go-jose/v4 v4.1.4 // indirect
@@ -105,7 +105,7 @@ require (
 	github.com/lyft/protoc-gen-star/v2 v2.0.4 // indirect
 	github.com/mattn/go-colorable v0.1.14 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
-	github.com/mattn/go-runewidth v0.0.20 // indirect
+	github.com/mattn/go-runewidth v0.0.21 // indirect
 	github.com/mitchellh/copystructure v1.2.0 // indirect
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/mitchellh/hashstructure/v2 v2.0.2 // indirect
@@ -145,8 +145,8 @@ require (
 	golang.org/x/net v0.52.0 // indirect
 	golang.org/x/oauth2 v0.36.0 // indirect
 	golang.org/x/sync v0.20.0 // indirect
-	golang.org/x/sys v0.42.0 // indirect
-	golang.org/x/term v0.41.0 // indirect
+	golang.org/x/sys v0.43.0 // indirect
+	golang.org/x/term v0.42.0 // indirect
 	golang.org/x/text v0.35.0 // indirect
 	golang.org/x/time v0.15.0 // indirect
 	golang.org/x/tools v0.42.0 // indirect
@@ -158,5 +158,5 @@ require (
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	mvdan.cc/sh/moreinterp v0.0.0-20260120230322-19def062a997 // indirect
-	mvdan.cc/sh/v3 v3.12.1-0.20260124232039-e74afc18e65b // indirect
+	mvdan.cc/sh/v3 v3.13.1 // indirect
 )
