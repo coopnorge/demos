@@ -24,7 +24,7 @@ services:
     image: docker.io/fullstorydev/grpcurl:latest@sha256:085e183ca334eb4e81ca81ee12cbb2b2737505d1d77f5e33dabc5d066593d998
     network_mode: host
   mockoauth2:
-    image: ghcr.io/navikt/mock-oauth2-server:0.5.10@sha256:0a0760a245ca624d1589f3925cd1f96c4deca50423fed6732a3801a00163099f
+    image: ghcr.io/navikt/mock-oauth2-server:3.0.1@sha256:19dbd608fc3587beedd0cbd9597f0e8f54e7c394ee3faf17aa13946e9c68338d
     restart: always
     environment:
       JSON_CONFIG_PATH: /tmp/config/mock-oauth2-server.json
