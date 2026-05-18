@@ -3,7 +3,7 @@ module gitlab.com/aucampia/eg/service-golang
 go 1.26.0
 
 require (
-	github.com/coopnorge/go-masker-lib v0.2.1
+	github.com/coopnorge/go-masker-lib v0.2.2
 	github.com/cortesi/modd v0.8.1
 	github.com/envoyproxy/protoc-gen-validate v1.3.3
 	github.com/go-playground/validator/v10 v10.30.2
