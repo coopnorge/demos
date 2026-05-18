@@ -1,7 +1,7 @@
 connectrpc.com/connect v1.19.2 h1:McQ83FGdzL+t60peksi0gXC7MQ/iLKgLduAnThbM0mo=
 connectrpc.com/connect v1.19.2/go.mod h1:tN20fjdGlewnSFeZxLKb0xwIZ6ozc3OQs2hTXy4du9w=
-github.com/coopnorge/go-signal-lib v0.4.0 h1:MyWHeKhuymH6vksI47anugebshHCSoJ0TYpEuPeXc08=
-github.com/coopnorge/go-signal-lib v0.4.0/go.mod h1:AqR4ByXAItyR5xUf3F+/rry9by4jRxTn8px39GqLK58=
+github.com/coopnorge/go-signal-lib v0.5.0 h1:3eNMVz8pUKyzWGOTe086juK35suY+Hf1SkzIZp9f1tw=
+github.com/coopnorge/go-signal-lib v0.5.0/go.mod h1:Q6fLK/wmSLJhi4i/1o3n1aV5HeGdlsZ5++R7ggM4+v4=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/google/go-cmp v0.7.0 h1:wk8382ETsv4JYUZwIsn6YpYiWiBsYLSJiTsyBybVuN8=
