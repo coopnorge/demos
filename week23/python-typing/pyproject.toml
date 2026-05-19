@@ -34,7 +34,7 @@ mypy = "0.812"
 pytest = "9.0.3"
 pytest-cov = "2.12.1"
 pytest-subtests = "0.15.0"
-typing-extensions = "3.10.0.0"
+typing-extensions = "4.15.0"
 
 [build-system]
 requires = ["setuptools","poetry-core==2.4.0"]
