@@ -14,7 +14,7 @@ packages = [
 
 [tool.poetry.dependencies]
 python = "3.14.5"
-click = "7.1.2"
+click = "8.3.3"
 dataclasses = { version = "0.8", python = ">=3.6,<3.7" }
 pydantic = {extras = ["dotenv"], version = "^1.8.2"}
 typer = "0.3.2"
