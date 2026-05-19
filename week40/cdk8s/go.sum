@@ -13,8 +13,8 @@ github.com/aws/jsii-runtime-go v1.129.0 h1:HirIS6zroS7KXW9flKeK8Yai9g7K6VGPOY6bg
 github.com/aws/jsii-runtime-go v1.129.0/go.mod h1:+Hxuq6OMXQjzeApX0FpitOW9H6bC3nYAvTP3d2jfF+U=
 github.com/cdk8s-team/cdk8s-core-go/cdk8s v1.5.86 h1:j/LKRrnESe6aw2p+2I68SP2p7/ju1Pxu9uBCtj/ku9U=
 github.com/cdk8s-team/cdk8s-core-go/cdk8s v1.5.86/go.mod h1:mT022kG/TBim9wDtLN6SVzJhuDOTTccJsFZM+YWIDlA=
-github.com/cdk8s-team/cdk8s-core-go/cdk8s/v2 v2.70.60 h1:l9UUpie3JFFFSElPfC2pycKYsrqmAwGcJ8hbSki4QDo=
-github.com/cdk8s-team/cdk8s-core-go/cdk8s/v2 v2.70.60/go.mod h1:IqvyJTCW0NCZr/IoWU6v7EvfqUdSmnqdUcxL7qHhWl4=
+github.com/cdk8s-team/cdk8s-core-go/cdk8s/v2 v2.70.61 h1:+C4kI3wdqkUMnB3DNdVeV1ZsZlmw27Rtp0GBmT/kdlQ=
+github.com/cdk8s-team/cdk8s-core-go/cdk8s/v2 v2.70.61/go.mod h1:IqvyJTCW0NCZr/IoWU6v7EvfqUdSmnqdUcxL7qHhWl4=
 github.com/cdk8s-team/cdk8s-plus-go/cdk8splus20 v1.0.0-beta.187 h1:kChLNk1/C/Rwf2Hqwd2FoQRI8Z5rXxYlGyynBuaJcfA=
 github.com/cdk8s-team/cdk8s-plus-go/cdk8splus20 v1.0.0-beta.187/go.mod h1:E4e32KrU1Y66YUXhggzP9TTKdw3BPz1olN6gbCjvmWw=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
