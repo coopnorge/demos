@@ -8,13 +8,13 @@ authors = []
 python = "3.14.5"
 
 [tool.poetry.dev-dependencies]
-rdflib-jsonld = "0.5.0"
+rdflib-jsonld = "0.6.2"
 rdflib = "5.0.0"
-pylode = "2.10.3"
+pylode = "2.13.2"
 pyyaml = "5.4.1"
 #"yocho.rdflib-xtl" = "^0.3.0"
 "yocho.rdflib-xtl" = { git = "https://gitlab.com/aucampia/wip/rdflib-xtl.git", branch = "master" }
-PyGObject = "3.42.2"
+PyGObject = "3.56.2"
 xdot = "1.6"
 numpy = "^1.19.4"
 
