@@ -1,5 +1,5 @@
 module worker-pool-patterns
 
-go 1.25.6
+go 1.26.0
 
-require golang.org/x/sync v0.20.0
+require golang.org/x/sync v0.22.0

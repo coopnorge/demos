@@ -15,10 +15,10 @@ import (
 	"github.com/c2fo/vfs/v6/backend/gs"
 	"github.com/c2fo/vfs/v6/vfssimple"
 	"github.com/fsouza/fake-gcs-server/fakestorage"
+	"github.com/guregu/null/v6"
 	"github.com/otiai10/copy"
 	"github.com/sirupsen/logrus"
 	"github.com/stretchr/testify/assert"
-	"gopkg.in/guregu/null.v4"
 )
 
 func init() {
@@ -134,7 +134,6 @@ func TestProcessFiles(t *testing.T) {
 	}
 	for _, testCase := range testCases {
 		t.Run(testCase.name, func(t *testing.T) {
-
 			var locURI string
 			switch testCase.fsType {
 			case "gs":
@@ -202,7 +201,6 @@ func TestProcessFiles(t *testing.T) {
 			} else {
 				assert.Len(t, filesFinal, len(filesInitial))
 			}
-
 		})
 	}
 }
