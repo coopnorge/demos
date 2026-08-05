@@ -3,7 +3,7 @@ module example.com/coopnorge/govfs
 go 1.26.0
 
 require (
-	github.com/c2fo/vfs/v6 v6.27.1
+	github.com/c2fo/vfs/v7 v7.20.5
 	github.com/fsouza/fake-gcs-server v1.55.1
 	github.com/guregu/null/v6 v6.0.0
 	github.com/otiai10/copy v1.14.1
