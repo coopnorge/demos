@@ -13,13 +13,13 @@ packages = [
 [tool.poetry.scripts]
 
 [tool.poetry.dependencies]
-python = "3.14.5"
+python = "3.14.6"
 click = "8.3.3"
 dataclasses = { version = "0.8", python = ">=3.6,<3.7" }
 pydantic = {extras = ["dotenv"], version = "^1.8.2"}
-typer = "0.3.2"
+typer = "0.27.0"
 jsonschema = "4.26.0"
-PyYAML = "6.0.1"
+PyYAML = "6.0.3"
 
 [tool.poetry.dev-dependencies]
 black = "^21.5b2"
@@ -29,13 +29,13 @@ flake8-black = "0.4.0"
 flake8-bugbear = "25.11.29"
 flake8-isort = "7.0.0"
 invoke = "3.0.3"
-isort = "5.10.1"
+isort = "5.13.2"
 mypy = "2.3.0"
-pytest = "9.0.3"
+pytest = "9.1.1"
 pytest-cov = "7.1.0"
 pytest-subtests = "0.15.0"
 typing-extensions = "4.16.0"
 
 [build-system]
-requires = ["setuptools","poetry-core==2.4.0"]
+requires = ["setuptools","poetry-core==2.4.1"]
 build-backend = "poetry.core.masonry.api"
