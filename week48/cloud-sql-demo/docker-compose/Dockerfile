@@ -1,3 +1,3 @@
-FROM docker.io/library/node:24.14.1@sha256:80fc934952c8f1b2b4d39907af7211f8a9fff1a4c2cf673fb49099292c251cec as devtools
+FROM docker.io/library/node:24.18.0@sha256:5711a0d445a1af54af9589066c646df387d1831a608226f4cd694fc59e745059 as devtools
 
 RUN apt-get install --yes --no-install-recommends make
