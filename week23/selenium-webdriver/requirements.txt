@@ -1,2 +1,2 @@
 selenium==4.46.0
-chromedriver-py==151.0.7922.34
+chromedriver-py==151.0.7922.47
