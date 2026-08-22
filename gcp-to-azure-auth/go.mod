@@ -3,7 +3,7 @@ module gcp-to-azure-auth
 go 1.26.0
 
 require (
-	cloud.google.com/go/iam v1.12.0
+	cloud.google.com/go/iam v1.13.0
 	github.com/Azure/azure-storage-blob-go v0.15.0
 	github.com/AzureAD/microsoft-authentication-library-for-go v1.7.2
 	github.com/spf13/viper v1.21.0
