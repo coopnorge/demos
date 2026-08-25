@@ -5,7 +5,7 @@ description = ""
 authors = []
 
 [tool.poetry.dependencies]
-python = "3.14.6"
+python = "3.14.7"
 
 [tool.poetry.dev-dependencies]
 rdflib-jsonld = "0.6.2"
