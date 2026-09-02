@@ -1,6 +1,6 @@
 module github.com/coopnorge/demos/2022W34/pubsub-to-bigquery/docker-compose
 
-go 1.26.0
+go 1.27.0
 
 require (
 	github.com/GoogleCloudPlatform/protoc-gen-bq-schema v1.1.0
