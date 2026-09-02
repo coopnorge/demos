@@ -1,6 +1,6 @@
 module gitlab.com/aucampia/eg/service-golang
 
-go 1.26.0
+go 1.27.0
 
 require (
 	github.com/coopnorge/go-masker-lib v0.2.5

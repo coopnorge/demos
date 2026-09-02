@@ -1,6 +1,6 @@
 module example.com/cdk8s
 
-go 1.26.0
+go 1.27.0
 
 require (
 	github.com/aws/constructs-go/constructs/v3 v3.4.344
