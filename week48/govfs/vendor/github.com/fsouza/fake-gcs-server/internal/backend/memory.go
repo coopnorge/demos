@@ -56,7 +56,10 @@ func (bm *bucketInMemory) addObject(obj Object) Object {
 	obj.Generation = getNewGenerationIfZero(obj.Generation)
 	index := findObject(obj, bm.activeObjects, false)
 	if index >= 0 {
-		if bm.VersioningEnabled {
+		// A write that reuses the live generation is a metadata update
+		// (PatchObject, the ACL handlers) rather than a new version; only
+		// a write that changes the generation archives the old one.
+		if bm.VersioningEnabled && bm.activeObjects[index].Generation != obj.Generation {
 			bm.activeObjects[index].Deleted = time.Now().Format(timestampFormat)
 			bm.cpToArchive(bm.activeObjects[index])
 		}
@@ -336,6 +339,37 @@ func (s *storageMemory) DeleteObject(bucketName, objectName string) error {
 	return nil
 }
 
+// DeleteObjectWithGeneration deletes the named generation of an object,
+// live or archived.  Unlike a plain delete on a versioning-enabled bucket,
+// which archives the live object, deleting a specific generation removes
+// the data outright, matching Cloud Storage.
+func (s *storageMemory) DeleteObjectWithGeneration(bucketName, objectName string, generation int64) error {
+	if generation == 0 {
+		return s.DeleteObject(bucketName, objectName)
+	}
+	s.mtx.Lock()
+	defer s.mtx.Unlock()
+	bucketInMemory, err := s.getBucketInMemory(bucketName)
+	if err != nil {
+		return err
+	}
+	obj := Object{ObjectAttrs: ObjectAttrs{BucketName: bucketName, Name: objectName, Generation: generation}}
+	if index := findObject(obj, bucketInMemory.activeObjects, true); index >= 0 {
+		bucketInMemory.activeObjects = removeAt(bucketInMemory.activeObjects, index)
+	} else if index := findObject(obj, bucketInMemory.archivedObjects, true); index >= 0 {
+		bucketInMemory.archivedObjects = removeAt(bucketInMemory.archivedObjects, index)
+	} else {
+		return errors.New("object not found")
+	}
+	s.buckets[bucketName] = bucketInMemory
+	return nil
+}
+
+func removeAt(objects []Object, index int) []Object {
+	objects[index] = objects[len(objects)-1]
+	return objects[:len(objects)-1]
+}
+
 func (s *storageMemory) PatchObject(bucketName, objectName string, attrsToUpdate ObjectAttrs) (StreamingObject, error) {
 	obj, err := s.GetObject(bucketName, objectName)
 	if err != nil {
@@ -362,7 +396,7 @@ func (s *storageMemory) UpdateObject(bucketName, objectName string, attrsToUpdat
 	return obj, nil
 }
 
-func (s *storageMemory) ComposeObject(bucketName string, objectNames []string, destinationName string, metadata map[string]string, contentType string, contentEncoding string, contentDisposition string, contentLanguage string, cacheControl string, storageClass string) (StreamingObject, error) {
+func (s *storageMemory) ComposeObject(bucketName string, objectNames []string, destinationName string, metadata map[string]string, contentType string, contentEncoding string, contentDisposition string, contentLanguage string, cacheControl string, storageClass string, acl []storage.ACLRule) (StreamingObject, error) {
 	var data []byte
 	for _, n := range objectNames {
 		obj, err := s.GetObject(bucketName, n)
@@ -401,12 +435,18 @@ func (s *storageMemory) ComposeObject(bucketName string, objectNames []string, d
 		}
 	}
 
+	if acl != nil {
+		dest.ACL = acl
+	}
 	dest.Content = data
 	dest.Crc32c = ""
 	dest.Md5Hash = ""
 	dest.Etag = ""
 	dest.Size = 0
 	dest.Metadata = metadata
+	// Compose creates a new generation rather than reusing the
+	// destination's, matching Cloud Storage.
+	dest.Generation = 0
 
 	result, err := s.CreateObject(dest.StreamingObject(), NoConditions{})
 	if err != nil {
