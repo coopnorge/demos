@@ -1,6 +1,21 @@
 # Changes
 
 
+## [1.65.0](https://github.com/googleapis/google-cloud-go/compare/storage/v1.64.0...storage/v1.65.0) (2026-08-14)
+
+
+### Features
+
+* Update API sources and regenerate ([#20252](https://github.com/googleapis/google-cloud-go/issues/20252)) ([ac017a0](https://github.com/googleapis/google-cloud-go/commit/ac017a0d30ec2d42db35f7d3b5ea7fb20b4b860a))
+* Update API sources and regenerate ([#20369](https://github.com/googleapis/google-cloud-go/issues/20369)) ([bfe3aaf](https://github.com/googleapis/google-cloud-go/commit/bfe3aafc49e0c13815aa0401b1eba47aef4511df))
+
+## [1.64.0](https://github.com/googleapis/google-cloud-go/compare/storage/v1.63.1...storage/v1.64.0) (2026-07-21)
+
+
+### Features
+
+* **storage:** Accept CRC32C for appendable objects ([#20104](https://github.com/googleapis/google-cloud-go/issues/20104)) ([1b2f5af](https://github.com/googleapis/google-cloud-go/commit/1b2f5afa0fe0f159edbc7184467928ebbd8720e2))
+
 ## [1.63.1](https://github.com/googleapis/google-cloud-go/compare/storage/v1.63.0...storage/v1.63.1) (2026-07-13)
 
 
