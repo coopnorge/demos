@@ -431,6 +431,20 @@ func (s *storageFS) DeleteObject(bucketName, objectName string) error {
 	return os.Remove(path)
 }
 
+// DeleteObjectWithGeneration deletes a specific generation of an object.
+// The filesystem backend does not support versioning, so the generation
+// must match the live object's.
+func (s *storageFS) DeleteObjectWithGeneration(bucketName, objectName string, generation int64) error {
+	if generation != 0 {
+		obj, err := s.GetObjectWithGeneration(bucketName, objectName, generation)
+		if err != nil {
+			return err
+		}
+		obj.Close()
+	}
+	return s.DeleteObject(bucketName, objectName)
+}
+
 func (s *storageFS) PatchObject(bucketName, objectName string, attrsToUpdate ObjectAttrs) (StreamingObject, error) {
 	obj, err := s.GetObject(bucketName, objectName)
 	if err != nil {
@@ -478,7 +492,7 @@ func concatObjectReaders(objects []StreamingObject) io.ReadSeekCloser {
 	return concatenatedContent{io.MultiReader(readers...)}
 }
 
-func (s *storageFS) ComposeObject(bucketName string, objectNames []string, destinationName string, metadata map[string]string, contentType string, contentEncoding string, contentDisposition string, contentLanguage string, cacheControl string, storageClass string) (StreamingObject, error) {
+func (s *storageFS) ComposeObject(bucketName string, objectNames []string, destinationName string, metadata map[string]string, contentType string, contentEncoding string, contentDisposition string, contentLanguage string, cacheControl string, storageClass string, acl []storage.ACLRule) (StreamingObject, error) {
 	var sourceObjects []StreamingObject
 	for _, n := range objectNames {
 		obj, err := s.GetObject(bucketName, n)
@@ -502,6 +516,7 @@ func (s *storageFS) ComposeObject(bucketName string, objectNames []string, desti
 			StorageClass:       storageClass,
 			Created:            now,
 			Updated:            now,
+			ACL:                acl,
 		},
 	}
 
