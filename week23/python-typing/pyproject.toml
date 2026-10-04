@@ -13,11 +13,11 @@ packages = [
 [tool.poetry.scripts]
 
 [tool.poetry.dependencies]
-python = "3.14.6"
+python = "3.14.7"
 click = "8.4.2"
 dataclasses = { version = "0.8", python = ">=3.6,<3.7" }
 pydantic = {extras = ["dotenv"], version = "^1.8.2"}
-typer = "0.27.0"
+typer = "0.27.2"
 jsonschema = "4.26.0"
 PyYAML = "6.0.3"
 
@@ -37,5 +37,5 @@ pytest-subtests = "0.15.0"
 typing-extensions = "4.16.0"
 
 [build-system]
-requires = ["setuptools","poetry-core==2.4.1"]
+requires = ["setuptools","poetry-core==2.5.0"]
 build-backend = "poetry.core.masonry.api"
