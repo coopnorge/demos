@@ -26,10 +26,12 @@ import (
 	"strconv"
 	"strings"
 
+	"cloud.google.com/go/auth"
 	"cloud.google.com/go/iam/apiv1/iampb"
 	gapic "cloud.google.com/go/storage/internal/apiv2"
 	"cloud.google.com/go/storage/internal/apiv2/storagepb"
 	"github.com/googleapis/gax-go/v2"
+
 	"google.golang.org/api/iterator"
 	"google.golang.org/api/option"
 	"google.golang.org/api/option/internaloption"
@@ -178,22 +180,14 @@ func newGRPCStorageClient(ctx context.Context, opts ...storageOption) (client *g
 	var clientMetrics *clientMetrics
 	var metricsCleanup func()
 	if isOtelMetricsEnabled(&config) {
-		var project string
-		c, err := transport.Creds(ctx, s.clientOption...)
-		if err == nil {
-			project = c.ProjectID
-		}
-		if cm, cleanup, err := initMetrics(ctx, project, &config); err == nil {
-			clientMetrics = cm
-			metricsCleanup = cleanup
-
-			unaryInt, streamInt := metricsInterceptors(cm)
+		clientMetrics, metricsCleanup = initGRPCMetricsAndWrapCredentials(ctx, &config, s)
+		if clientMetrics != nil {
+			unaryInt, streamInt := metricsInterceptors(clientMetrics)
 			s.clientOption = append(s.clientOption,
 				option.WithGRPCDialOption(grpc.WithChainUnaryInterceptor(unaryInt)),
 				option.WithGRPCDialOption(grpc.WithChainStreamInterceptor(streamInt)),
 			)
-		} else {
-			log.Printf("Failed to enable metrics: %v", err)
+			s.clientOption = append(s.clientOption, grpcNetworkMetricsDialOptions("storage.googleapis.com", clientMetrics)...)
 		}
 	}
 
@@ -225,6 +219,28 @@ func newGRPCStorageClient(ctx context.Context, opts ...storageOption) (client *g
 	configureStreamingTimeouts(g)
 	c.raw = g
 	return c, nil
+}
+
+func initGRPCMetricsAndWrapCredentials(ctx context.Context, config *storageConfig, s *settings) (*clientMetrics, func()) {
+	var project string
+	var authCreds *auth.Credentials
+
+	credsOpts := append([]option.ClientOption{option.WithScopes(gapic.DefaultAuthScopes()...)}, s.clientOption...)
+	if c, err := internaloption.AuthCreds(ctx, credsOpts); err == nil {
+		authCreds = c
+		project, _ = authCreds.ProjectID(ctx)
+	} else if c, err := transport.Creds(ctx, credsOpts...); err == nil {
+		project = c.ProjectID
+	}
+
+	clientMetrics, metricsCleanup := initClientMetrics(ctx, project, config)
+	if clientMetrics != nil {
+		if authCreds != nil {
+			authCreds = wrapAuthCredentials(authCreds, clientMetrics)
+			s.clientOption = append(s.clientOption, option.WithAuthCredentials(authCreds))
+		}
+	}
+	return clientMetrics, metricsCleanup
 }
 
 // configureStreamingTimeouts explicitly overrides default call timeouts to 0 (unbounded)
@@ -369,10 +385,12 @@ func (c *grpcStorageClient) ListBuckets(ctx context.Context, project string, opt
 
 	var gitr *gapic.BucketIterator
 	fetch := func(pageSize int, pageToken string) (token string, err error) {
+		ctx, record := startMetricsOp(it.ctx, "ListBuckets", false)
+		defer func() { record(err) }()
 
 		var buckets []*storagepb.Bucket
 		var next string
-		err = run(it.ctx, func(ctx context.Context) error {
+		err = run(ctx, func(ctx context.Context) error {
 			// Initialize GAPIC-based iterator when pageToken is empty, which
 			// indicates that this fetch call is attempting to get the first page.
 			//
@@ -611,12 +629,14 @@ func (c *grpcStorageClient) ListObjects(ctx context.Context, bucket string, q *Q
 		Filter:                   it.query.Filter,
 	}
 	fetch := func(pageSize int, pageToken string) (token string, err error) {
+		ctx, record := startMetricsOp(it.ctx, "ListObjects", false)
+		defer func() { record(err) }()
 		// Add trace span around List API call within the fetch.
 		ctx, _ = startSpan(ctx, "grpcStorageClient.ObjectsListCall")
 		defer func() { endSpan(ctx, err) }()
 		var objects []*storagepb.Object
 		var gitr *gapic.ObjectIterator
-		err = run(it.ctx, func(ctx context.Context) error {
+		err = run(ctx, func(ctx context.Context) error {
 			gitr = c.raw.ListObjects(ctx, req, s.gax...)
 			objects, token, err = gitr.InternalFetch(pageSize, pageToken)
 			return err
