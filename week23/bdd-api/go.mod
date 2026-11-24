@@ -1,6 +1,6 @@
 module github.comcoopnorgedemosweek23bdd-api
 
-go 1.26.0
+go 1.27.4
 
 require (
 	github.com/cucumber/godog v0.15.1
